@@ -1,0 +1,21 @@
+<fieldset>
+  <ol>
+    <li>
+      <label>Nome</label>
+      <%= f.text_field :nome %>
+    </li>
+    <li>
+      <label>E-mail</label>
+      <%= f.text_field :email %>
+      <p class="dica">O e-mail deve ser válido e será usado no login.</p>
+    </li>
+    <li>
+      <label>Senha</label>
+      <%= f.password_field :senha_digitada %>
+    </li>
+    <li>
+      <label>Confirme a senha</label>
+      <%= f.password_field :senha_digitada_confirmation %>
+    </li>
+  </ol>
+</fieldset>

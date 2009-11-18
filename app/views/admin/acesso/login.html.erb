@@ -1,0 +1,27 @@
+<div id="login">
+  <h1>Login</h1>
+  <%= flash_message %>
+  <% form_tag :action => "login" do %>
+    <fieldset>
+      <ol>
+        <li>
+          <label>E-mail</label>
+          <%= text_field_tag :email, params[:email], :class => "text" %>
+        </li>
+        <li>
+          <label>Senha</label>
+          <%= password_field_tag :senha, "", :class => "password" %>
+        </li>
+        <li style="margin:0;">
+          <%= submit_tag "Entrar" %>
+        </li>
+      </ol>
+    </fieldset>
+  <% end %>
+</div>
+
+<script type="text/javascript" defer="true">
+  Event.observe(window, "load", function () {
+    $("email").activate();
+  });
+</script>

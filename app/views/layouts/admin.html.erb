@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Emotioncard - Administração - <%= controller.controller_name.humanize %></title>
+  <%= stylesheet_link_tag "960/reset.css" %>
+  <%= stylesheet_link_tag "960/960.css" %>
+  <%= stylesheet_link_tag "960/text.css" %>
+  <%= stylesheet_link_tag "jquery/custom-theme/jquery-ui-1.7.2.custom.css" %>
+
+  <%= stylesheet_link_tag "admin/will_paginate.css" %>
+  <%= stylesheet_link_tag "admin/crud.css" %>
+  <%= stylesheet_link_tag "admin/forms.css" %>
+  <%= stylesheet_link_tag "admin/menu.css" %>
+  <%= stylesheet_link_tag "admin/default.css" %>
+
+  <%#= javascript_include_tag :defaults %>
+  <%= javascript_include_tag "admin/jquery-1.3.2.min.js" %>
+  <%= javascript_include_tag "admin/jquery-ui-1.7.2.custom.min.js" %>
+  <%= javascript_include_tag "flashobject" %>
+</head>
+<body>
+<div id="cabecalho">
+  <div class="container_12">
+    <div class="grid_12">
+      <div class="grid_9 alpha">
+        <h1>
+          Administração
+        </h1>
+      </div>
+      <div class="grid_3 omega">
+        <div id="links_administrativos">
+          <%= link_to "Administradores", admin_administradores_path %> |
+          <%= link_to "<b>Sair</b>", admin_logout_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="menu" class="clearfix">
+  <div class="container_12">
+    <div class="grid_12">
+      <%= render :partial => "layouts/admin/navegacao" %>
+    </div>
+  </div>
+</div>
+<div class="container_12">
+  <div id="principal" class="grid_12">
+    <%= flash_message %>
+    <%= yield %>
+  </div>
+</div>
+</body>
+</html>

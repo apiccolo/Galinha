@@ -1,0 +1,48 @@
+<ul class="dropdown">
+  <li>
+    <%= link_to "Painel", :controller => "admin/painel" %>
+  </li>
+  <li>
+    <%= link_to "Usuários", admin_usuarios_path %>
+  </li>
+  <li>
+    <%= link_to_function "Sistema de cartões", "$('#menu_do_sistema_de_cartoes').toggle();", :class => "dir" %>
+    <ul id="menu_do_sistema_de_cartoes" style="display: none;">
+      <li>
+        <%= link_to "Categorias", admin_categorias_path %>
+      </li>
+      <li>
+        <%= link_to "Datas comemorativas", admin_datas_comemorativas_path %>
+      </li>
+      <li>
+        <%= link_to "Cartões", admin_cartoes_path %>
+      </li>
+      <li>
+        <%= link_to "Cartões montados", :controller => "cartoes_montados" %>
+      </li>
+      <li>
+        <%= link_to "Patrocínios", :controller => "patrocinios" %>
+      </li>
+      <li>
+        <%= link_to "Estatísticas", "" %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to_function "Loja", "$('#menu_da_loja').toggle();", :class => "dir" %>
+    <ul id="menu_da_loja" style="display: none;">
+      <li class="secao">Produtos</li>
+      <li><%= link_to "Tipos de produto", admin_tipos_de_produto_path %></li>
+      <li><%= link_to "Produtos", admin_produtos_path %></li>
+      <li class="secao">Compras</li>
+      <li><%= link_to "Compras", admin_compras_path %></li>
+      <li><%= link_to "Assinaturas", admin_assinaturas_path %></li>
+      <li><%= link_to "Formas de pagamento", "" %></li>
+      <li><%= link_to "Modalidades de entrega", "" %></li>
+      <li class="secao">Relatórios</li>
+      <li>
+        <%= link_to "Estatísticas", "" %>
+      </li>
+    </ul>
+  </li>
+</ul>

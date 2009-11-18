@@ -1,0 +1,21 @@
+/* Login
+------------------------------------------------------------------------------
+*/
+
+body {
+  background-color: #84C82B;
+}
+
+#login {
+  padding: 20px;
+  margin: 50px 0 0 0;
+  background-color: #F2F2F2;
+  border: 10px solid #68A020;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+}
+
+fieldset { margin: 0; }
+
+input.text,
+input.password { padding: 5px; font-family: Arial, sans-serif; font-size: 20px; width: 396px; }

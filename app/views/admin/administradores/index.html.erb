@@ -1,0 +1,28 @@
+<h1>Administradores</h1>
+<p>
+  <%= link_to "Novo administrador", new_admin_administrador_path %>
+</p>
+<table id="lista_de_administradores" class="crud">
+  <thead>
+    <tr>
+      <th>
+        Nome
+      </th>
+      <th colspan="1">
+        Ações
+      </th>
+    </tr>
+  </thead>
+<% for administrador in @administradores -%>
+  <tr>
+    <td><%= link_to administrador.nome, edit_admin_administrador_path(administrador) %></td>
+    <td><%= link_to "Remover", admin_administrador_path(administrador), :confirm => "Tem certeza?", :method => :delete %></td>
+  </tr>
+<% end -%>
+</table>
+
+<style type="text/css" media="screen">
+
+.remover { width: 80px; }
+
+</style>

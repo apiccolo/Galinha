@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="shortcut icon" href="/images/favico.png" />
+  <%= display_meta_tags :site => "Emotioncard", :separator => "-" %>
+  <%= render :partial => "layouts/stylesheets_e_javascripts_com_bundle" %>
+  <%= render :partial => "layouts/tag_comercial_do_terra" %>
+</head>
+<body class="default <%= controller.controller_path.gsub("/", "_").to_s %> <%= controller.controller_path.gsub("/", "_").to_s %>_<%= action_name %><% if request.ssl? %> ssl<% end %>">
+  <%= render :partial => "layouts/testeira" %>
+
+  <div id="conteudo" class="container_16 clearfix">
+    <%= flash_message_com_link_para_fechar %>
+    <div class="grid_16">
+      <%= yield %>
+    </div>
+  </div> <!-- conteudo -->
+
+  <%= render :partial => "layouts/rodape" %>
+</body>
+</html>

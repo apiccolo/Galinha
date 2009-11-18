@@ -1,0 +1,160 @@
+/* Tags
+------------------------------------------------------------------------------
+*/
+
+a, a:visited {
+  color: blue;
+}
+
+h1 {
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 20px;
+  letter-spacing: -1px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+/* Cabeçalho
+------------------------------------------------------------------------------
+*/
+
+#cabecalho {
+  position: relative;
+  background-color: #CC0000;
+  height: 85px;
+  color: white;
+}
+
+#cabecalho h1 {
+  padding: 20px 0 0 0;
+}
+
+#links_administrativos {
+  background-color: #800000;
+  padding: 10px;
+  margin: 22px 0 0 0;
+  text-align: center;
+  width: 160px;
+}
+
+#links_administrativos a,
+#links_administrativos a:visited {
+  color: white;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+#links_administrativos a:hover {
+  text-decoration: underline;
+}
+
+#menu {
+  background-color: #EAE3C5;
+  margin-bottom: 20px;
+}
+
+#menu a,
+#menu a:visited {
+  text-decoration: none;
+}
+
+/* Mensagem sobre erro de validação.
+------------------------------------------------------------------------------
+*/
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid #D72A2A;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #FFE9E9;
+}
+
+#errorExplanation h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #D72A2A;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#errorExplanation ul {
+  margin: 0;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+/* Mensagens de sucesso, aviso e erro.
+------------------------------------------------------------------------------
+*/
+
+.notice, .error, .warning, .info {
+  line-height: 1.5em;
+  margin: 0 auto 5px;
+}
+
+.notice {
+  border: 2px solid #9c9;
+  background: #E2F9E3;
+  color: #060;
+}
+
+.error {
+  border: 2px solid #c68484;
+  background: #FCC;
+  color: #c00;
+}
+
+.warning {
+  border: 2px solid #dd0;
+  background: #FFC;
+  color: #000;
+}
+
+.info {
+  border: 2px solid #82c2d4;
+  background: #EBF5F8;
+  color: #000;
+}
+
+#flash_message p {
+  padding: 10px;
+  margin: 0;
+}
+
+#flash_message {
+  margin-bottom: 20px;
+}
+
+.flash {
+  margin: 0 0 2px 0; padding: 0;
+}
+
+/* Bordas arredondadas
+------------------------------------------------------------------------------
+*/
+
+#links_administrativos {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}

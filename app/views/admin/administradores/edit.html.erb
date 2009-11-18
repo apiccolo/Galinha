@@ -1,0 +1,14 @@
+<h1>Editar administrador</h1>
+
+<% form_for(@administrador, :url => admin_administrador_path(@administrador), :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial => "form", :locals => { :f => f } %>
+  <fieldset>
+    <ol>
+      <li>
+        <%= f.submit "Salvar" %> ou
+        <%= link_to "Voltar", admin_administradores_path %>
+      </li>
+    </ol>
+  </fieldset>
+<% end %>

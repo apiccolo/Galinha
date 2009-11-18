@@ -1,0 +1,33 @@
+/* Formulário
+------------------------------------------------------------------------------
+*/
+
+fieldset,
+fieldset legend {
+  margin-bottom: 10px;
+}
+
+fieldset legend {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+fieldset ol {
+  margin: 0;
+}
+
+fieldset ol li {
+  list-style: none;
+  margin: 0 0 10px;
+}
+
+fieldset label,
+fieldset ol li label {
+  display: block;
+}
+
+fieldset .dica {
+  font-size: 12px;
+  color: #999999;
+  margin: 0;
+}
