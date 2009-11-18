@@ -2,6 +2,7 @@ log/*
 tmp/*
 doc/*
 db/development.sqlite3
+config/database.yml
 
 # Arquivos Mac e Windows
 nbproject
