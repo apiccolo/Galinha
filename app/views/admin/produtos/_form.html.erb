@@ -1,0 +1,68 @@
+<div class="grid_6 alpha">
+<fieldset>
+  <ol>
+    <li>
+      <label class="checkbox">Produto disponível</label>
+      <%= f.check_box :disponivel %>
+    </li>
+    <li>
+      <label>Nome</label>
+      <%= f.text_field :nome, :size => 55 %>
+    </li>
+    <li>
+      <label>Descrição</label>
+      <%= f.text_area :descricao, :rows => 3, :cols => 48 %>
+      <p class="dica">Descrição sucinta (porém informativa) sobre o produto.</p>
+    </li>
+    <li>
+      <label>Descrição fiscal</label>
+      <%= f.text_field :descricao_simples, :size => 55 %>
+      <p class="dica">Descrição impressa na nota fiscal.</p>
+    </li>
+    <li class="small">
+      <label>Em estoque</label>
+      <%= f.text_field :qtd_estoque, :size => 6 %>
+    </li>
+    <li class="small">
+      <label>Peso</label>
+      <%= f.text_field :peso, :size => 6 %>
+      <p class="dica">Em gramas.</p>
+    </li>
+    <li>
+      <label>Tamanho</label>
+      <%= f.text_field :tamanho, :size => 26 %>
+      <p class="dica">Alt. (cm) x Larg. (cm) x Prof. (cm)</p>
+    </li>
+    <li>
+      <label>Imagens</label>
+      <b>/images/produtos/</b><%= f.text_field :imagem_pequena %>
+      <p class="dica">Indique acima a imagem principal (ex.: dvd1.png)<br />
+        Suba a(s) imagem(ns) para a pasta indicada acima.<br />
+        Para thumbnails, acrescente <b>_thumb</b> (ex.: dvd1_thumb.png)
+      </p>
+    </li>
+  </ol>
+</fieldset>
+</div>
+<!-- COLUNA DA DIREITA -->
+<div class="grid_6 omega">
+  <fieldset>
+    <ol>
+      <li class="big green">
+        <label>Preço</label>
+        R$ <%= f.text_field :preco, :size => 4 %>
+        <p class="dica">Use ponto para separar os centavos.</p>
+      </li>
+      <li>
+        <label>Preço fiscal</label>
+        R$ <%= f.text_field :preco_fiscal, :size => 4 %>
+        <p class="dica">Use ponto para separar os centavos.</p>
+      </li>
+      <li>
+        <label>Acréscimo para presente</label>
+        R$ <%= f.text_field :plus_presente, :size => 4 %>
+        <p class="dica">Use ponto para separar os centavos.</p>
+      </li>
+    </ol>
+  </fieldset>
+</div>

@@ -1,0 +1,1080 @@
+/* --------- /stylesheets/960/reset.css --------- */ 
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}/* --------- /stylesheets/960/960.css --------- */ 
+/*
+	960 Grid System ~ Core CSS.
+	Learn more ~ http://960.gs/
+
+	Licensed under GPL and MIT.
+*/
+
+/* =Containers
+--------------------------------------------------------------------------------*/
+
+.container_12,
+.container_16
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+}
+
+/* =Grid >> Global
+--------------------------------------------------------------------------------*/
+
+.grid_1,
+.grid_2,
+.grid_3,
+.grid_4,
+.grid_5,
+.grid_6,
+.grid_7,
+.grid_8,
+.grid_9,
+.grid_10,
+.grid_11,
+.grid_12,
+.grid_13,
+.grid_14,
+.grid_15,
+.grid_16
+{
+	display: inline;
+	float: left;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.container_12 .grid_3,
+.container_16 .grid_4
+{
+	width: 220px;
+}
+
+.container_12 .grid_6,
+.container_16 .grid_8
+{
+	width: 460px;
+}
+
+.container_12 .grid_9,
+.container_16 .grid_12
+{
+	width: 700px;
+}
+
+.container_12 .grid_12,
+.container_16 .grid_16
+{
+	width: 940px;
+}
+
+/* =Grid >> Children (Alpha ~ First, Omega ~ Last)
+--------------------------------------------------------------------------------*/
+
+.alpha
+{
+	margin-left: 0;
+}
+
+.omega
+{
+	margin-right: 0;
+}
+
+/* =Grid >> 12 Columns
+--------------------------------------------------------------------------------*/
+
+.container_12 .grid_1
+{
+	width: 60px;
+}
+
+.container_12 .grid_2
+{
+	width: 140px;
+}
+
+.container_12 .grid_4
+{
+	width: 300px;
+}
+
+.container_12 .grid_5
+{
+	width: 380px;
+}
+
+.container_12 .grid_7
+{
+	width: 540px;
+}
+
+.container_12 .grid_8
+{
+	width: 620px;
+}
+
+.container_12 .grid_10
+{
+	width: 780px;
+}
+
+.container_12 .grid_11
+{
+	width: 860px;
+}
+
+/* =Grid >> 16 Columns
+--------------------------------------------------------------------------------*/
+
+.container_16 .grid_1
+{
+	width: 40px;
+}
+
+.container_16 .grid_2
+{
+	width: 100px;
+}
+
+.container_16 .grid_3
+{
+	width: 160px;
+}
+
+.container_16 .grid_5
+{
+	width: 280px;
+}
+
+.container_16 .grid_6
+{
+	width: 340px;
+}
+
+.container_16 .grid_7
+{
+	width: 400px;
+}
+
+.container_16 .grid_9
+{
+	width: 520px;
+}
+
+.container_16 .grid_10
+{
+	width: 580px;
+}
+
+.container_16 .grid_11
+{
+	width: 640px;
+}
+
+.container_16 .grid_13
+{
+	width: 760px;
+}
+
+.container_16 .grid_14
+{
+	width: 820px;
+}
+
+.container_16 .grid_15
+{
+	width: 880px;
+}
+
+/* =Prefix Extra Space >> Global
+--------------------------------------------------------------------------------*/
+
+.container_12 .prefix_3,
+.container_16 .prefix_4
+{
+	padding-left: 240px;
+}
+
+.container_12 .prefix_6,
+.container_16 .prefix_8
+{
+	padding-left: 480px;
+}
+
+.container_12 .prefix_9,
+.container_16 .prefix_12
+{
+	padding-left: 720px;
+}
+
+/* =Prefix Extra Space >> 12 Columns
+--------------------------------------------------------------------------------*/
+
+.container_12 .prefix_1
+{
+	padding-left: 80px;
+}
+
+.container_12 .prefix_2
+{
+	padding-left: 160px;
+}
+
+.container_12 .prefix_4
+{
+	padding-left: 320px;
+}
+
+.container_12 .prefix_5
+{
+	padding-left: 400px;
+}
+
+.container_12 .prefix_7
+{
+	padding-left: 560px;
+}
+
+.container_12 .prefix_8
+{
+	padding-left: 640px;
+}
+
+.container_12 .prefix_10
+{
+	padding-left: 800px;
+}
+
+.container_12 .prefix_11
+{
+	padding-left: 880px;
+}
+
+/* =Prefix Extra Space >> 16 Columns
+--------------------------------------------------------------------------------*/
+
+.container_16 .prefix_1
+{
+	padding-left: 60px;
+}
+
+.container_16 .prefix_2
+{
+	padding-left: 120px;
+}
+
+.container_16 .prefix_3
+{
+	padding-left: 180px;
+}
+
+.container_16 .prefix_5
+{
+	padding-left: 300px;
+}
+
+.container_16 .prefix_6
+{
+	padding-left: 360px;
+}
+
+.container_16 .prefix_7
+{
+	padding-left: 420px;
+}
+
+.container_16 .prefix_9
+{
+	padding-left: 540px;
+}
+
+.container_16 .prefix_10
+{
+	padding-left: 600px;
+}
+
+.container_16 .prefix_11
+{
+	padding-left: 660px;
+}
+
+.container_16 .prefix_13
+{
+	padding-left: 780px;
+}
+
+.container_16 .prefix_14
+{
+	padding-left: 840px;
+}
+
+.container_16 .prefix_15
+{
+	padding-left: 900px;
+}
+
+/* =Suffix Extra Space >> Global
+--------------------------------------------------------------------------------*/
+
+.container_12 .suffix_3,
+.container_16 .suffix_4
+{
+	padding-right: 240px;
+}
+
+.container_12 .suffix_6,
+.container_16 .suffix_8
+{
+	padding-right: 480px;
+}
+
+.container_12 .suffix_9,
+.container_16 .suffix_12
+{
+	padding-right: 720px;
+}
+
+/* =Suffix Extra Space >> 12 Columns
+--------------------------------------------------------------------------------*/
+
+.container_12 .suffix_1
+{
+	padding-right: 80px;
+}
+
+.container_12 .suffix_2
+{
+	padding-right: 160px;
+}
+
+.container_12 .suffix_4
+{
+	padding-right: 320px;
+}
+
+.container_12 .suffix_5
+{
+	padding-right: 400px;
+}
+
+.container_12 .suffix_7
+{
+	padding-right: 560px;
+}
+
+.container_12 .suffix_8
+{
+	padding-right: 640px;
+}
+
+.container_12 .suffix_10
+{
+	padding-right: 800px;
+}
+
+.container_12 .suffix_11
+{
+	padding-right: 880px;
+}
+
+/* =Suffix Extra Space >> 16 Columns
+--------------------------------------------------------------------------------*/
+
+.container_16 .suffix_1
+{
+	padding-right: 60px;
+}
+
+.container_16 .suffix_2
+{
+	padding-right: 120px;
+}
+
+.container_16 .suffix_3
+{
+	padding-right: 180px;
+}
+
+.container_16 .suffix_5
+{
+	padding-right: 300px;
+}
+
+.container_16 .suffix_6
+{
+	padding-right: 360px;
+}
+
+.container_16 .suffix_7
+{
+	padding-right: 420px;
+}
+
+.container_16 .suffix_9
+{
+	padding-right: 540px;
+}
+
+.container_16 .suffix_10
+{
+	padding-right: 600px;
+}
+
+.container_16 .suffix_11
+{
+	padding-right: 660px;
+}
+
+.container_16 .suffix_13
+{
+	padding-right: 780px;
+}
+
+.container_16 .suffix_14
+{
+	padding-right: 840px;
+}
+
+.container_16 .suffix_15
+{
+	padding-right: 900px;
+}
+
+/* =Clear Floated Elements
+--------------------------------------------------------------------------------*/
+
+/* http://sonspring.com/journal/clearing-floats */
+
+html body * span.clear,
+html body * div.clear,
+html body * li.clear,
+html body * dd.clear
+{
+	background: none;
+	border: 0;
+	clear: both;
+	display: block;
+	float: none;
+	font-size: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+/* http://www.positioniseverything.net/easyclearing.html */
+
+.clearfix:after
+{
+	clear: both;
+	content: '.';
+	display: block;
+	visibility: hidden;
+	height: 0;
+}
+
+.clearfix
+{
+	display: inline-block;
+}
+
+* html .clearfix
+{
+	height: 1%;
+}
+
+.clearfix
+{
+	display: block;
+}/* --------- /stylesheets/960/text.css --------- */ 
+/*
+  960 Grid System ~ Text CSS.
+  Learn more ~ http://960.gs/
+
+  Licensed under GPL and MIT.
+*/
+
+/* =Basic HTML
+--------------------------------------------------------------------------------*/
+
+body
+{
+  font: 12px/1.5 Georgia, "Times New Roman", Times, serif;
+}
+
+a:focus
+{
+  outline: 1px dotted invert;
+}
+
+hr
+{
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px 0 0;
+  clear: both;
+  height: 0;
+}
+
+/* =Headings
+--------------------------------------------------------------------------------*/
+
+h1
+{
+  font-size: 25px;
+}
+
+h2
+{
+  font-size: 23px;
+}
+
+h3
+{
+  font-size: 21px;
+}
+
+h4
+{
+  font-size: 19px;
+}
+
+h5
+{
+  font-size: 17px;
+}
+
+h6
+{
+  font-size: 15px;
+}
+
+/* =Spacing
+--------------------------------------------------------------------------------*/
+
+ol
+{
+  list-style: decimal;
+}
+
+ul
+{
+  list-style: square;
+}
+
+li
+{
+  margin-left: 30px;
+}
+
+p,
+dl,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+pre,
+table,
+address,
+fieldset
+{
+  margin-bottom: 20px;
+}/* --------- /stylesheets/admin/will_paginate.css --------- */ 
+.pagination {
+  padding: 3px;
+  margin: 3px;
+}
+.pagination a {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #aaaadd;
+  text-decoration: none;
+  color: #000099;
+}
+.pagination a:hover, .pagination a:active {
+  border: 1px solid #239BC7;
+  color: #000;
+}
+.pagination span.current {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #239BC7;
+  font-weight: bold;
+  background-color: #239BC7;
+  color: #FFF;
+}
+.pagination span.disabled {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #eee;
+  color: #ddd;
+}
+
+
+
+/* Todo o bloco de paginação. */
+.pages {
+  border-top: 1px solid #999999;
+  font-size: 9pt;
+  margin-top: 10px;
+  padding: 8px 0;
+}
+
+/* Todos os links, incluindo <<, >> e páginas. */
+.pages a {
+  background: #FFFFFF none repeat scroll 0%;
+  border: 1px solid #DDDDDD;
+  padding: 2px 6px;
+  text-decoration: none;
+}
+
+.pages a:hover {
+  background: #67C3E4 none repeat scroll 0%;
+  border-color: #239BC7;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* Botões >> e <<. */
+.next a, .prev a {
+  font-weight: bold;
+  border: 2px solid #DDDDDD;
+}
+
+/* Página atua. */
+.current {
+  padding: 2px 6px;
+  font-weight: bold;
+  font-size: 120%;
+  color: #239BC7;
+}
+
+/* Janela e quantidade de itens: (X-Y de Z). */
+.pages .overview {
+  color: #239BC7;
+}/* --------- /stylesheets/admin/crud.css --------- */ 
+/* CRUD
+------------------------------------------------------------------------------
+*/
+
+table.crud {
+  width: 100%;
+}
+
+table.crud th {
+  text-align: left;
+  background-color: #F5F5F5;
+  padding: 2px 4px 2px 0;
+}
+
+table.crud td {
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #EAEAEA;
+}
+
+a.incluir {
+  font-weight: bold;
+  color: green;
+  padding: 0 0 0 18px;
+  background: transparent url(/images/icones/add.png) no-repeat 0 0;
+}
+
+a.remover {
+  font-weight: bold;
+  color: #E9584C;
+  padding: 0 0 0 18px;
+  background: transparent url(/images/icones/delete.png) no-repeat 0 0;
+}
+
+.procurar {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-color: #F5F5F5;
+  margin: 0 0 20px;
+  padding: 10px;
+}
+
+.procurar fieldset {
+  margin: 0;
+}
+
+.procurar li {
+  float: left;
+  display: inline;
+  margin-right: 10px;
+}/* --------- /stylesheets/admin/forms.css --------- */ 
+/* Formulário
+------------------------------------------------------------------------------
+*/
+
+fieldset,
+fieldset legend {
+  margin-bottom: 10px;
+}
+
+fieldset legend {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+fieldset ol {
+  margin: 0;
+}
+
+fieldset ol li {
+  list-style: none;
+  margin: 0 0 10px;
+}
+fieldset ol li.small { 
+  float:left;
+  width: 100px;
+}
+fieldset ol li.big { 
+  font-size:24px;
+}
+fieldset ol li.big input { 
+  font-size:24px;
+} 
+fieldset label,
+fieldset ol li label {
+  display: block;
+}
+fieldset label.checkbox,
+fieldset ol li label.checkbox {
+  float:left;
+  margin-right:10px;
+}
+
+p.form_button {
+  text-align:right;
+  margin:0 100px 0;
+  font-size:14px;
+}
+p.form_button input {
+  background-color:#5BBEFF;
+  color:white;
+  font-weight:bold;
+  font-size:14px;
+}
+
+fieldset .dica {
+  font-size: 12px;
+  color: #999999;
+  margin: 0;
+}
+.green,
+.green input {
+  color:green;
+}/* --------- /stylesheets/admin/menu.css --------- */ 
+div#menu_admin {
+  padding: 10px 0 6px;
+  font-family:Verdana,Arial,sans-serif;
+}
+.dropdown,
+ul.dropdown li,
+ul.dropdown li ul {
+  margin: 0;
+}
+
+ul.dropdown {
+  margin:0 0 0;
+}
+
+ul.dropdown li {
+  list-style: none;
+  display: inline;
+  position: relative;
+  margin-right: 20px;
+  line-height: 20px;
+  padding:6px 10px 10px 10px;
+}
+
+ul.dropdown li.selected { 
+  background-color: white;
+  -moz-border-radius-topleft:8px;
+  -moz-border-radius-topright:8px;
+}
+
+ul.dropdown li.selected a, 
+ul.dropdown li.selected a:visited {
+  font-weight:bold;
+  color: black;
+}
+ul.dropdown li a,
+ul.dropdown li a:visited {
+  color: gray;
+}
+
+ul.dropdown li a:hover {
+  /* background-color: #D5C88C; */
+}
+
+ul.dropdown li a img.icon {
+  position:relative;
+  top:3px;
+}
+
+ul.dropdown a.dir {
+  background: transparent url(/images/icones/dropdown_preto.png) no-repeat scroll right 8px;
+  padding: 5px 10px 5px 5px;
+}
+
+ul.dropdown li ul {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  width: 200px;
+  background-color: #D5C88C;
+  border: 1px solid #6E643E;
+}
+
+ul.dropdown li ul li {
+  display: block;
+  margin: 0;
+}
+
+ul.dropdown li ul li.secao {
+  padding: 5px;
+  font-weight: bold;
+}
+
+ul.dropdown li ul li a,
+ul.dropdown li ul li a:visited {
+  color: black;
+  display: block;
+  padding: 5px;
+  background: none;
+}
+
+ul.dropdown li ul li a:hover {
+  background-color: #6E643E;
+  color: white;
+}/* --------- /stylesheets/admin/default.css --------- */ 
+/* Tags
+------------------------------------------------------------------------------
+*/
+
+body {
+  font-family:Verdana,Arial,sans-serif;
+}
+
+a, a:visited {
+  color: blue;
+}
+
+h1 {
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 20px;
+  letter-spacing: -1px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+/* Cabeçalho
+------------------------------------------------------------------------------
+*/
+
+#cabecalho {
+  position: relative;
+  background-color: #19A4FF;
+  background-image:url(/images/fundos/bg_degrade_1px_black.png);
+  height: 85px;
+  color: white;
+}
+
+#cabecalho h1 {
+  padding: 20px 0 0 0;
+}
+
+#links_administrativos {
+  background-color: #5BBEFF;
+  padding: 10px;
+  margin: 22px 0 0 0;
+  text-align: center;
+  width: 160px;
+}
+
+#links_administrativos a,
+#links_administrativos a:visited {
+  color: white;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+#links_administrativos a:hover {
+  text-decoration: underline;
+}
+
+#menu {
+  background-color: #FFE69F;
+  margin-bottom: 20px;
+}
+
+#menu a,
+#menu a:visited {
+  text-decoration: none;
+}
+
+/* Mensagem sobre erro de validação.
+------------------------------------------------------------------------------
+*/
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid #D72A2A;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #FFE9E9;
+}
+
+#errorExplanation h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #D72A2A;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#errorExplanation ul {
+  margin: 0;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+/* Mensagens de sucesso, aviso e erro.
+------------------------------------------------------------------------------
+*/
+
+.notice, .error, .warning, .info {
+  line-height: 1.5em;
+  margin: 0 auto 5px;
+}
+
+.notice {
+  border: 2px solid #9c9;
+  background: #E2F9E3;
+  color: #060;
+}
+
+.error {
+  border: 2px solid #c68484;
+  background: #FCC;
+  color: #c00;
+}
+
+.warning {
+  border: 2px solid #dd0;
+  background: #FFC;
+  color: #000;
+}
+
+.info {
+  border: 2px solid #82c2d4;
+  background: #EBF5F8;
+  color: #000;
+}
+
+#flash_message p {
+  padding: 10px;
+  margin: 0;
+}
+
+#flash_message {
+  margin-bottom: 20px;
+}
+
+.flash {
+  margin: 0 0 2px 0; padding: 0;
+}
+
+/* Bordas arredondadas
+------------------------------------------------------------------------------
+*/
+
+#links_administrativos {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}

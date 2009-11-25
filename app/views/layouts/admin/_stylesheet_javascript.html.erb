@@ -1,0 +1,16 @@
+<% bundle :name => "admin_galinha_bundle", :compress => (RAILS_ENV=='production') do -%>
+<%= stylesheet_link_tag "960/reset.css" %>
+<%= stylesheet_link_tag "960/960.css" %>
+<%= stylesheet_link_tag "960/text.css" %>
+<%#= stylesheet_link_tag "jquery/custom-theme/jquery-ui-1.7.2.custom.css" %>
+
+<%= stylesheet_link_tag "admin/will_paginate.css" %>
+<%= stylesheet_link_tag "admin/crud.css" %>
+<%= stylesheet_link_tag "admin/forms.css" %>
+<%= stylesheet_link_tag "admin/menu.css" %>
+<%= stylesheet_link_tag "admin/default.css" %>
+
+<%#= javascript_include_tag :defaults %>
+<%#= javascript_include_tag "admin/jquery-1.3.2.min.js" %>
+<%#= javascript_include_tag "admin/jquery-ui-1.7.2.custom.min.js" %>
+<% end -%>

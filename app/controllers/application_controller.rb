@@ -7,4 +7,13 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  filter_parameter_logging :senha,
+                           :senha_confirmation,
+                           :senha_digitada,
+                           :senha_digitada_confirmation,
+                           :cartao_de_credito,
+                           :chave_privada
+
+   # Oferece autenticação, login, logout, etc.
+   include Galinha::Autenticacao
 end

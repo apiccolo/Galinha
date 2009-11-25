@@ -1,0 +1,19 @@
+<div class="grid_7 alpha" id="player">
+  <div id="video_youtube">
+    <%= render :partial => controller.action_name %>
+  </div>
+  <div id="video_icones">
+    <p>
+      <a href="/videos/galinha_pintadinha"><img src="/images/decoracao/bot_galinha.png" alt="icone galinha" /></a>
+      <a href="/videos/pintinho_amarelinho"><img src="/images/decoracao/bot_pintinho.png" alt="icone pintinho" /></a>
+      <a href="/videos/baratinha"><img src="/images/decoracao/bot_barata.png" alt="icone barata" /></a>
+    </p>
+    <p id="trailer">
+      <a href="/videos/trailer">Trailer</a>  &nbsp;|&nbsp;  
+      <a href="/videos/karaoke">Exemplo Karaokê</a>
+    </p>
+  </div>
+  <div id="count_youtube">Visto mais de <b>30 milhões</b> de vezes!!!</div>
+</div>
+<%= render :partial => "barra_lateral" %>
+<%= render :partial => "depoimentos_saibamais" %>

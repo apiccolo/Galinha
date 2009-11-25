@@ -29,11 +29,24 @@ ActionController::Routing::Routes.draw do |map|
   #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
   #     admin.resources :products
   #   end
+  
+  map.admin "admin", :controller => "admin/painel", :action => "index"
+  map.admin_login "admin/login", :controller => "admin/acesso", :action => "login"
+  map.admin_logout "admin/logout", :controller => "admin/acesso", :action => "logout"
+  map.namespace :admin do |admin|
+    admin.resources :administradores
+    admin.resources :produtos
+    admin.resources :pedidos
+    admin.resources :descontos
+    admin.resources :configuracoes
+    admin.resources :automacoes
+  end
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
+  map.root :controller => 'comprar'
 
   # See how all your routes lay out with "rake routes"
+  map.connect '/videos/:action', :controller => 'videos'
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should

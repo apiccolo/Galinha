@@ -1,5 +1,4 @@
 require "bcrypt"
-
 class Administrador < ActiveRecord::Base
   validates_presence_of :nome, :email
 

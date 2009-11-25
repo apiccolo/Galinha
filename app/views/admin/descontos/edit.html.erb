@@ -1,0 +1,12 @@
+<h1>Editing desconto</h1>
+
+<% form_for(@desconto) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @desconto %> |
+<%= link_to 'Back', descontos_path %>

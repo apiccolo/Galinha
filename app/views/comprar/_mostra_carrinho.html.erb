@@ -1,0 +1,47 @@
+<div class="grid_10 alpha omega">
+  <img src="/images/decoracao/carrinho.png" alt="carrinho" />
+<% if @carrinho and (@carrinho.size > 0) -%>
+<table class="crud">
+  <tr>
+    <!-- th>id</th -->
+    <th>qtd</th>
+    <th>nome</th>
+    <th>presente</th>
+    <th>preco</th>
+    <th></th>
+  </tr>
+<% total_qtd = total_preco = 0 %>
+<% @carrinho.each do |c| %>
+<% prod = Produto.find(c.produto_id) %>
+  <tr>
+    <!-- td><%= prod.id %></td -->
+    <td><%= text_field_tag "qtd_produto_#{prod.id}", c.qtd, :size => 3 %></td>
+    <td><%= prod.nome %></td>
+    <td>
+      <%= check_box_tag "presente_produto_#{prod.id}", 1, c.presente, :onclick => "embrulhar(#{prod.id})" %>
+      <abbr title="Acréscimo de <%= number_to_currency(prod.plus_presente) %>/item">+...?</abbr>
+    </td>
+    <td><%= number_to_currency(calcular_preco(c, prod)) %></td>
+    <td><%= link_to "[x]", :action => "retirar", :produto_id => prod.id %></td>
+  </tr>
+<% total_qtd += c.qtd %>
+<% total_preco += calcular_preco(c, prod) %>
+<% end %>
+  <tr id="total">
+    <!--td></td-->
+    <td class="green"><%= total_qtd %> itens</td>
+    <td></td>
+    <td></td>
+    <td class="green"><%= number_to_currency(total_preco) %></td>
+    <td></td>    
+  </tr>
+</table>
+<% else -%>
+<p>Seu carrinho está vazio.</p>
+<% end -%>
+</div>
+<script type="text/javascript" charset="utf-8">
+function embrulhar(prod_id) {
+  location.href='/comprar/embrulhar?produto_id='+prod_id 
+}
+</script>

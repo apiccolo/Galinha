@@ -1,0 +1,25 @@
+/* HTML tags ===============================================================*/
+body {
+  background-image: url("/images/fundos/bg_pintadinho.gif");
+  font-family:Verdana,Arial,sans-serif;
+  color:#333;
+  font-size:12px;
+  font-weight:normal;
+  font-style:none;
+}
+a { 
+  color: #009BCA; 
+  text-decoration: none; 
+}
+a:hover { 
+  text-decoration: underline; 
+}
+p {
+  font-family:Verdana,Arial,sans-serif;
+  font-size:12px;
+  font-weight:normal;
+  font-style:none;
+}
+.negrito {
+  font-weight:bold;
+}

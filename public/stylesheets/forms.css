@@ -1,0 +1,104 @@
+/* Formulários =============================================================*/
+
+form fieldset {
+  border: 1px solid white;
+  padding: 10px 10px 0 10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+form fieldset.sem_bordas {
+  border: 0;
+  padding: 0 11px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+}
+
+form fieldset legend {
+  font-size: 24px;
+  font-family: "Gill Sans", "Helvetica", "Arial", sans-serif;
+  padding: 0 5px;
+  font-weight: bold;
+  color: #73BE1E;
+  letter-spacing: -1px;
+}
+
+form fieldset ol {
+  margin: 0;
+}
+
+form fieldset ol li {
+  list-style: none;
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  line-height: 26px;
+}
+
+form fieldset ol li label {
+  display: block;
+  margin: 1px 0 3px 1px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+form label.obrigatorio,
+form span.obrigatorio,
+form p.obrigatorio {
+  font-weight: bold;
+}
+
+form .dica {
+  color: #999999;
+  margin: 2px 0 0 1px;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+input.text_field,
+input.password_field,
+textarea,
+select {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-color: #ABADB3 #E3E9EF #E3E9EF #ABADB3;
+  border-style: solid;
+  border-width: 1px;
+  font-family: inherit;
+  color: inherit;
+  padding: 5px;
+  font-size: 12px;
+}
+
+input.check_box {
+  margin: 0;
+  vertical-align: middle;
+}
+
+select {
+  padding: 5px 5px 5px 2px;
+}
+
+textarea {
+  font-family: inherit;
+  font-size: 12px;
+}
+
+select#usuario_cidade_id {
+  width: 385px;
+}
+
+/* Formulários com campos à esquerda =========================================*/
+
+form fieldset.campos_na_esquerda ol li label {
+  display: block;
+  float: left;
+  width: 170px;
+  margin: 0 10px 0 0;
+  font-size: 12px;
+  line-height: 24px;
+  text-align: right;
+}
+
+form fieldset.campos_na_esquerda ol li .dica {
+  margin: 0 0 0 181px;
+}

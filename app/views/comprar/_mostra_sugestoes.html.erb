@@ -1,0 +1,10 @@
+<div class="grid_10 alpha omega" id="sugestoes">
+  <p>Sugestões</p>
+  <% @produtos.each do |produto| %>
+  <div id="produto_<%= produto.id %>" class="produtos">
+    <p><%= produto.id %>. <%= produto.nome %><br />
+       Por apenas R$ <%= number_to_currency(produto.preco) %></p>
+    <p><%= link_to "Incluir no carrinho", :action => "incluir", :produto_id => produto.id %></p>
+  </div>
+  <% end %>
+</div>

@@ -3,16 +3,20 @@
 */
 
 body {
-  background-color: #84C82B;
+  background-color: #5BBEFF;
 }
 
 #login {
   padding: 20px;
   margin: 50px 0 0 0;
   background-color: #F2F2F2;
-  border: 10px solid #68A020;
+  border: 10px solid #19A4FF;
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
+}
+#login h1 {
+  font-family:Verdana,Arial,sans-serif;
+  text-align:center;
 }
 
 fieldset { margin: 0; }

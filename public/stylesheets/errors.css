@@ -1,0 +1,135 @@
+/* Mensagem sobre erro de validação ========================================*/
+
+.fieldWithErrors input,
+.fieldWithErrors textarea,
+.fieldWithErrors select {
+  background-color: red;
+  border: 1px solid #D72A2A;
+  background-color: #FFE9E9;
+}
+
+#errorExplanation {
+  border: 2px solid #D72A2A;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #FFE9E9;
+  -moz-border-radius: 5px;
+}
+
+#errorExplanation h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #D72A2A;
+  font-weight: normal;
+  padding: 0;
+}
+
+#errorExplanation p {
+  margin-bottom: 10px;
+}
+
+#errorExplanation ul {
+  margin: 0;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+  margin-left: 30px;
+  margin-bottom: 0;
+}
+
+#errorExplanation ul li:first-letter {
+  text-transform: uppercase;
+}
+
+#message_block .notice,
+#message_block .error,
+#message_block .warning,
+#message_block .info {
+  padding: 10px;
+  margin: 0;
+}
+
+#message_block ul li {
+  margin: 0 0 0 15px;
+}
+
+#message_block .notice {
+  border: 2px solid #9c9;
+  background: #E2F9E3;
+  color: #060;
+}
+
+#message_block .error {
+  border: 2px solid #c68484;
+  background: #FCC;
+  color: #c00;
+}
+
+#message_block .warning {
+  border: 2px solid #dd0;
+  background: #FFC;
+  color: #000;
+}
+
+#message_block .info {
+  border: 2px solid #82c2d4;
+  background: #EBF5F8;
+  color: #000;
+}
+
+/* Mensagens de sucesso, aviso e erro ======================================*/
+
+#flash_message {
+  position: absolute;
+  top: 0;
+  left: 217px;
+  width: 550px;
+  text-align: center;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+
+#flash_message p {
+  font-size: 12px;
+  padding: 10px;
+  margin: 0;
+}
+
+#flash_message a {
+  float: right;
+  font-weight: bold;
+}
+
+#flash_message .notice,
+#flash_message .error,
+#flash_message .warning,
+#flash_message .info {
+  line-height: 1.5em;
+  margin: 0 auto 5px;
+}
+
+#flash_message .notice {
+  border: 2px solid #9c9;
+  background: #E2F9E3;
+  color: #060;
+}
+
+#flash_message .error {
+  border: 2px solid #c68484;
+  background: #FCC;
+  color: #c00;
+}
+
+#flash_message .warning {
+  border: 2px solid #dd0;
+  background: #FFC;
+  color: #000;
+}
+
+#flash_message .info {
+  border: 2px solid #82c2d4;
+  background: #EBF5F8;
+  color: #000;
+}

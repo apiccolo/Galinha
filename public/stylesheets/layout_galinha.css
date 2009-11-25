@@ -1,0 +1,270 @@
+/* Testeira
+-----------------------------------------------------------------------------
+*/
+#header, #content, #footer {
+  background-color:#eee;
+  color:#333;
+}
+#header {
+  background-image: url(/images/fundos/testeira_icones_dvd1.png);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  margin-top:10px;
+  padding-top:105px;
+}
+/* extra... */
+#header #fita_natal {
+  position:absolute;
+  top:50px;
+  left:755px;
+}
+#header #header_content {
+  background-color: #dae02b;
+}
+#header #header_content #link2home {
+  margin:0 0 0 30px;
+  width:500px;
+}
+#header #header_content h2#usp {
+  color: #613E7E;
+  float:left;
+  font-size: 1.65em;
+  font-weight:normal;
+  line-height:1.1em;
+  margin:45px 0 0;
+}
+
+
+/* Conteúdo
+-----------------------------------------------------------------------------
+*/
+
+#content {
+  background-image: url(/images/fundos/bg_degrade_1px.jpg);
+  background-repeat: repeat-x;
+  background-color: #fff;
+}
+#player {
+  background-image: url(/images/decoracao/box_player.png);
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+#player #video_youtube {
+  width:425px;
+  margin: 25px auto 35px;
+}
+#player #video_icones {
+  width:500px;
+  margin: -20px auto;
+  text-align:center;
+}
+#player #video_icones p {
+  margin:0;
+}
+#player #trailer {
+  width:500px;
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: center;
+}
+#player #count_youtube {
+  font-size: 1.5em; 
+  text-align: center;
+  margin-top:50px;
+}
+#vantagens p#musicas {
+  margin:0 30px 5px;
+}
+#barra_selos {
+  margin-top:10px;
+}
+#barra_selos img{
+  padding: 0 5px 0 5px;
+}
+#copyhome {
+  /* background-image: url(images/bg_degrade_1px.jpg);
+  background-repeat: repeat-x; */
+  background-color: #fff;
+}
+#copyhome #depoimentos{
+  margin:20px 0 0 45px;
+}
+#copyhome #depoimentos p{
+  font-family:georgia,palatino,'times new roman',serif;
+  font-size:1.2em;
+  font-style:italic;
+  color: #333333;
+  margin:0 0 5px 0;
+}
+#copyhome #saibamais{
+  margin:20px 0 0 45px;
+}
+#copyhome h3{
+  font-family:"Verdana";
+  font-size:1.8em;
+}
+#copyhome #saibamais p{
+  font-family:georgia,palatino,'times new roman',serif;
+  font-size:1.2em;
+  font-style:italic;
+  color: #333333;
+} 
+#vendas #compra h3 {
+  font-size:2em;
+  font-weight:bold;
+}
+#vendas ul#vantagens, 
+#vendas ul#vantagens li {
+  list-style:none;
+  text-transform:capitalize;
+  font-weight:bold;
+  font-size: 1.15em;
+  margin-left:0;
+}
+#vendas ul#vantagens li.menor {
+  font-size: 0.9em;
+  text-transform:none;
+  font-weight:normal;
+  color:#099;
+}
+#vendas div#chamada_para_venda {
+  position: relative;
+  margin-top: 25px;
+}
+#vendas div#chamada_para_venda p#produto {
+  width: 240px;
+  font-weight:normal;
+  position:absolute;
+  top: 20px;
+  left: 200px;
+  font-size:0.9em;
+}
+#vendas div#chamada_para_venda p#produto span#preco {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+#vendas div#chamada_para_venda #dvd_com_botao_chamada {
+  font-size: 1.6em;
+  color: #FFFFFF;
+  width:150px;
+  text-align:center;
+  position:relative;
+  left: 210px;
+  top: -100px;
+  padding-left: 40px;
+}
+#vendas div#chamada_para_venda p#dvd_com_botao_chamada a,
+#vendas div#chamada_para_venda p#dvd_com_botao_chamada a:hover,
+#vendas div#chamada_para_venda p#dvd_com_botao_chamada a:visited {
+  color:#fff;
+  text-decoration:none;
+}
+#compra {
+  margin-left:40px;
+}
+#compra p{
+  font-size:1.4em;
+}
+#compra li{
+  font-size:1.1em;
+  margin-bottom:0.2em;
+}
+#dados_pessoais {
+  font-size:1em;
+}
+.azul_claro {
+  color:#0786E3;
+}
+.vermelho {
+  color:#E64101;
+}
+.hint {
+  font-size:0.8em;
+}
+.medio {
+  font-size:1.1em;
+}
+/*** form de compra ****/
+fieldset#dados_pessoais ol li,
+fieldset#produto ol li,
+fieldset#entrega ol li {
+  list-style:none;
+  margin-left:0;
+}
+li.preco_total {
+  padding:2px;
+}
+li.preco_total,
+li.preco_total label {
+  color:#000;
+}
+
+/*** LETRAS DAS MUSICAS ***/
+.letras {
+  margin-left:40px;
+}
+.letras p {
+  font-size: 1.1em;
+  line-height: 1.2em;
+  margin-bottom: 25px;
+}
+
+.letras h1 {
+    font-size: 2.4em;
+}
+.letras #avanco {
+  padding-left: 30px;
+}
+
+.lateral_letras p {
+  font-size: 1em;
+  line-height: 1em;
+}
+
+/*** AVISO ****/
+p.aviso {
+  border-top: 1px solid #dd0;
+  border-bottom: 1px solid #dd0;
+  background: #ffc url(/images/flashmessages/warning.png) no-repeat 5px center;
+  color: #000;
+  padding:3px 3px 3px 30px;
+  margin: 20px 0px;
+}
+
+/*** COMPRAR ****/
+h3#call2compra {
+  color:#E64101;
+  font-size:2em;
+  font-weight:bold;
+  
+}
+
+
+/* Rodapé
+-----------------------------------------------------------------------------
+*/
+
+#rodape {
+  background-color:#164A69;
+  height:60px;
+  padding: 10px 0 0;
+  text-align: center;
+}
+#rodape ul {
+  list-style: none;
+  text-align: center;
+  width: 460px;
+  margin: 0 auto;
+}
+
+#rodape ul li {
+  display: inline;
+  line-height: 20px;
+  font-size: 12px;
+  margin: 0 5px;
+  padding: 0;
+}
+
+#rodape p {
+  font-size: 11px;
+}

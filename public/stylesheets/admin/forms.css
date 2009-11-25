@@ -20,14 +20,44 @@ fieldset ol li {
   list-style: none;
   margin: 0 0 10px;
 }
-
+fieldset ol li.small { 
+  float:left;
+  width: 100px;
+}
+fieldset ol li.big { 
+  font-size:24px;
+}
+fieldset ol li.big input { 
+  font-size:24px;
+} 
 fieldset label,
 fieldset ol li label {
   display: block;
+}
+fieldset label.checkbox,
+fieldset ol li label.checkbox {
+  float:left;
+  margin-right:10px;
+}
+
+p.form_button {
+  text-align:right;
+  margin:0 100px 0;
+  font-size:14px;
+}
+p.form_button input {
+  background-color:#5BBEFF;
+  color:white;
+  font-weight:bold;
+  font-size:14px;
 }
 
 fieldset .dica {
   font-size: 12px;
   color: #999999;
   margin: 0;
+}
+.green,
+.green input {
+  color:green;
 }

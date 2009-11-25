@@ -3,21 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <link rel="shortcut icon" href="/images/favico.png" />
-  <%= display_meta_tags :site => "Emotioncard", :separator => "-" %>
-  <%= render :partial => "layouts/stylesheets_e_javascripts_com_bundle" %>
-  <%= render :partial => "layouts/tag_comercial_do_terra" %>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <%= display_meta_tags :site => "Site Oficial da Galinha Pintadinha", :separator => "-" %>
+  <%= render :partial => "layouts/essential/stylesheet_javascript" %>
 </head>
-<body class="default <%= controller.controller_path.gsub("/", "_").to_s %> <%= controller.controller_path.gsub("/", "_").to_s %>_<%= action_name %><% if request.ssl? %> ssl<% end %>">
-  <%= render :partial => "layouts/testeira" %>
-
-  <div id="conteudo" class="container_16 clearfix">
-    <%= flash_message_com_link_para_fechar %>
-    <div class="grid_16">
+<body>
+  <div id="conteudo" class="container_12 clearfix">
+    <%= flash_message_mais_fechar %>
+    <%= render :partial => "layouts/essential/testeira" %>
+    <div class="grid_12" id="content">
       <%= yield %>
     </div>
-  </div> <!-- conteudo -->
-
-  <%= render :partial => "layouts/rodape" %>
+    <%= render :partial => "layouts/essential/rodape" %>
+  </div><!-- conteudo -->
 </body>
 </html>

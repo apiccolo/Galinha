@@ -2,6 +2,10 @@
 ------------------------------------------------------------------------------
 */
 
+body {
+  font-family:Verdana,Arial,sans-serif;
+}
+
 a, a:visited {
   color: blue;
 }
@@ -26,7 +30,8 @@ h3 {
 
 #cabecalho {
   position: relative;
-  background-color: #CC0000;
+  background-color: #19A4FF;
+  background-image:url(/images/fundos/bg_degrade_1px_black.png);
   height: 85px;
   color: white;
 }
@@ -36,7 +41,7 @@ h3 {
 }
 
 #links_administrativos {
-  background-color: #800000;
+  background-color: #5BBEFF;
   padding: 10px;
   margin: 22px 0 0 0;
   text-align: center;
@@ -55,7 +60,7 @@ h3 {
 }
 
 #menu {
-  background-color: #EAE3C5;
+  background-color: #FFE69F;
   margin-bottom: 20px;
 }
 
