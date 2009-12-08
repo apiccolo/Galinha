@@ -1,0 +1,83 @@
+<div class="grid_10 prefix_1 suffix_1 alpha omega">
+<h2>Meu pedido no site da Galinha Pintadinha!</h2>
+<p>Veja abaixo as principais informações referentes ao seu pedido.</p>
+
+<%= flash_message -%>
+<%= error_messages_for 'pedido' %>
+
+<% form_tag '/comprar/seu_pedido', :id => 'form_seu_pedido' do %>
+<%= hidden_field_tag "pid", params[:pid] %>
+<%= hidden_field_tag "pbase", params[:pbase] %>
+<%= hidden_field_tag "chkpid", params[:chkpid] %>
+<%= hidden_field_tag "md5", params[:md5] %>
+<% end %>
+
+<fieldset id="seu_pedido">
+  <legend>Pedido n. <%= @pedido.id.to_s -%></legend>
+  <ol>
+    <% for p in @pedido.produtos_quantidades -%>
+    <li style="float:left;display:inline;width:170px;">
+      <%= image_tag(p.produto.imagem_pequena) %>
+    </li>
+    <li>Produto: <b><%= p.produto.nome %></b></li>
+    <li>Quantidade: <b><%= "#{p.qtd} "+pluralize(p.qtd, "unidade") -%></b> <%= " (para presente!)" if p.presente %></li>
+    <% end -%>
+    <li>Total: 
+      <b><%= number_to_currency(@pedido.total, 
+                                :precision => 2, 
+                                :unit => 'R$ ', 
+                                :separator => ",", 
+                                :format => "%u %n") %></b>
+    </li>
+    <li>Status: <b><%= @pedido.status.humanize -%></b></li>
+    <li>Última atualização: <b><%= @pedido.updated_at.strftime('%A, %d de %B de %Y às %H:%M') -%></b></li>
+  </ol>
+</fieldset>
+
+<div class="grid_5 alpha">
+<fieldset id="pedido_entrega">
+  <legend>Dados de entrega</legend>
+  <ol>
+    <li>Para: <b><%= para_label(@pedido) -%></b></li>
+    <li>Endereço: <b><%= @pedido.entrega_endereco -%></b></li>
+    <li>Número: <b><%= @pedido.entrega_numero -%></b></li>
+    <li>Complemento: <b><%= @pedido.entrega_complemento -%></b></li>
+    <li>Bairro: <b><%= @pedido.entrega_bairro -%></b></li>
+    <li>CEP: <b><%= @pedido.entrega_cep -%></b></li>
+    <li>Cidade: <b><%= @pedido.entrega_cidade -%></b></li>
+    <li>Estado: <b><%= @pedido.entrega_estado -%></b></li>
+  </ol>
+</fieldset>
+</div>
+
+<% if @pedido.aguardando_pagamento? -%>
+<div class="grid_4 omega" style="padding:10px;background-color:#ffd;">
+  <p><b>Ainda aguardamos o pagamento de seu pedido...</b></p>
+  <p>Caso tenha ocorrido algum problema com o pagamento no UOL PagSeguro,
+     clique no botão abaixo e conclua agora sua compra</p>
+  <%= render :partial => "form_pagseguro",
+             :locals => { 
+               :pedido => @pedido,
+               :change_page => false
+             } %>
+  <!--p class="formHint" style="font-size:10px;">Mas <b>atenção</b>: clique no link acima do UOL PagSeguro apenas em caso de erro ao tentar efetuar o pagamento. Por favor, não refaça o processo de pagamento caso você já tenha gerado um boleto ou deseje mudar a forma de pagamento. Em caso de dúvida, <%= link_to "fale conosco", "/fale_conosco" -%>.</p-->
+</div>
+<% end -%>
+
+<div class="grid_8">
+<p>Caso haja algum erro, reclamação, dúvida, crítica etc. ou deseje cancelar seu pedido, entre em contato com <%= mail_to("contato@galinhapintadinha.com.br", "nosso atendimento") -%> ou use nossa página de <%= link_to "Fale Conosco", "/fale_conosco" -%>. <br />
+  Lembre-se, por favor, de mencionar o número de seu pedido.</p>
+</div>
+
+</div>
+
+<style type="text/css" media="screen">
+fieldset#seu_pedido ol li,
+fieldset#pedido_entrega ol li {
+  list-style:none;
+}
+</style>
+
+<script type="text/javascript">
+//new Validation('form_seu_pedido', {useTitles:true}); // OR new Validation(document.forms[0]);
+</script>

@@ -1,0 +1,173 @@
+<div>
+
+<% form_tag "/admin/automacao/mudar_status" do %>
+<fieldset>
+  <legend>Dados</legend>
+<% 
+i = 0 
+table = Array.new 
+pedidos = 0
+if @file_content and !@file_content.blank? 
+  @file_content.each_line { |j|
+    i += 1; 
+    table << j.split("\t");
+  } 
+%>
+<p><%= i %> linhas de dados.</p>
+<% end -%>
+<!-- TABELA COM DUAS COLUNAS: 
+     + esquerda) Dados do Pedido vindos do UOL PagSeguro
+     + direita ) Dados dos Pedidos encontrados no SysGalinha
+     => Confrontar essas duas infos para ver se há esquecimentos.
+-->
+  <table id="result" border="0" width="98%" cellpadding="0" cellspacing="2" align="center">
+    <tr>
+      <th>UOL PagSeguro</th>
+      <th>Galinha Pintadinha</th>
+    </tr>
+<% 
+first_row = table[0] #primeira linha = nome dos campos
+1.upto(table.length.to_i-1) do |a|
+    row = table[a] 
+    status = row[5]
+    ref_transacao = row[14] -%>
+  <tr>
+    <!-- UOLPagSeguro -->
+    <td valign="top" class="<%= status.downcase if status and not status.blank? %>">
+      <p><%= link_to_function "[+]", "$('pag_#{ref_transacao}').toggle()" %>
+         Pedido <%= ref_transacao %>: <span class="sta uol_status"><%= status %></span>
+         <%= image_tag("icons/tick.png") if status=="Aprovado" or status=="Completo" %></p>
+      <ul id="pag_<%= ref_transacao %>" style="display:none">
+        <% 0.upto(row.length.to_i-1) do |b| -%>
+          <% dado = row[b] -%>
+          <li>[<%= first_row[b] %>] = <%= dado %></li>
+        <% end -%>
+      </ul>
+    </td>
+    <!-- Galinha -->
+    <% if (ref_transacao and not ref_transacao.blank?) -%>
+<% 
+begin
+  pedido = Pedido.find(ref_transacao) 
+rescue ActiveRecord::RecordNotFound
+  pedido = nil
+end
+-%>
+    <% if pedido -%>
+      <td valign="top" class="<%= "atencao" if prestar_atencao(status, pedido) %>">
+        <p><%= link_to_function "[+]", "$('sysgalinha_#{pedido.id}').toggle()" %>
+           Pedido <%= pedido.id.to_s %>: <span class="sta <%= pedido.status %>"><%= pedido.status.humanize %></span>
+           <% if prestar_atencao(status, pedido) %>
+             <%= image_tag("icons/cancel.png") %><br />
+             <%= link_to_remote "Mudar pedido <b>#{pedido.id}</b> para <b>Processando envio</b>?",
+                                { :url => { 
+                                    :action => "confirmar_pagamento",
+                                    :id => pedido.id
+                                  }
+                                },
+                                {
+                                  :class => "mudar_status",
+                                  :id => "link2_pedido_#{pedido.id}" 
+                                } -%>
+            <% end %>
+           </p>
+        <ul id="sysgalinha_<%= pedido.id.to_s %>" style="display:none;">
+          <% pedido.attributes.each do |k, v| -%>
+            <% if v and not v.blank? -%>
+            <li class="<%= k %>"><%= "[#{k}] = #{v}" %></li>
+            <% end -%>
+          <% end -%>
+        </ul>
+      </td>
+    <% pedidos += 1 -%>
+    <% else %>
+      <td class="erro">
+        <p>ERRO: Pedido não encontrado.</p>
+      </td>
+    <% end -%>
+    <% end -%><!-- Galinha -->
+  </tr>
+<% end -%>
+  </table>
+  <p><%= pedidos.to_s %> pedidos identificados.
+</fieldset>
+<% end %>
+</div>
+
+<style type="text/css" media="screen">
+body {
+  font-family:Verdana, Arial, sans-serif;
+  font-size:12px;
+}
+#result tr,
+#result td {
+  background-color:#ccc;
+}
+#result th {
+  background-color:#999;
+  font-size:14px;
+}
+#result td.aprovado,
+#result td.completo {
+  background-color:#66cc99;
+}
+span.sta {
+  font-weight:bold;
+}
+span.uol_status {
+  color:#777;
+}
+#result td.aprovado span.uol_status,
+#result td.completo span.uol_status{
+  color:#095B31;
+}
+span.aguardando_pagamento {
+  color:#777;
+}
+span.processando_envio,
+span.processando_envio_envelopado,
+span.produto_enviado,
+span.produto_enviado_cod_postagem,
+span.recebido_pelo_cliente,
+span.encerrado {
+  color:#095B31;
+}
+span.pedido_cancelado {
+  color:#032539;
+}
+#result td.atencao {
+  background-color:#ed9377;
+}
+#result td.atencao span.sta {
+  color:#5A1A05;
+}
+#result td.atencao a.mudar_status {
+  display:block;
+  border:1px solid #043F21;
+  padding:3px;
+  margin:3px;
+  color:#043F21;
+  background-color:#53A67C;
+  text-decoration:none;
+}
+#result td.atencao a.mudar_status:hover {
+  color:#53A67C;
+  background-color:#043F21;
+  text-decoration:none;
+}
+#result td.erro {
+  background-color:#811631;
+}
+#result td p {
+  margin: 1px 0 1px 3px;
+}
+#result td ul {
+  margin:0;
+  font-size:10px;
+  padding-left:10px;
+}
+#result td ul li {
+  list-style:none;
+  margin-left:5px;
+}
+</style>

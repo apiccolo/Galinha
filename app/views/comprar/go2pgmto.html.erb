@@ -1,0 +1,33 @@
+<div class="grid_10 prefix_1 suffix_1">
+
+  <div>
+  <%= render :partial => "instrucoes_iniciais",
+             :locals => { :i => 3 } %>
+  </div>
+             
+<p>Agora é só <b>CLICAR NO BOTÃO ABAIXO</b> e realizar o pagamento no <b>UOL PAGSEGURO:</b></p>
+
+<%= render :partial => "form_pagseguro",
+           :locals => { 
+             :pedido => @pedido,
+             :change_page => true
+           } %>
+
+<p>&nbsp;</p>
+<p><b>O número de seu pedido é: <%= @pedido.id.to_s -%></b></p>
+<p>Anote-o e informe-o sempre que quiser tirar qualquer dúvida com nossa equipe de vendas.</p>
+<p>Enviamos para o email <b><%= @pedido.pessoa.email %></b> informações sobre o status de seu pedido, para que você possa acompanhar com clareza e segurança todo o andamento de sua compra, do pedido à entrega em sua casa.</p>
+<p>&nbsp;</p>
+
+<p><b>Quais as formas de pagamento disponíveis?</b></p>
+<ul>
+<li>Cartões de Crédito: Visa, MasterCard, Diners, Hipercard, American Express e Aura.</li>
+<li>Transferência Eletrônica: Bradesco, Itaú, Unibanco, Banco do Brasil, Banco Real, entre outros.</li>
+<li>Boleto Bancário</li>
+</ul>
+
+<p><b>Informações adicionais sobre segurança</b></p>
+<p>O UOL PagSeguro utiliza alta tecnologia para manter sua informação segura. Quando você envia um pagamento através do sistema PagSeguro, o vendedor não terá acesso a seus dados financeiros, tais como: o número do seu cartão de crédito, ou seus dados bancários. Além disso, o Pagseguro tem o "Pagamento Seguro", processo de custódia do pagamento que aumenta a segurança nas transações entre compradores e vendedores.</p>
+<p>E o mais importante, ele conta com a marca UOL: sinônomo de credibilidade na internet.</p>
+
+</div>

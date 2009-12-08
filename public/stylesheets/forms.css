@@ -86,19 +86,3 @@ textarea {
 select#usuario_cidade_id {
   width: 385px;
 }
-
-/* Formulários com campos à esquerda =========================================*/
-
-form fieldset.campos_na_esquerda ol li label {
-  display: block;
-  float: left;
-  width: 170px;
-  margin: 0 10px 0 0;
-  font-size: 12px;
-  line-height: 24px;
-  text-align: right;
-}
-
-form fieldset.campos_na_esquerda ol li .dica {
-  margin: 0 0 0 181px;
-}

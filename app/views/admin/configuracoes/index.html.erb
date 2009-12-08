@@ -1,0 +1,25 @@
+<h1>Configurações</h1>
+<ul>
+  <li>
+    <p>Gerais do sistema</p>
+  <li>
+    <p>Descontos</p>
+    <ul>
+      <li>Valor padrão do cupom de desconto</li>
+      <li>Prazo de validade padrão do cupom de desconto</li>
+    </ul>
+  </li>
+  <li>
+    <p>Emails</p>
+    <ul>
+      <li><%= link_to "Rodapé dos emails", 
+                      { :action => "editar_arquivo", 
+                        :file => "/app/views/mailer/_rodape.html.erb",
+                        :nome_arquivo => "Rodapé padrão dos emails",
+                        :rows => 8, :cols => 70 },
+                      :method => :post -%></li>
+      <li><%= link_to "Emails administrativos",
+                      { :action => "emails_admin" } %></li>
+    </ul>
+  </li>  
+</ul>

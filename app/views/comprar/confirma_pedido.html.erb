@@ -1,0 +1,15 @@
+<div class="prefix_1 grid_10 suffix_1 alpha omega">
+  <%= error_messages_for 'pedido', 'pessoa', :header_message => "Atenção: Pedido com problemas" -%>
+  <div>
+    <h3 id="call2compra">Peça já os produtos da Galinha Pintadinha!</h3>
+    <%= render :partial => "instrucoes_iniciais",
+               :locals => { :i => 2 } -%>
+  </div>
+
+<!-- RESUMO DO CARRINHO -->
+<%= render :partial => "mostra_resumo_carrinho" %>
+
+<!-- FORM RESUMO DO PEDIDO -->
+<%= render :partial => "mostra_form_resumo_pedido" %>
+
+</div>

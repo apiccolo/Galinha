@@ -1,0 +1,5 @@
+<% for p in @pedidos -%>
+<% if registrar_cliente?(p) -%>
+<%= "CPF: #{formata_cpf(p.pessoa.cpf)}; Nota Fiscal: #{p.nota_fiscal}; Comprador: #{p.pessoa.nome}\n" -%>
+<% end -%>
+<% end -%>

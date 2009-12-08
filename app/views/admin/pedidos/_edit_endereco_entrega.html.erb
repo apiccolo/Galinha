@@ -1,0 +1,66 @@
+<% form_remote_tag :url => { 
+      :controller => "pedidos",
+      :action => "edit_endereco_entrega",
+      :authenticity_token => form_authenticity_token,
+      :id => pedido.id
+    },
+    #:before => "$('admin_pedidos_endereco_entrega-#{pedido.id}-loading-indicator').hide()",
+    #:after  => "Form.enable('admin_pedidos_endereco_entrega-#{pedido.id}-form')",
+    :id => "admin_pedidos_endereco_entrega-#{pedido.id}-form" do %>
+<h4>Editar endereço de entrega do pedido #<%= pedido.id.to_s %></h4>
+<%= hidden_field_tag :id, pedido.id.to_s %>
+<ol id="endereco">
+  <li>
+    <label>Endereço</label>
+    <%= text_field :pedido, :entrega_endereco %>
+  </li>
+  <li>
+    <label>Número</label>
+    <%= text_field :pedido, :entrega_numero %>
+  </li>
+  <li>
+    <label>Complemento</label>
+    <%= text_field :pedido, :entrega_complemento %>
+  </li>  
+  <li>
+    <label>CEP</label>
+    <%= text_field :pedido, :entrega_cep %>
+  </li>  
+  <li>
+    <label>Bairro</label>
+    <%= text_field :pedido, :entrega_bairro %>
+  </li>
+  <li>
+    <label>Cidade</label>
+    <%= text_field :pedido, :entrega_cidade %>
+  </li>  
+  <li>
+    <label>Estado</label>
+    <%= text_field :pedido, :entrega_estado %>
+  </li>
+</ol>
+<p class="form-footer">
+    <%= submit_to_remote "salvar", "Salvar!", 
+        :url => { 
+          :controller => "pedidos",
+          :action => "edit_endereco_entrega",
+          :authenticity_token => form_authenticity_token,
+          :id => pedido.id
+        } %>
+    <%= image_tag "/images/active_scaffold/default/indicator.gif", 
+                  :style => "visibility: hidden",
+                  :id => "admin_pedidos_endereco_entrega-#{pedido.id}-loading-indicator",
+                  :class => "loading-indicator" %>
+</p>
+<% end %>
+
+<style type="text/css" media="screen">
+ol#endereco li {
+  margin:2px 0;
+  padding-left:30px;
+  width:500px;
+}
+ol#endereco li label {
+  display:block;
+}
+</style>

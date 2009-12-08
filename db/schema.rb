@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091125191309) do
+ActiveRecord::Schema.define(:version => 20091207134840) do
 
   create_table "administradores", :force => true do |t|
     t.string   "nome"
@@ -19,8 +19,13 @@ ActiveRecord::Schema.define(:version => 20091125191309) do
     t.datetime "updated_at"
   end
 
+  create_table "combo_tem_produtos", :id => false, :force => true do |t|
+    t.integer "combo_id"
+    t.integer "produto_id"
+  end
+
   create_table "descontos", :force => true do |t|
-    t.string   "codigo"
+    t.string   "codigo",     :limit => 50
     t.string   "email"
     t.integer  "valor"
     t.datetime "valido_ate"
@@ -29,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20091125191309) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "descontos", ["codigo"], :name => "index_descontos_on_codigo"
 
   create_table "pedidos", :force => true do |t|
     t.integer  "pessoa_id"
@@ -77,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20091125191309) do
     t.datetime "updated_at"
     t.string   "cnpj",               :limit => 30
     t.string   "inscricao_estadual", :limit => 20
+    t.string   "como_conheceu",      :limit => 30
   end
 
   add_index "pessoas", ["chave_cookie"], :name => "index_pessoas_on_chave_cookie"
@@ -95,6 +103,8 @@ ActiveRecord::Schema.define(:version => 20091125191309) do
     t.string  "imagem_pequena"
     t.string  "descricao_simples", :limit => 30
     t.float   "preco_fiscal",                    :default => 0.0
+    t.string  "type",              :limit => 20
+    t.float   "desconto",                        :default => 0.0
   end
 
   add_index "produtos", ["nome"], :name => "index_produtos_on_nome"
@@ -104,9 +114,10 @@ ActiveRecord::Schema.define(:version => 20091125191309) do
     t.integer  "pedido_id"
     t.integer  "produto_id"
     t.integer  "qtd"
-    t.boolean  "presente",   :default => false
+    t.boolean  "presente",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "preco_unitario"
   end
 
   add_index "produtos_quantidades", ["pedido_id"], :name => "index_produtos_quantidades_on_pedido_id"
@@ -126,5 +137,11 @@ ActiveRecord::Schema.define(:version => 20091125191309) do
 
   add_index "retornos_pgmtos", ["pedido_id"], :name => "index_retornos_pgmtos_on_pedido_id"
   add_index "retornos_pgmtos", ["transacaoid"], :name => "index_retornos_pgmtos_on_transacaoid"
+
+  create_table "sugestoes", :force => true do |t|
+    t.integer "produto_id"
+    t.integer "produto_sugerido_id"
+    t.integer "position"
+  end
 
 end

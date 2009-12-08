@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Lista de CEPs de pedidos &quot;<%= status.humanize %>&quot;</title>
+  <%= javascript_include_tag :defaults %>
+<style type="text/css" media="screen,print">
+body {
+  font-family:Verdana,Arial,sans-serif;
+  font-size:12px;
+}
+.pedidos_ceps {
+  border:1px solid gray;
+}
+.pedidos_ceps th,
+.pedidos_ceps td {
+  border:1px solid gray;
+  padding:1px 5px;
+}
+.pedidos_ceps td.pid {
+  text-align:center;
+}
+.pedidos_ceps td.correio {
+  width:200px;
+}
+#titulo {
+  font-size:20px;
+  font-weight:bold;
+}
+p, #titulo {
+  margin:0px;
+}
+.comprador {
+  font-size:9px;
+}
+#funcoes {
+  margin:0 auto;
+  display:block;
+  padding:20px;
+  border:1px dotted gray;
+  width:300px;
+  background-color:#aaa;
+}
+#funcoes h2 {
+  margin:0 auto;
+  text-align:center;
+}
+#funcoes form {
+  display:block;
+}
+#funcoes input {
+  float:left;
+  margin-right:10px;
+  margin-bottom:20px;
+}
+</style>
+<style type="text/css" media="print">
+#titulo, #funcoes { display:none; }
+</style>
+</head>
+<body>
+<% if status=="processando_envio_notafiscal" -%>
+  <%# form_tag :action => "marca_enviados_em_lote" do %>
+  <form name="form1" action="marca_enviados_em_lote" method="post">
+<% end -%>
+<p id="titulo">CEPs dos pedidos &quot;<%= status.humanize %>&quot;</p>
+<p>CEPs de pedidos &quot;<%= status.humanize %>&quot;: Lista de <%= Time.now.strftime("<b>%d de %B</b> de %Y, %A, gerada às %H:%M").downcase %>.</p>
+  <table class="pedidos_ceps" cellspacing="0" cellpadding="0" border="1">
+    <tr>
+      <th>Pedido ID</th>
+      <th>Nomes</th>
+      <th>CEP</th>
+      <th>Correio</th>
+    </tr>
+    <% pedidos.each do |pedido| -%>
+    <tr id="table_row_<%= pedido.id.to_s %>">
+      <td class="pid">
+        <%= pedido.id.to_s %>
+        <%= hidden_field_tag "ids[]", pedido.id.to_s %>
+      </td>
+      <td>
+      <% if pedido.entrega_nome_pacote and not pedido.entrega_nome_pacote.empty? %>
+        <%= pedido.entrega_nome_pacote %><br />
+        <span class="comprador"><%= pedido.produtos_quantidades.first.qtd %> <%= pluralize(pedido.produtos_quantidades.first.qtd, "dvd", "dvds") %> comprado por <i><%= pedido.pessoa.nome %></i></span>
+      <% else -%>
+        <%= pedido.pessoa.nome %>
+      <% end -%>
+      </td>
+      <td><%= pedido.cep %></td>
+      <td class="correio">
+        <%= render :partial => "informar_cod_postagem", 
+                   :locals => { 
+                     :pedido => pedido 
+                   } if cod_postagem_text_field %>
+      </td>
+    </tr>
+    <% end -%>
+  </table>
+  
+  <% if status=="processando_envio_notafiscal" -%>
+  <div id="funcoes">
+    <h2>Impressão</h2>
+    <%= button_to_function "Imprimir", "window.print();" %>
+    <%= button_to "Marcar pedidos como &quot;enviados&quot;?", { :action => "marca_enviados_em_lote" }, :confirm => "Imprimiu já essa lista?\nDeseja mesmo marcar todos os pedidos dessa lista como \"Produto enviado\"?\nEssa ação não tem volta..." %>
+    <p>&nbsp;</p>
+  </div>
+  <% end -%>
+  
+<% if status=="processando_envio_notafiscal" -%>
+  </form>
+  <%# end %><!-- FORM -->
+<% end -%>
+</body>
+</html>

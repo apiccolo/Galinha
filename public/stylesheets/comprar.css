@@ -1,0 +1,91 @@
+/* CARRINHO DE COMPRAS */
+.topo_carrinho {
+  background-color:#576F9E;
+}
+.topo_carrinho h5 {
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  margin:0;
+}
+.valor {
+  font-weight:bold;
+}
+.verdinho {
+  background-color:#BFDDBF;
+  text-align:center;
+}
+.grandao {
+  font-size:18px;
+  color:white;
+}
+.pequeno {
+  font-size:11px;
+}
+.direita {
+  text-align:right;
+}
+.centro {
+  text-align:center;
+}
+.curta {
+  width:50px;
+}
+.larga {
+  width:240px;
+}
+tr#total {
+  background-color:#69C56A;
+  line-height:0.25em;
+}
+/* LISTA DE SUGESTOES */
+#sugestoes {
+  margin:0 0 20px;
+  background-color:#F5F5C4;
+}
+.topo_colorido {
+  background-color:#EBEB95;
+}
+.topo_colorido h6 {
+  color:#576F9E;
+  font-weight:normal;
+  text-align:center;
+  margin:0;
+}
+ul#lista_de_sugestoes {
+  margin:0;
+}
+ul#lista_de_sugestoes li.produtos {
+  list-style:none;
+  margin:10px 0 0 10px;
+  padding:0;
+  float:left;
+  width:180px;
+}
+ul#lista_de_sugestoes li.produtos p {
+  text-align:center;
+}
+#leve_tambem .topo_colorido {
+  background-color:red;
+}
+#leve_tambem .topo_colorido h6 {
+  color:#576F9E;
+  font-weight:normal;
+  text-align:center;
+  margin:0;
+}
+
+
+
+span.preco_mentira {
+  text-decoration: line-through;
+  color:red;
+}
+span.preco_final {
+  font-weight:bold;
+  color:green;
+}
+span.desconto {
+  font-weight:bold;
+  color:green;
+}

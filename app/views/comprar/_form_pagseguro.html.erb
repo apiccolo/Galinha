@@ -1,0 +1,42 @@
+<% form_tag 'https://pagseguro.uol.com.br/security/webpagamentos/webpagto.aspx', 
+            :target => 'PagSeguro', 
+            :id => 'form_pagseguro', 
+            :onsubmit => change_page ? 'changePage()' : 'return true' do %>
+<input type="hidden" name="email_cobranca" value="contato@galinhapintadinha.com.br" />
+<input type="hidden" name="tipo" value="CP" />
+<input type="hidden" name="moeda" value="BRL" />
+<% pedido.produtos_quantidades.each_with_index do |p, i| -%>
+<input type="hidden" name="item_id_<%= (i+1).to_s -%>" value="<%= p.produto.id.to_s -%>" />
+<input type="hidden" name="item_descr_<%= (i+1).to_s -%>" value="<%= p.produto.descricao -%>" />
+<input type="hidden" name="item_quant_<%= (i+1).to_s -%>" value="<%= p.qtd.to_s -%>" />
+<input type="hidden" name="item_valor_<%= (i+1).to_s -%>" value="<%= p.produto.preco -%>" />
+<!--input type="hidden" name="item_frete_<%= (i+1).to_s -%>" value="0" /-->
+<!--input type="hidden" name="item_peso_<%= (i+1).to_s -%>" value="<%= p.produto.peso.to_i -%>" /-->
+<% end -%>
+
+<input type="hidden" name="cliente_nome" value="<%= pedido.para %>" />
+<input type="hidden" name="cliente_cep" value="<%= pedido.entrega_cep %>" />
+<input type="hidden" name="cliente_end" value="<%= pedido.entrega_endereco %>" />
+<input type="hidden" name="cliente_num" value="<%= pedido.entrega_numero %>" />
+<input type="hidden" name="cliente_compl" value="<%= pedido.entrega_complemento %>" />
+<input type="hidden" name="cliente_bairro" value="<%= pedido.entrega_bairro %>" />
+<input type="hidden" name="cliente_cidade" value="<%= pedido.entrega_cidade %>" />
+<input type="hidden" name="cliente_uf" value="<%= pedido.entrega_estado %>" />
+<input type="hidden" name="cliente_pais" value="BRA" />
+<input type="hidden" name="cliente_ddd" value="<%= pedido.pessoa.fone_ddd %>" />
+<input type="hidden" name="cliente_tel" value="<%= pedido.pessoa.fone_str %>" />
+<input type="hidden" name="cliente_email" value="<%= pedido.pessoa.email %>" />
+
+<input type="hidden" name="ref_transacao" value="<%= pedido.id.to_s %>" />
+
+<input type="image" src="https://pagseguro.uol.com.br/Imagens/btnPagueComBR.jpg" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+<% end %>
+
+<% if change_page -%>
+<script type="text/javascript" charset="utf-8">
+  function changePage() {
+    location.href='/comprar/obrigado'
+    return true;
+  }
+</script>
+<% end -%>

@@ -1,0 +1,6 @@
+<% form_remote_tag :url => {:action => "gravar_cod_postagem", :id => pedido.id} do %>
+  <%= text_field :pedido, :cod_postagem, :size => 18 %>
+  <%= submit_to_remote "submit_pedido_#{pedido.id}", "salvar", 
+                       :url => {:action => "gravar_cod_postagem", :id => pedido.id} %><br />
+  <%= check_box_tag "pedido[suprimir_email]", false %> Suprimir notificação/email.
+<% end %>

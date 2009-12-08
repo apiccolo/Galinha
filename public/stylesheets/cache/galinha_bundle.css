@@ -754,22 +754,7 @@ textarea {
 select#usuario_cidade_id {
   width: 385px;
 }
-
-/* Formulários com campos à esquerda =========================================*/
-
-form fieldset.campos_na_esquerda ol li label {
-  display: block;
-  float: left;
-  width: 170px;
-  margin: 0 10px 0 0;
-  font-size: 12px;
-  line-height: 24px;
-  text-align: right;
-}
-
-form fieldset.campos_na_esquerda ol li .dica {
-  margin: 0 0 0 181px;
-}/* --------- /stylesheets/errors.css --------- */ 
+/* --------- /stylesheets/errors.css --------- */ 
 /* Mensagem sobre erro de validação ========================================*/
 
 .fieldWithErrors input,
@@ -791,8 +776,13 @@ form fieldset.campos_na_esquerda ol li .dica {
 #errorExplanation h2 {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #D72A2A;
-  font-weight: normal;
+  background-color: #F1EE3E;
+  background-image: url(/images/icones/exclamation.png);
+  background-repeat: no-repeat;
+  background-position:190px 6px;
+  color:#D72A2A;
+  font-weight:bold;
+  text-align:center;
   padding: 0;
 }
 
@@ -905,7 +895,59 @@ form fieldset.campos_na_esquerda ol li .dica {
   background: #EBF5F8;
   color: #000;
 }
-/* --------- /stylesheets/layout_galinha.css --------- */ 
+/* --------- /stylesheets/crud.css --------- */ 
+/* CRUD
+------------------------------------------------------------------------------
+*/
+
+table.crud {
+  width: 100%;
+}
+
+table.crud th {
+  text-align: left;
+  background-color: #F5F5F5;
+  padding: 2px 4px 2px 0;
+}
+
+table.crud td {
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #EAEAEA;
+}
+
+a.incluir {
+  font-weight: bold;
+  color: green;
+  padding: 0 0 0 18px;
+  background: transparent url(images/icones/add.png) no-repeat 0 0;
+}
+
+a.remover {
+  font-weight: bold;
+  color: #E9584C;
+  padding: 0 0 0 18px;
+  background: transparent url(images/icones/delete.png) no-repeat 0 0;
+}
+
+.procurar {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-color: #F5F5F5;
+  margin: 0 0 20px;
+  padding: 10px;
+}
+
+.procurar fieldset {
+  margin: 0;
+}
+
+.procurar li {
+  float: left;
+  display: inline;
+  margin-right: 10px;
+}/* --------- /stylesheets/layout_galinha.css --------- */ 
 /* Testeira
 -----------------------------------------------------------------------------
 */

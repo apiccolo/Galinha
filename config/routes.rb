@@ -35,11 +35,27 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_logout "admin/logout", :controller => "admin/acesso", :action => "logout"
   map.namespace :admin do |admin|
     admin.resources :administradores
-    admin.resources :produtos
-    admin.resources :pedidos
+    admin.resources :produtos, :collection => { :new_combo => :get,
+                                                :create_combo => :post,
+                                                :print => :get },
+                               :member => { :edit_combo => :get,
+                                            :update_combo => :put,
+                                            :relacionar => :get,
+                                            :gravar_relacionar => :post,
+                                            :print => :get }
+    admin.resources :pedidos, :collection => { :print => :get,
+                                               :lista_ceps => :get,
+                                               :controle_postagem => :get },
+                              :member => { :print => :get }
+    
     admin.resources :descontos
-    admin.resources :configuracoes
-    admin.resources :automacoes
+    admin.resources :configuracoes, :collection => { :editar_arquivo => :post,
+                                                     :salvar_arquivo => :post }
+    admin.resources :relatorios
+    admin.resources :automacoes, :collection => { :entrar_arquivo => :get,
+                                                  :processar_dados => :post,
+                                                  :relatorios => :get },
+                                 :member => { :confirmar_pagamento => :post }
   end
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.

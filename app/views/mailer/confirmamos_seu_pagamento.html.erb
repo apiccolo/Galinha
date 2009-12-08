@@ -1,0 +1,11 @@
+Car<%= @pessoa.termina_o_a %> <%= @pessoa.primeiro_nome %>,
+
+Confirmamos em <%= @pedido.updated_at.strftime("%d de %B de %Y às %H:%M").to_s.downcase %> o pagamento de seu pedido (n. <%= @pedido.id.to_s %>). Assim, nosso departamento de logística iniciou o processamento de embalagem, postagem e envio de seu pedido. Portanto, quando seu produto for encaminhado aos Correios, enviar-lhe-emos uma notificação por email.
+
+Sempre que desejar, acompanhe o status de seu pedido em:
+<%= @link2pedido %>
+
+Atenciosamente,
+
+
+A Galinha Pintadinha!

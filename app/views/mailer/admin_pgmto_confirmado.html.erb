@@ -1,0 +1,10 @@
+Pedido n. <%= @pedido.id.to_s %> foi pago.
+
+Recebemos essa confirmação de pagamento do UOLPagSeguro às <%= Time.now.strftime("%H:%M de %A (%d/%m)") %>. 
+<%= @pessoa.termina_o_a.upcase %> <%= @pessoa.primeiro_nome %> já foi notificada pelo sistema - inicie já o processo de envio.
+
+Mais detalhes em (faça o login administrativo...):
+<%= @link_check %>
+
+
+Systema da Galinha Pintadinha!

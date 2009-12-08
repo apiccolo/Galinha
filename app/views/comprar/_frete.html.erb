@@ -1,0 +1,17 @@
+<div id="freve_vars">
+  <%= hidden_field :pedido, :frete, :value => 0 %>
+  <div id="calculando_frete" style="display:none">
+    <p>Aguarde... calculando opções de frete.<br />
+    <%= image_tag("spinner.gif") %>
+    </p>
+  </div>
+</div>
+<div id="frete">
+  <%= observe_field "pedido_entrega_cep",
+                    :url => { :action => "frete" },
+                    :with => "'cep='+$('pedido_entrega_cep').value+'&'+Form.Element.serialize('qtd_1')",
+                    :update => "frete",
+                    :before => "$('calculando_frete').show()",
+                    :success => "$('calculando_frete').hide()"
+      -%>
+</div>

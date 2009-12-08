@@ -1,3 +1,4 @@
+<!-- COMBO -->
 <div class="grid_6 alpha">
 <fieldset>
   <ol>
@@ -15,23 +16,9 @@
       <p class="dica">Descrição sucinta (porém informativa) sobre o produto.</p>
     </li>
     <li>
-      <label>Descrição fiscal</label>
+      <label>Descrição simples</label>
       <%= f.text_field :descricao_simples, :size => 55 %>
       <p class="dica">Descrição impressa na nota fiscal.</p>
-    </li>
-    <li class="small">
-      <label>Em estoque</label>
-      <%= f.text_field :qtd_estoque, :size => 6 %>
-    </li>
-    <li class="small">
-      <label>Peso</label>
-      <%= f.text_field :peso, :size => 6 %>
-      <p class="dica">Em gramas.</p>
-    </li>
-    <li>
-      <label>Tamanho</label>
-      <%= f.text_field :tamanho, :size => 26 %>
-      <p class="dica">Alt. (cm) x Larg. (cm) x Prof. (cm)</p>
     </li>
     <li>
       <label>Imagens</label>
@@ -48,14 +35,20 @@
 <div class="grid_6 omega">
   <fieldset>
     <ol>
-      <li class="big green">
-        <label>Preço</label>
-        R$ <%= f.text_field :preco, :size => 4 %>
-        <p class="dica">Use ponto para separar os centavos.</p>
-      </li>
       <li>
-        <label>Preço fiscal</label>
-        R$ <%= f.text_field :preco_fiscal, :size => 4 %>
+        <label>Produtos do pacote</label>
+        <%= select_tag "produto_combo[produto_ids][]",
+                       options_from_collection_for_select(@produtos, 'id', 'nome', @produto.produto_ids), 
+                       :multiple => true,
+                       :style => "height:100px;width:200px" %>
+      </li>
+      <!-- li id="li_total">
+        <label>Total</label>
+        R$ <span id="total"></span>
+      </li -->
+      <li class="big green">
+        <label>Desconto</label>
+        R$ <%= f.text_field :desconto, :size => 4 %>
         <p class="dica">Use ponto para separar os centavos.</p>
       </li>
       <li>

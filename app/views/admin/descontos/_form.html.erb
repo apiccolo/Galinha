@@ -1,0 +1,30 @@
+<div class="grid_6 alpha">
+<fieldset>
+  <ol>
+    <li class="big green">
+      <label>Valor</label>
+      R$ <%= f.text_field :valor, :size => 4 %>
+      <p class="dica">Use ponto para separar os centavos.</p>
+    </li>
+    <li>
+      <label>Email</label>
+      <%= f.text_field :email, :size => 44 %>
+    </li>
+    <li class="checkbox">
+      <%= f.check_box :enviar_email %> Enviar email ao criar/salvar este cupom?
+    </li>
+    <li>
+      <label>Válido até</label>
+      <%= f.datetime_select :valido_ate, :default => 30.days.from_now.end_of_day %>
+    </li>
+    <% if @desconto.usou? -%>
+    <li>
+      <p>
+      Desconto usado em <%= l @desconto.usado_em, :format => "%d/%m/%Y %H:%M" %><br />
+      Detalhes do pedido <b><%= link_to "pedido #{@desconto.pedido_id}", :controller => "pedidos", :action => "show", :id => @desconto.pedido_id %></b>.
+      </p>
+    </li>
+    <% end -%>
+  </ol>
+</fieldset>
+</div>

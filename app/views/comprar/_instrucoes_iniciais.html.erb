@@ -1,12 +1,31 @@
 <div class="grid_5 alpha">
 <p class="negrito">É rápido, fácil e seguro! Siga os passos abaixo:</p>
-<ol>
-  <li>Preencha corretamente os dados da compra a seguir.</li>
-  <li>No próximo passo, você será direcionado para o UOL PAGSEGURO, para realizar o pagamento.</li>
-  <li>Pronto! Em breve você receberá seu DVD em casa!</li>
+<ol id="passos">
+  <li <% if (i==1) %>class="marcada"<% end -%>>Preencha corretamente os dados da compra;</li>
+  <li <% if (i==2) %>class="marcada"<% end -%>>Confirme seus dados e os dados do pedido;</li>
+  <li <% if (i==3) %>class="marcada"<% end -%>>Faça o pagamento no UOL PagueSeguro.</li>
 </ol>
+<p>Pronto! Em breve você receberá seus produtos em casa!</p>
 </div>
 <div class="grid_5 omega">
 <p>Compra segura através do UOL PAGSEGURO</p>
-<img src="https://pagseguro.uol.com.br/Security/Imagens/btnPreferenciaCartoesBR.gif"/>
+<% if ambiente_producao? -%>
+<img src="https://pagseguro.uol.com.br/Security/Imagens/btnPreferenciaCartoesBR.gif" alt="pagseguro" width="418" height="74" />
+<% else -%>
+<p style="width:418;height:74;background-color:#aaa;padding:20px">
+  Logomarca UOLPagSeguro: turned off [DEV]
+</p>
+<% end -%>
 </div>
+<style type="text/css" media="screen">
+ol#passos {
+  margin-bottom:5px;
+}
+ol#passos li {
+  color:#666;
+}
+ol#passos li.marcada {
+  font-weight:bold;
+  color:#69C56A;
+}
+</style>

@@ -1,0 +1,37 @@
+<div id="detalhes_pedido_<%= pedido.id %>" class="grid_12 alpha omega">
+  <div class="detalhes_pedido clearfix">
+  <h2>Pedido #<%= pedido.id %></h2>
+  <div class="grid_6 alpha">
+    <h3>Comprador</h3>
+    <div class="infos_wrapper">
+      <%= descreve_comprador(pedido) %>
+      <br />
+      <%= pedido.pessoa.como_conheceu %>
+    </div>
+  </div>
+  <div class="grid_6 omega">
+    <h3>Entrega</h3>
+    <div class="infos_wrapper">
+      <%= descreve_entrega(pedido) %>
+    </div>
+  </div>
+  <div class="grid_6 alpha">
+    <h3>Produtos e Valores</h3>
+    <div class="infos_wrapper">
+      <%= descreve_produtos_pedido(pedido, :com_preco_unitario => true, :com_valor_total => true) %>
+      <p class="frete">Frete: <span class="valor_frete"><%= number2currency(pedido.frete) -%></span></p>
+      <p class="desconto">Descontos: <span class="valor_desconto">-<%= number2currency(pedido.desconto) %></span></p>
+      <p class="total">Total: <span class="valor_total"><%= number2currency(calcula_total_pedido(pedido)) %></span></p>
+    </div>
+  </div>
+  <div class="grid_6 omega">
+    <h3>Status e Pagamento</h3>
+    <div class="infos_wrapper">
+      UOL pag seguro
+    </div>
+  </div>
+  <div class="grid_12 alpha omega">
+    <p class="direita" style="margin:0 10px 2px 0"><%= link_to_function "Fechar [x]", visual_effect(:blind_up, "detalhes_pedido_#{pedido.id}") %></p>
+  </div>
+  </div>
+</div>

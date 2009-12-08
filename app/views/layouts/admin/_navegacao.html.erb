@@ -1,7 +1,7 @@
 <div id="menu_admin">
   <ul class="dropdown">
     <li <% if (controller.controller_name == "painel") %> class="selected" <% end %>>
-      <%= link_to "Painel", :controller => "admin/painel" %>
+      <%= link_to "Painel "+image_tag("icones/painel.png", :class => "icon"), :controller => "admin/painel" %>
     </li>
     <li <% if (controller.controller_name == "produtos") %> class="selected" <% end %>>
       <%= link_to "Produtos "+image_tag("icones/produtos.png", :class => "icon"), admin_produtos_path %>
@@ -12,8 +12,11 @@
     <li <% if (controller.controller_name == "descontos") %> class="selected" <% end %>>
       <%= link_to "Descontos "+image_tag("icones/descontos.png", :class => "icon"), admin_descontos_path %>
     </li>
-    <li <% if (controller.controller_name == "automacao") %> class="selected" <% end %>>
+    <li <% if (controller.controller_name == "automacoes") %> class="selected" <% end %>>
       <%= link_to "Automação "+image_tag("icones/automacao.png", :class => "icon"), admin_automacoes_path %>
+    </li>
+    <li <% if (controller.controller_name == "relatorios") %> class="selected" <% end %>>
+      <%= link_to "Relatórios "+image_tag("icones/relatorios.png", :class => "icon"), admin_relatorios_path %>
     </li>
     <li <% if (controller.controller_name == "configuracoes") %> class="selected" <% end %>>
       <%= link_to "Configurações "+image_tag("icones/configuracoes.png", :class => "icon"), admin_configuracoes_path %>

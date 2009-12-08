@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Imprimir Etiqueta</title>
+  <%= javascript_include_tag "prototype" %>
+</head>
+<style type="text/css" media="screen,print">
+.etiqueta { display:none; }
+.para_text { display:none;position:relative;left:-50px;}
+.para_nome { font-weight:bold; }
+
+#vendedor,
+#pedido,
+#comprador,
+#funcoes {
+  margin:10px 0 0 10px;
+  font-family:Verdana,Arial,sans-serif;
+  font-size:1.25em;  
+}
+#vendedor { 
+  width:310px;
+  height:70px;
+  border: 1px dotted #aaa;
+  padding:10px;
+}
+#vendedor p {
+  color:#aaa;
+  font-size:0.5em;
+  float:left; 
+  margin-top:4px;
+}
+#vendedor img { 
+  margin:5px 20px 0 10px; 
+  width:60px;
+  float:left; 
+}
+
+#pedido {
+  margin:0 0 0 120px;
+}
+#pedido p {
+  color:#aaa;
+  font-size:0.35em;
+  margin-top:10px;
+  line-height:0.9em;
+}
+
+#comprador p {
+  margin:110px 0 30px 250px;
+}
+
+#funcoes {
+  display:none;
+}
+</style>
+<style type="text/css" media="screen">
+#funcoes {
+  margin:0 auto;
+  display:block;
+  padding:40px;
+  border:1px dotted gray;
+  width:440px;
+  background-color:#aaa;
+}
+#funcoes h2 {
+  margin-top:0;
+}
+#funcoes form {
+  display:block;
+}
+#funcoes input {
+  float:left;
+  margin-right:10px;
+}
+</style>
+<body>
+  <div id="vendedor">
+    <%= image_tag("logos_bromelia_filminhos_100px.png") %>
+    <p><b>Bromelia Produções</b><br />
+       R. Camargo Pimentel, 15<br />
+       Jardim Guanabara<br />
+       13073-340 - Campinas - SP
+    </p>
+  </div>
+
+  <div id="pedido">
+    <p>Pedido #<%= pedido.id.to_s %> 
+    <%= " (#{pedido.produtos_quantidades[0].qtd} dvds) " if (pedido.produtos_quantidades[0].qtd > 1) %>
+    <%= " <br />(p/ pres.)" if (pedido.produtos_quantidades[0].presente) %>
+    </p>
+  </div>
+
+  <div id="comprador">
+    <p><%= etiqueta_column(pedido) %></p>
+  </div>
+  
+  <div id="funcoes">
+    <h2>Impressão de Envelopes</h2>
+    <%= button_to_function "Imprimir Envelope",
+                           "window.print();$('marcar').writeAttribute('disabled',false)" %>
+    <% form_remote_tag :url => {:action => "envelopado", :id => pedido.id } do %>
+    <%= submit_to_remote "marcar", "Marcar como &quot;envelopado&quot;?",
+                  :url => {:action => "envelopado", 
+                   :id => pedido.id },
+                  :html => { :id => "marcar", 
+                  :disabled => true } %>
+    <% end %>
+    <% if proximo -%>
+    <%= button_to "Próximo pedido &raquo;", 
+                  {:action => "print",
+                   :id => proximo.id } %>
+    <% end %>
+  </div>
+  <p>&nbsp;</p>
+</body>
+</html>

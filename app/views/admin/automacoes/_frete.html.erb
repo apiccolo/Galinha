@@ -1,0 +1,16 @@
+<table cellspacing="0" cellpadding="0" border="1">
+  <tr>
+  <% fretes.each do |frete| -%>
+    <td>
+    <% valor_do_frete = frete[1].to_f -%>
+    <%#= radio_button :pedido, :frete_tipo, frete[0], :onclick => "mudarValor(#{valor_do_frete})" %> 
+      <b><%= frete[0] %></b>: <br />
+      <%= number_to_currency(valor_do_frete, 
+                             :precision => 2, 
+                             :unit => 'R$ ', 
+                             :separator => ",", 
+                             :format => "%u %n") %>
+    </td>                         
+  <% end -%>
+  </tr>
+</table>

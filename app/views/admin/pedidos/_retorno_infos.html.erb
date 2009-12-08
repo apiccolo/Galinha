@@ -1,0 +1,13 @@
+<% elem_id = "retorno_infos_"+retorno.id.to_s -%>
+<div id="<%= elem_id %>" style="width:380px;border:1px solid gray;background-color:#ffd;padding:3px;float:left;position:absolute;">
+<p style="text-align:center;font-weight:bold;color:#fff;background-color:#333">Retorno Automático UOLPagSeguro</p>
+<p>TransacaoID: <b><%= retorno.transacaoid %></b></p>
+<p>TipoPagamento: <b><%= retorno.tipopagamento %></b></p>
+<p>Status: <b><%= retorno.status %></b></p>
+<p>Recebido em: <b><%= retorno.created_at.strftime("%d/%m/%Y %H:%M:%S") %></b></p>
+<p>Demais Informações: <b><%= link_to_function "...", 
+                              visual_effect(:blind_down, "texto_#{elem_id}", :duration => 1.5) %></b>
+  <span id="texto_<%= elem_id %>" style="display:none"><%= "#{retorno.demais}" %></span>
+</p>
+<p style="text-align:right"><%= link_to_function "fechar", visual_effect(:fold, "#{elem_id}") %></p>
+</div>

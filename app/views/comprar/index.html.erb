@@ -1,18 +1,32 @@
 <div class="prefix_1 grid_10 suffix_1 alpha omega">
-<h3 id="call2compra">Peça já os produtos da Galinha Pintadinha!</h3>
-<%= render :partial => "instrucoes_iniciais" %>
+  <%= error_messages_for 'pedido', 'pessoa', :header_message => "Atenção: Pedido com problemas" -%>
+  <div>
+    <h3 id="call2compra">Peça já os produtos da Galinha Pintadinha!</h3>
+    <%= render :partial => "instrucoes_iniciais",
+               :locals => { :i => 1 } %>
+  </div>
 
 <!-- CARRINHO -->
 <%= render :partial => "mostra_carrinho" %>
 
+<!-- LISTA DE "LEVE TAMBÉM" -->
+<%= render :partial => "mostra_leve_tambem" %>
+
 <!-- LISTA DE SUGESTOES -->
 <%= render :partial => "mostra_sugestoes" %>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+<!-- FORM DO COMPRADOR -->
+<%= render :partial => "mostra_form_comprador" %>
 
 <hr />
-<p>Variable debug</p>
-<b><%#= debug session[:carrinho] %></b>
+  <p>Variable debug</p>
+  <div class="grid_5 alpha">
+    
+    <b>Carrinho size: <b><%= session[:carrinho].size if session[:carrinho] %></b>
+    <br />
+    <i><%= debug session[:carrinho] %></i>
+  </div>
+  <div class="grid_5 alpha">
+    <b><%= debug @leve_tambem %></b>
+  </div>
 </div>

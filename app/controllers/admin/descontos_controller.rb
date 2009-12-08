@@ -2,8 +2,7 @@ class Admin::DescontosController < Admin::AdminController
   # GET /descontos
   # GET /descontos.xml
   def index
-    @descontos = Desconto.all
-
+    @descontos = Desconto.paginate(:all, :page => params[:page], :per_page => 30, :order => "id DESC")
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @descontos }
@@ -14,7 +13,6 @@ class Admin::DescontosController < Admin::AdminController
   # GET /descontos/1.xml
   def show
     @desconto = Desconto.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @desconto }
@@ -25,7 +23,6 @@ class Admin::DescontosController < Admin::AdminController
   # GET /descontos/new.xml
   def new
     @desconto = Desconto.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @desconto }
@@ -41,10 +38,9 @@ class Admin::DescontosController < Admin::AdminController
   # POST /descontos.xml
   def create
     @desconto = Desconto.new(params[:desconto])
-
     respond_to do |format|
       if @desconto.save
-        flash[:notice] = 'Desconto was successfully created.'
+        flash[:notice] = 'Desconto criado com sucesso.'
         format.html { redirect_to(admin_descontos_path) }
         format.xml  { render :xml => @desconto, :status => :created, :location => @desconto }
       else
@@ -58,10 +54,9 @@ class Admin::DescontosController < Admin::AdminController
   # PUT /descontos/1.xml
   def update
     @desconto = Desconto.find(params[:id])
-
     respond_to do |format|
       if @desconto.update_attributes(params[:desconto])
-        flash[:notice] = 'Desconto was successfully updated.'
+        flash[:notice] = 'Desconto atualizado com sucesso.'
         format.html { redirect_to(admin_descontos_path) }
         format.xml  { head :ok }
       else
@@ -76,7 +71,6 @@ class Admin::DescontosController < Admin::AdminController
   def destroy
     @desconto = Desconto.find(params[:id])
     @desconto.destroy
-
     respond_to do |format|
       format.html { redirect_to(admin_descontos_path) }
       format.xml  { head :ok }

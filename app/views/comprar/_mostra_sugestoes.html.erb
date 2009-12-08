@@ -1,10 +1,17 @@
 <div class="grid_10 alpha omega" id="sugestoes">
-  <p>Sugestões</p>
-  <% @produtos.each do |produto| %>
-  <div id="produto_<%= produto.id %>" class="produtos">
-    <p><%= produto.id %>. <%= produto.nome %><br />
-       Por apenas R$ <%= number_to_currency(produto.preco) %></p>
-    <p><%= link_to "Incluir no carrinho", :action => "incluir", :produto_id => produto.id %></p>
+<% if @sugestoes and not @sugestoes.blank? -%>
+  <div class="grid_10 alpha omega topo_colorido">
+    <h6>Sugestões da Galinha Pintadinha</h6>
   </div>
+  <ul id="lista_de_sugestoes" class="clearfix">
+  <% @sugestoes.each do |produto| %>
+    <li id="produto_<%= produto.id %>" class="produtos">
+      <%= infos_produto_box(produto) %>
+    </li>
   <% end %>
+  </ul>
+  <div class="grid_10 alpha omega topo_sugestoes">
+    <p class="direita pequeno" style="margin:0 10px 0 0"><%= link_to_function "não, obrigado.", visual_effect(:blind_up, "sugestoes") -%></p>
+  </div>
+<% end -%>
 </div>

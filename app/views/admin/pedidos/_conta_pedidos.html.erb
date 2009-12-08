@@ -1,0 +1,71 @@
+<% if pedidos
+total_pedidos = 0
+totais = {}
+totais[:pedido] = 0
+totais[:aguardando_pagamento] = 0
+totais[:processando_envio] = 0
+totais[:processando_envio_envelopado] = 0
+totais[:produto_enviado] = 0
+totais[:produto_enviado_cod_postagem] = 0
+totais[:recebido_pelo_cliente] = 0
+totais[:pedido_cancelado] = 0
+totais[:encerrado] = 0 -%>
+<h4 style="display:inline">Detalhamento das vendas:</h4>
+<a href="#" onclick="javascript:$('detalhamento').toggle()">[+]</a>
+<div id="detalhamento" style="display:none;">
+<ul>
+  <% pedidos.group_by { |k| k.data_pedido.at_beginning_of_month }.sort.each do |z, lista_pedidos_mes| 
+     totais_mes = {}
+     totais_mes[:pedido] = 0
+     totais_mes[:aguardando_pagamento] = 0
+     totais_mes[:processando_envio] = 0 
+     totais_mes[:processando_envio_envelopado] = 0 
+     totais_mes[:produto_enviado] = 0 
+     totais_mes[:produto_enviado_cod_postagem] = 0 
+     totais_mes[:recebido_pelo_cliente] = 0 
+     totais_mes[:pedido_cancelado] = 0 
+     totais_mes[:encerrado] = 0 -%>
+  <li>
+    <b><%= z.strftime("%B de %Y") %></b>
+    <a href="#" onclick="javascript:$('mes_<%= z.strftime("%Y_%m") %>').toggle()">[+]</a>
+    <br />
+    <ul id="mes_<%= z.strftime("%Y_%m") %>" style="display:none;">
+    <% lista_pedidos_mes.group_by { |h| h.status }.each do |u, lista| -%>
+      <% for pedido in lista -%>
+        <% if pedido and 
+              pedido.produtos_quantidades and 
+              pedido.produtos_quantidades[0] and 
+              pedido.produtos_quantidades[0].qtd -%>
+          <% do_pedido = pedido.produtos_quantidades[0].qtd.to_i -%>
+          <% totais_mes[pedido.status.to_sym] += pedido.produtos_quantidades[0].qtd.to_i -%>
+        <% end -%>
+      <% end #for -%>
+      <li><b><%= totais_mes[u.to_sym] -%></b> DVDs com status <i><%= u.humanize %></i> 
+          <span style="font-size:0.75em;">(<%= lista.size %> pedidos)</span></li>
+      <% totais[u.to_sym] += totais_mes[u.to_sym].to_i
+         total_pedidos += lista.size.to_i -%>
+    <% end #lista_pedidos_mes.each -%>
+    </ul>
+  </li>
+  <% end #pedidos.each -%>
+</ul>
+</div>
+
+<!-- SOMATORIA FINAL -->
+<hr><h4>Resumo final:</h4>
+<h5 style="margin-left:20px;">
+  <% tt = soma(totais) -%><%= tt %> DVDs solicitados / <%= total_pedidos %> pedidos
+</h5>
+
+<ul>
+<% totais.each do |k, v| -%>
+  <% if v != 0 -%>
+  <li>
+    <b><%= v -%></b> DVDs com status <i><%= k.to_s.humanize %></i>
+    <span style="font-size:0.75em;">[<%= number_to_percentage(100*v/tt, :precision => 0) %>]</span>
+  </li>
+  <% end -%>
+<% end -%>
+</ul>
+</p>
+<% end #if -%>

@@ -1,0 +1,23 @@
+Querid<%= @pessoa.termina_o_a %> <%= @pessoa.primeiro_nome %>,
+
+Seu DVD da Galinha Pintadinha já havia sido postado - faltou apenas
+lhe informar o código de postagem dos Correios.
+
+Você pode saber onde seu DVD está agora clicando no link abaixo e
+inserindo o código: <%= @pedido.codigo_postagem %>
+
+http://websro.correios.com.br/sro_bin/txect01$.startup?P_LINGUA=001&P_TIPO=001
+
+Bem, já está a caminho, deve estar chegando... 
+Esperamos que vocês gostem!
+
+Em caso de dúvidas, não hesite em nos contactar via
+"contato@galinhapintadinha.com.br"
+
+Atenciosamente,
+Equipe da Galinha Pintadinha
+
+
+PS: Após receber o produto, por favor, clique no link abaixo para
+nos notificar e deixar sua opinião sobre nossos serviços:
+<%= @link2feedback %>

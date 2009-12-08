@@ -2,6 +2,6 @@
 
 <% form_for(@produto, :url => admin_produto_path(@produto), :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
-  <%= render :partial => "form", :locals => { :f => f } %>
+  <%= render :partial => "form_produto_simples", :locals => { :f => f } %>
   <p class="form_button"><%= f.submit "Salvar" %> ou <%= link_to "Voltar", admin_produtos_path %></p>
 <% end %>

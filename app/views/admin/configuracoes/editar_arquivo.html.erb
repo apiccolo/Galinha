@@ -1,0 +1,10 @@
+<h2>Editando <u><%= params[:nome_arquivo] %></u></h2>
+<p style="margin:0">Arquivo: <i><%= params[:file] -%></i></p>
+
+<% form_tag "salvar_arquivo" do %>
+  <%= hidden_field_tag :file, params[:file] %>
+  <%= text_area_tag :content, @f.readlines, 
+                    :rows => params[:rows], 
+                    :cols => params[:cols] %>
+  <p><%= submit_tag :salvar %> ou <%= link_to "cancelar", :action => "index" %></p>
+<% end %>

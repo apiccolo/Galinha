@@ -1,0 +1,17 @@
+<div class="grid_10 alpha omega" id="leve_tambem">
+<% if @leve_tambem and not @leve_tambem.blank? -%>
+  <div class="grid_10 alpha omega topo_colorido2">
+    <h6>Leve também</h6>
+  </div>
+  <ul id="lista_de_leve_tambem" class="clearfix">
+  <% @leve_tambem.each do |pc| -%>
+    <li id="produto_<%= pc.id %>" class="produtos">
+      <%= infos_leve_tambem(pc, @carrinho) %>
+    </li>
+  <% end -%>
+  </ul>
+  <div class="grid_10 alpha omega topo_sugestoes">
+    <p class="pequeno direita" style="margin:0"><%= link_to_function "[x] não, obrigado.", visual_effect(:blind_up, "sugestoes") -%></p>
+  </div>
+<% end -%>
+</div>

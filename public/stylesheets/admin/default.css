@@ -163,3 +163,69 @@ h3 {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
+
+/* Adendo ao Table CRUD 
+------------------------------------------------------------------------------
+*/
+.estreita { width:20px; }
+.grandao { font-size: 26px; }
+.grandao .real { font-size: 14px; }
+.pequeno { font-size: 11px; }
+.cinza { color: #999; }
+.direita { text-align:right; }
+.carregando { 
+  background-image: url('/images/spinners/spinner.gif');
+  background-repeat: no-repeat;
+  background-position: 10px auto;
+}
+div.detalhes_pedido {
+  background-color:#FFFFBB;
+}
+div.detalhes_pedido h2, 
+div.detalhes_pedido h3 {
+  margin:0;
+}
+div.detalhes_pedido h3 {
+  color:#19A4FF;
+}
+div.detalhes_pedido div.infos_wrapper {
+  padding:5px;
+  border:3px solid #19A4FF;
+  -moz-border-radius-topleft:8px;
+  -moz-border-radius-topright:8px;
+  -moz-border-radius-bottomleft:8px;
+  -moz-border-radius-bottomright:8px;
+}
+p.item_produto {
+  margin:0;
+}
+p.item_produto span.preco_unitario {
+  margin-left:70px;
+}
+p.item_produto span.valor_total {
+  margin-left:70px;
+  color:green;
+}
+p.frete {
+  color:#777;
+  margin:0;
+}
+p.frete span.valor_frete {
+  margin-left:265px;
+}
+p.desconto {
+  color:red;
+  margin:0;
+}
+p.desconto span.valor_desconto {
+  margin-left:235px;
+}
+p.total {
+  border-top:1px dotted gray;
+  font-size:14px;
+  font-weight:bold;
+}
+p.total span.valor_total {
+  color:green;
+  margin-left:250px;
+}

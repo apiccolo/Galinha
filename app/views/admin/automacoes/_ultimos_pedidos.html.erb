@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Lista de CEPs dos últimos pedidos concluídos</title>
+  <%= javascript_include_tag :defaults %>
+<style type="text/css" media="screen,print">
+body {
+  font-family:Verdana,Arial,sans-serif;
+  font-size:12px;
+}
+.pedidos_ceps {
+  border:1px solid gray;
+}
+.pedidos_ceps th,
+.pedidos_ceps td {
+  border:1px solid gray;
+  padding:1px 5px;
+}
+.pedidos_ceps td.pid {
+  text-align:center;
+}
+.pedidos_ceps td.correio {
+  width:300px;
+}
+#titulo {
+  font-size:20px;
+  font-weight:bold;
+}
+p, #titulo {
+  margin:0px;
+}
+.comprador {
+  font-size:9px;
+}
+#funcoes {
+  margin:0 auto;
+  display:block;
+  padding:20px;
+  border:1px dotted gray;
+  width:300px;
+  background-color:#aaa;
+}
+#funcoes h2 {
+  margin:0 auto;
+  text-align:center;
+}
+#funcoes form {
+  display:block;
+}
+#funcoes input {
+  float:left;
+  margin-right:10px;
+  margin-bottom:20px;
+}
+</style>
+<style type="text/css" media="print">
+#titulo, #funcoes { display:none; }
+</style>
+</head>
+<body>
+<p id="titulo">CEPs dos últimos pedidos concluídos</p>
+  <table class="pedidos_ceps" cellspacing="0" cellpadding="0" border="1">
+    <tr>
+      <th>Pedido ID</th>
+      <th>Cidade</th>
+      <th>CEP</th>
+      <th>Correio</th>
+    </tr>
+    <% pedidos.each do |pedido| -%>
+    <tr id="table_row_<%= pedido.id.to_s %>">
+      <td class="pid">
+        <%= pedido.id.to_s %>
+      </td>
+      <td>
+        <%= pedido.entrega_cidade %> - <%= pedido.entrega_estado %><br />
+      </td>
+      <td><%= pedido.cep %></td>
+      <td class="correio" id="cep_<%= pedido.id.to_s %>">
+        <%= link_to_remote "calcular...", { :url => { :action => "cotacao_servicos_por_cep",
+                                           :cep => "#{pedido.entrega_cep}",
+                                           :qtd => "#{pedido.produtos_quantidades[0].qtd}" }, 
+                                 :update => "cep_#{pedido.id}" }, 
+                            :id => "link_#{pedido.id}" %>
+      </td>
+    </tr>
+    <% end -%>
+  </table>
+</body>
+</html>

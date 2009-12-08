@@ -1,0 +1,67 @@
+<h1>Pedidos</h1>
+<p>
+  <% form_tag "", :method => :get do %>
+  ID <%= text_field_tag "id", params[:id], :size => 4 %>
+  Nome/Email comprador <%= text_field_tag "nome_email", params[:nome_email], :size => 20 %>
+  CEP <%= text_field_tag "entrega_cep", params[:entrega_cep], :size => 8 %>
+  <%= submit_tag "Buscar" %>
+  <% end %>
+</p>
+<table id="lista_de_pedidos" class="crud">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Comprador</th>
+      <th>Status</th>
+      <th>Produtos</th>
+      <th>Entrega</th>
+      <th>Valor</th>
+      <th colspan="1">
+        Ações
+      </th>
+    </tr>
+  </thead>
+<% for pedido in @pedidos -%>
+  <tr id="pedido_<%= pedido.id %>">
+    <td class="estreita"><%= pedido.id %></td>
+    <td>
+      <%= descreve_comprador(pedido) %>
+    </td>
+    <td class="estreita <%= pedido.status %>">
+      <%= descreve_status(pedido) %>
+    </td>
+    <td>
+      <%= descreve_produtos_pedido(pedido) %>
+    </td>
+    <td>
+      <%= descreve_entrega(pedido) %>
+    </td>
+    <td class="grandao green"><%= number2currency(calcula_total_pedido(pedido)) %></td>
+    <td>
+      <%= link_to_remote "Detalhes", 
+                         :url => { :action => "detalhes", 
+                                   :id => pedido }, 
+                         :update => "pedido_mais_#{pedido.id}",
+                         :before => "$('pedido_#{pedido.id}').addClassName('carregando')",
+                         :after => "$('pedido_#{pedido.id}').removeClassName('carregando');" + visual_effect(:highlight, "pedido_#{pedido.id}", :duration => 1.5) %><br />
+      <%= link_to "Alterar Status", :action => "alterar_status", :id => pedido %><br />
+      <%= link_to "Remover", admin_pedido_path(pedido), :confirm => "Tem certeza?", :method => :delete %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="7" id="pedido_mais_<%= pedido.id %>" style="border-top:0">
+    </td>
+  </tr>
+<% end -%>
+</table>
+
+<%= will_paginate(@pedidos) %>
+
+<style type="text/css" media="screen">
+.pedido {
+  background-color:#eee;
+}
+.aguardando_pagamento {
+  background-color:#ddd;
+}
+</style>

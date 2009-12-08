@@ -1,0 +1,12 @@
+Caro Administrador
+
+<%= @pessoa.nome %> deixou um comentário sobre o pedido (n. <%= @pedido.id.to_s %>) em <%= @pedido.updated_at.strftime("%d de %B de %Y às %H:%M") %>:
+
+<%= @pedido.obs -%>
+--- FIM DO COMENTÁRIO ---
+
+Verifique no sistema maiores detalhes.
+Atenciosamente,
+
+
+A Galinha Pintadinha!

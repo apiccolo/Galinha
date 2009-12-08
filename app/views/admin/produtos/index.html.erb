@@ -1,13 +1,13 @@
 <h1>Produtos</h1>
 <p>
-  <%= link_to image_tag("icones/add.png") + " Novo produto", new_admin_produto_path, :style => "text-decoration:none" %>
+  <%= link_to image_tag("icones/add.png") + " Novo produto Simples", new_admin_produto_path, :style => "text-decoration:none" %>
+  <%= link_to image_tag("icones/add.png") + " Novo Combo", { :action => "new_combo" }, :style => "text-decoration:none;margin-left:100px" %>
 </p>
 <table id="lista_de_produtos" class="crud">
   <thead>
     <tr>
       <th><img src="/images/icones/disponivel.gif" alt="disponivel"></th>
       <th>Nome/Descrição simples</th>
-      <th>Em estoque</th>
       <th>Preço</th>
       <th colspan="1">
         Ações
@@ -15,7 +15,7 @@
     </tr>
   </thead>
 <% for produto in @produtos -%>
-  <tr>
+  <tr class="<%= produto.class.to_s.downcase %>">
     <td class="estreita">
       <% if produto.disponivel -%>
         <img src="/images/icones/disponivel.gif" alt="disponivel">
@@ -23,13 +23,17 @@
         <img src="/images/icones/disponivel_not.gif" alt="disponivel">
       <% end -%></td>
     <td>
-      <%= link_to produto.nome, edit_admin_produto_path(produto) %><br />
-      <%= produto.descricao_simples %>
+      <%= produto.nome %><br />
+      <span class="pequeno cinza"><%= produto.descricao_simples %></span>
     </td>
-    <td><%= produto.qtd_estoque %></td>
     <td class="grandao green"><%= number2currency(produto.preco) %></td>
     <td>
-      <%= link_to "Editar", edit_admin_produto_path(produto) %><br />
+      <% if (produto.class == ProdutoSimples) -%>
+        <%= link_to "Editar", edit_admin_produto_path(produto) %><br />
+      <% elsif (produto.class == ProdutoCombo) -%>
+        <%= link_to "Editar", :action => "edit_combo", :id => produto %><br />
+      <% end -%>
+      <%= link_to "Relacionar", :action => "relacionar", :id => produto %><br />
       <%= link_to "Remover", admin_produto_path(produto), :confirm => "Tem certeza?", :method => :delete %>
     </td>
   </tr>
@@ -39,8 +43,6 @@
 <%= will_paginate(@produtos) %>
 
 <style type="text/css" media="screen">
-.estreita { width:20px; }
-.grandao { font-size: 26px; }
-.grandao .real { font-size: 14px; }
 .remover { width: 80px; }
+.produtocombo { background-color:#ffd;}
 </style>

@@ -1,0 +1,12 @@
+<%= e001_identificacao_da_empresa %>
+<% for ps in @pedidos -%>
+<% if registrar_cliente?(ps) -%>
+<%= e010_cadastro_de_cliente(ps) %>
+<% end -%>
+<% end -%>
+<% for p in @pedidos -%>
+<%= e200_notas_ficais(p) %>
+<%= e201_lancamentos_de_impostos_das_notas_fiscais(p) %>
+<%= e221_chave_lancamento_produtos(p) %>
+<%= e222_lancamento_produtos(p) %>
+<% end -%>

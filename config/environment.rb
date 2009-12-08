@@ -23,7 +23,7 @@ Rails::Initializer.run do |config|
   #config.gem "thoughtbot-factory_girl", :version => "~> 1.1.3", :lib => "factory_girl", :source => "http://gems.github.com"
   #config.gem "thoughtbot-paperclip", :lib => "paperclip", :source => "http://gems.github.com"
   #config.gem "dancroak-validates_email_format_of", :lib => "validates_email_format_of", :source => "http://gems.github.com"
-  config.gem "aasm", :lib => "aasm", :source => "http://gems.github.com"
+  #config.gem "aasm", :lib => "aasm", :source => "http://gems.github.com"
   config.gem "bcrypt-ruby", :lib => "bcrypt"#, :version => "~> 2.0.3"
 
   # Only load the plugins named here, in the order given (default is alphabetical).

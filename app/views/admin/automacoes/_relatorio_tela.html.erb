@@ -1,0 +1,79 @@
+<% if pedidos and not pedidos.blank? -%>
+<style type="text/css" media="screen">
+ul#pedidos {
+  font-size:10px;
+  font-family:Verdana,Arial,sans-serif;
+}
+ul#pedidos li {
+  width:200px;
+  height:400px;
+  border:1px dotted gray;
+  float:left;
+  margin:5px;
+  padding:5px;
+  list-style:none;
+}
+ul#pedidos li p.empresa,
+ul#pedidos li p span.verysmall {
+  font-size:9px;
+}
+ul#pedidos li p span.title {
+  background-color:#ddd;
+  text-transform:uppercase;
+  display:block;
+}
+</style>
+<p><b><%= pedidos.size.to_s %> 
+      <%= pluralize(pedidos.size, "pedido concluído", "pedidos concluídos") %></b> (com NF) entre
+<% if inicio.kind_of?(DateTime) -%> 
+<%= inicio.strftime("%d de %B de %Y às %H:%M") %> e 
+<%= final.strftime("%d de %B de %Y às %H:%M") %> no sistema.
+<% else -%>
+as notas de número <b><%= inicio -%></b> e <b><%= final -%></b>.
+<% end -%>
+</p>
+<% 
+total_de_dvds = 0 
+total_das_notas = 0
+-%>
+<ul id="pedidos">
+  <% for p in pedidos -%>
+  <li id="pedido_<%= p.id.to_s %>">
+    <p class="empresa"><span class="title">Bromélia Produções Ltda.</span>
+       Nota Fiscal: <b><%= p.nota_fiscal %></b><br />
+       CNPJ: 09.583.710/0001-66<br />
+       Inscrição Estadual: 244.786.970.119<br />
+       Operação: Venda<br />
+       C.F.O.P.: 6.102</p>
+    <p class="pessoa"><span class="title">Destinatário/Remetente</span>
+       Nome: <b><%= p.pessoa.nome %></b><br />
+       C.P.F.: <b><%= p.pessoa.cpf.blank? ? "não informado" : formata_cpf(p.pessoa.cpf) %></b><br />
+       End.:: <%= p.entrega_endereco %><%= ", #{p.entrega_numero}" if p.entrega_numero and not p.entrega_numero.blank? %><%= " - #{p.entrega_complemento}" if p.entrega_complemento and not p.entrega_complemento.blank? %><br />
+       Bairro: <%= p.entrega_bairro %><br />
+       CEP: <%= p.entrega_cep %><br />
+       Município: <%= p.entrega_cidade %><br />
+       U.F.: <b><%= p.entrega_estado %></b><br />
+       R.G.: não informado</p>
+    <p class="produto"><span class="title">Dados do Produto</span>
+       Cod. Produto: <%= p.produtos_quantidades[0].codproduto %><br />
+       Descr. Prod.: DVD Galinha Pintadinha <b>Pedido n. <%= p.id.to_s %></b><br />
+       Sit. Trib: 00<br />
+       Quant.: <b><%= p.produtos_quantidades[0].qtd %></b><br />
+       Valor Unitário: <%= p.produtos_quantidades[0].nf_valorunit %><br />
+       Valor Total: <b><%= p.produtos_quantidades[0].nf_valortotal %></b><br />
+       <span class="verysmall">
+       Alíquota ICMS: 0<br />
+       Obs.: Não incidência de ICMS conforme RICMS-SP art. 7 inciso XIII.</span>
+      </p>
+      <% total_de_dvds += p.produtos_quantidades[0].qtd.to_i -%>
+      <% total_das_notas += p.produtos_quantidades[0].nf_valortotal -%>
+  </li>
+  <% end -%>
+</ul>
+<p>Total de DVDs: <b><%= total_de_dvds.to_s -%></b> discos<br />
+   Total das notas fiscais: R$ <b><%= sprintf("%.2f", total_das_notas) -%></b>
+</p>
+<% else -%>
+<p>Não há pedidos concluídos (com NF) entre <%= inicio.strftime("%d de %B de %Y às %H:%M") %> e 
+                                            <%= final.strftime("%d de %B de %Y às %H:%M") %>.</p>
+<% end -%>

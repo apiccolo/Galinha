@@ -1,0 +1,44 @@
+/* UL: passo a passo */
+ul#my_options {
+  margin:5px 0 0 0;
+  width:750px;
+}
+ul#my_options li {
+  list-style:none;
+  float:left;
+}
+ul#my_options li a span.number {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size:52px;
+  font-weight:bold;
+  float:left;
+  width:35px;
+  height:50px;
+  color:#A5A0D8;
+}
+ul#my_options li a span.instrucao {
+  line-height:1.1em;
+}
+ul#my_options li.bigsquare {
+  width:325px;
+  height:126px;
+  margin:10px 10px 0 0;
+  background-color:#FFE073;
+}
+ul#my_options li.bigsquare a {
+  display:block;
+  padding:45px 0 48px 80px;
+  text-decoration:none;
+}
+ul#my_options li.bigrow {
+  width:658px;
+  height:58px;
+  margin:10px 10px 0 0;
+  background-color:#5A5685;
+  border:1px solid #130873;
+}
+ul#my_options li.bigrow a {
+  display:block;
+  padding:18px 0 23px 18px;
+  text-decoration:none;
+}

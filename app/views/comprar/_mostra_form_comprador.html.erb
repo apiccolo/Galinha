@@ -1,0 +1,182 @@
+<% form_tag "/comprar/confirma_pedido" do %>
+<div class="grid_10 alpha omega">
+  <div class="grid_10 alpha omega topo_carrinho">
+    <h5>Dados do comprador &amp; Dados da entrega</h5>
+  </div>
+<p class="pequeno" style="text-align:center;margin:0">* Campos de preenchimento opcional</p>
+<div class="grid_5 alpha">
+<fieldset id="comprador">
+  <legend>Comprador</legend>
+  <table class="ficha">
+    <tr>
+      <td class="nome_do_campo">Seu nome</td>
+      <td>
+        <%= text_field :pessoa, :nome, :class => "required", :title => "Preencha seu nome" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Seu email</td>
+      <td>
+        <%= text_field :pessoa, :email, :class => "required validate-email", :title => "Digite corretamente seu email" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Sexo</td>
+      <td>
+        <%= radio_button("pessoa", "sexo", "m") -%> Masculino <br />
+        <%= radio_button("pessoa", "sexo", "f", :class => "validate-one-required", :title => "Escolha um...") -%> Feminino
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Telefone</td>
+      <td>
+        (<%= text_field :pessoa, :fone_ddd, :size => 3, :maxlength => 2, :class => "validate-digits", :title => "Use apenas números no DDD", :style => "margin-right:0;" -%>) <%= text_field :pessoa, :fone_str, :size => 9, :maxlength => 8 %>
+        <br />
+        <span class="hint">Use apenas números</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">CPF*</td>
+      <td>
+        <%= text_field :pessoa, :cpf, { 
+                          :size => 15, 
+                          :maxlength => 11, 
+                          :class => "validate-digits", 
+                          :title => "Digite seu CPF - use apenas números" } %>
+        <br />
+        <span class="hint">Use apenas números</span>
+        <br />
+        <span class="hint">Se informado, o CPF do comprador constará no programa <%= link_to "Nota Fiscal Paulista", "http://www.nfp.fazenda.sp.gov.br/", :target => "_blank" %>.</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Como conheceu*</td>
+      <td>
+        <%= select_tag "pessoa[como_conheceu]", 
+                       options_for_select([["", nil],
+                                           ["Youtube","youtube"],
+                                           ["Site de busca", "site de busca"],
+                                           ["Newsletter", "newsletter"],
+                                           ["Indicação de amigo/parente","indicacao"],
+                                           ["Presente", "presente"],
+                                           ["Loja virutal", "loja virtual"],
+                                           ["Loja (não virtual)", "loja real"],
+                                           ["Outro", "outro"]], nil) %>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">&nbsp;</td>
+      <td>
+      </td>
+    </tr>
+  </table>
+</fieldset>
+  </div>
+
+<div class="grid_5 omega">
+<fieldset id="entrega">
+  <legend>Entrega</legend>
+  <table class="ficha">
+    <tr>
+      <td class="nome_do_campo">Para</td>
+      <td>
+        <%= text_field :pedido, :entrega_nome_pacote %>
+        <br />
+        <span class="hint">Ex.: nome da criança presenteada</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Endereço</td>
+      <td>
+        <%= text_field :pedido, :entrega_endereco, :class => "required", :title => "Preencha o endereço da entrega" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Número</td>
+      <td>
+        <%= text_field :pedido, :entrega_numero, :size => 12, :class => "required", :title => "Preencha o número do endereço de entrega" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Complemento*</td>
+      <td>
+        <%= text_field :pedido, :entrega_complemento %>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Bairro*</td>
+      <td>
+        <%= text_field :pedido, :entrega_bairro %>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">CEP</td>
+      <td>
+        <%= text_field :pedido, :entrega_cep, :size => 12, :maxlength => 8, :class => "required validate-digits", :title => "Digite o CEP do endereço de entrega - use apenas números" %>
+        <br />
+        <span class="hint">Use apenas números</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Estado</td>
+      <td>
+        <%= render :partial => 'select_estado', :locals => { :observe => false } -%>
+      </td>
+    </tr>
+    <tr>
+      <td class="nome_do_campo">Cidade</td>
+      <td>
+        <%= render :partial => 'text_cidade' -%>
+      </td>
+    </tr>
+  </table>
+</fieldset>
+  </div>
+</div>
+
+<div class="grid_10 alpha omega topo_carrinho direita" style="padding:2px">
+  <%= submit_tag 'CONTINUAR &raquo;' %>
+</div>
+<% end %>
+
+<style type="text/css" media="screen">
+#entrega, #comprador {
+  margin:10px 0 0;
+}
+#entrega legend,
+#comprador legend {
+  padding:5px 30px;
+  background-color:#ddd;
+  border-top:1px dotted gray;
+  border-left:1px dotted gray;
+  border-right:1px dotted gray;
+  font-weight:bold;
+}
+#entrega table.ficha,
+#comprador table.ficha {
+  width:376px;
+  border:1px dotted gray;
+  padding:10px 10px 0;
+}
+#entrega table.ficha tr td.nome_do_campo,
+#comprador table.ficha tr td.nome_do_campo {
+  text-align:right;
+  padding:10px 5px;
+  width:120px;
+  margin:10px 0;
+}
+.hint {
+  line-height:0.6em;
+}
+
+
+/* legado.... */
+#calculando_frete p {
+  text-align:center;
+  margin:5px 0;
+  color:red;
+}
+#frete div#opcoes {
+  margin-left:110px;
+}
+</style>

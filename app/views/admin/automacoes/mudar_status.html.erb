@@ -1,0 +1,7 @@
+<div>
+<% if @pedidos -%>
+  <% for p in @pedidos %>
+    <b><%= p.id.to_s %></b><br />
+  <% end %>
+<% end -%>
+</div>

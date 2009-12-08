@@ -1,0 +1,17 @@
+Car<%= @pessoa.termina_o_a %> <%= @pessoa.primeiro_nome %>,
+
+Vimos que o seu pedido de DVD da Galinha Pintadinha nº <%= @pedido.id.to_s %> não foi concluído.
+Para sua comodidade, ele foi cancelado em nosso sistema.
+Você pode fazer outro pedido a qualquer hora que ele chega rapidinho
+em sua casa!
+O DVD é uma graça e a criançada vai adorar!
+
+http://www.galinhapintadinha.com.br/
+
+Qualquer dúvida, não hesite em contactar "contato@galinhapintadinha.com.br"!
+
+Atenciosamente,
+Equipe da Galinha Pintadinha
+
+PS: Se desejar, acompanhe o status de seu pedido em:
+<%= @link2pedido %>

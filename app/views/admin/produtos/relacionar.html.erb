@@ -1,0 +1,46 @@
+<h1>Relacionar Produtos</h1>
+
+<% form_for(@produto, :url => { :action => "gravar_relacionar", :id => @produto }, :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages %>
+  <%#= render :partial => "form_produto_combo", :locals => { :f => f } %>
+  <div class="grid_2 alpha">
+    <div>
+      <%= infos_produto_box(@produto, :link_to_carrinho => false) %>
+    </div>
+    
+    <p>Produtos relacionados</p>
+    <ul>
+      <% @produto.produtos_relacionados.each do |s| -%>
+      <li><%= infos_produto_box(s, :link_to_carrinho => false) -%></li>
+      <% end -%>
+    </ul>
+    
+    <div id="criar_relacao" style="width:120px;height:120px;background-color:yellow">
+      <p>Arraste para cá os produtos relacionados</p>
+      <%= drop_receiving_element("criar_relacao", 
+                                 :url => { :action => "add" },
+                                 :onDrop => "function(draggable_element, droppable_element, event) { relacionarProduto(#{@produto.id}, draggable_element.id) }",
+                                 :confirm => "Quer mesmo relacionar esse produto a '#{@produto.nome}'?") %>
+    </div>
+  </div>
+  
+  <div class="grid_10 omega">
+    <p>Demais produtos</p>
+    <ul>
+    <% @demais_produtos.each do |p| -%>
+      <li id="produto_<%= p.id %>" value="<%= p.id %>"><%= infos_produto_box(p, :link_to_carrinho => false) %></li>
+      <%= draggable_element("produto_#{p.id}") %>
+    <% end -%>
+    </ul>
+  </div>
+  <p class="form_button"><%= f.submit "Salvar" %> ou <%= link_to "Voltar", admin_produtos_path %></p>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+function relacionarProduto(produto_id, elem_id) {
+  if ($(elem_id)) {
+    location.href='/admin/produtos/'+produto_id+'/relacionar?novo=1&produto_id='+$(elem_id).value;
+    //alert($(elem_id).value);
+  }
+}
+</script>

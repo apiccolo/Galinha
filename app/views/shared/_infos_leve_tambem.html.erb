@@ -1,0 +1,24 @@
+<p style="margin:0">
+  <%= thumbnail_produto(produto_combo) -%><br />
+  <span class="pequeno"><%= produto_combo.nome %></span>
+  <%= link_to_function "[+]", visual_effect(:blind_down, "mais_prod_#{produto_combo.id}") %>
+</p>
+<div style="margin:0;display:none" id="mais_prod_<%= produto_combo.id %>">
+  Contém:
+  <ul style="margin:0">
+  <% total = 0 %>
+  <% produto_combo.produtos.each do |p| %>
+    <% total += p.preco -%>
+    <li><%= p.nome %></li>
+  <% end -%>
+  </ul>
+</div>
+<p style="margin:0">
+  De <span class="preco_mentira"><%= number_to_currency(total) %></span>
+  por <span class="preco_final"><%= number_to_currency(produto_combo.preco) %></span><br />
+  Desconto de <span class="desconto"><%= number_to_currency(produto_combo.desconto) %></span>!</p>
+
+<p><%= link_to_remote "Levar!", 
+                      :url => { :action => "trocar_por_combo", 
+                                :produto_id => produto_combo.id } if options[:link_to_carrinho] -%></p>
+

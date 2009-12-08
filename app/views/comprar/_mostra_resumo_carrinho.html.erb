@@ -1,0 +1,86 @@
+<div class="grid_10 alpha omega">
+  <div class="grid_10 alpha omega topo_carrinho">
+    <h5>Produtos escolhidos</h5>
+  </div>
+<% if @carrinho and (@carrinho.size > 0) -%>
+<table class="crud">
+  <tr>
+    <th>Qtd.</th>
+    <th>Produto</th>
+    <th>Para presente?</th>
+    <th style="text-align:center">Valor</th>
+  </tr>
+<% total_qtd = total_preco = 0 %>
+<% @carrinho.each_with_index do |c, i| %>
+<% prod = Produto.find(c.produto_id) %>
+  <tr>
+    <td class="curta">
+      <%= c.qtd %>
+    </td>
+    <td class="larga">
+      <p style="margin:0">
+      <%= thumbnail_produto(prod) %>
+      <span class="pequeno"><%= prod.nome %></span>
+      </p>
+    </td>
+    <td>
+      <% if c.presente %>
+      sim
+      <% else %>
+      não
+      <% end %>
+    </td>
+    <td class="valor verdinho"><%= number_to_currency(calcular_preco(c, prod)) %></td>
+  </tr>
+<% total_qtd += c.qtd %>
+<% total_preco += calcular_preco(c, prod) %>
+<% end %>
+  <tr id="total">
+    <td colspan="2">&nbsp;<%= pluralize(total_qtd, "item") %></td>
+    <td></td>
+    <td class="valor grandao"><%= number_to_currency(total_preco) %></td>
+  </tr>
+</table>
+<% end -%>
+</div>
+<style type="text/css" media="screen">
+.topo_carrinho {
+  background-color:#576F9E;
+}
+.topo_carrinho h5 {
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  margin:0;
+}
+.valor {
+  font-weight:bold;
+}
+.verdinho {
+  background-color:#BFDDBF;
+  text-align:center;
+}
+.grandao {
+  font-size:18px;
+  color:white;
+}
+.pequeno {
+  font-size:11px;
+}
+.direita {
+  text-align:right;
+}
+.centro {
+  text-align:center;
+}
+.curta {
+  width:50px;
+}
+.larga {
+  width:240px;
+}
+tr#total {
+  background-color:#69C56A;
+  line-height:0.25em;
+}
+</style>

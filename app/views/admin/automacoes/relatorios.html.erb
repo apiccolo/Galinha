@@ -1,0 +1,49 @@
+<style type="text/css" media="screen">
+ol#rel li {
+  list-style:none;
+  margin:0 0 30px 10px;
+}
+</style>
+<div>
+<% form_remote_tag :url => "/admin/automacao/processar_relatorio" do %>
+<fieldset>
+  <legend> Relatórios: Vendas com Nota Fiscal </legend>
+  <ol id="rel">
+    <li>
+  <label for="intervalo">Seleção</label><br />
+  <%= radio_button_tag "selecao", "intervalo", false %> Intervalo
+  <div style="padding-left:20px">
+  Início <%= datetime_select("relatorio", "inicio", 
+                             :order => [:day, :month, :year], 
+                             :default => 30.days.ago.at_midnight) %><br />
+  Fim&nbsp;&nbsp;&nbsp; <%= datetime_select("relatorio", "final", 
+                            :order => [:day, :month, :year], 
+                            :default => 0.days.from_now.at_beginning_of_day) %>
+  </div>
+  <%= radio_button_tag "selecao", "numero_notas", true %> Número das notas
+  <div style="padding-left:20px">
+  Início <%= text_field("numero_nf", "inicio", :size => 8) %>  <br />
+  Fim&nbsp;&nbsp;&nbsp; <%= text_field("numero_nf", "final", :size => 8) %>
+  </div>
+    </li>
+    <li>
+      <label for="tipo">Saída</label><br />
+  <%= radio_button_tag "opcao", "tela", true %> Notas fiscais na tela<br />
+  <%= radio_button_tag "opcao", "arquivo", false %> Notas fiscais para contador
+    </li>
+    <li>  
+  <label for="submit">&nbsp;</label>
+  <%= submit_to_remote "Processar", "Processar",
+                       :url => { :action => 'processar_relatorio' },
+                       :before => "$('spinner').show();"
+                       %>
+    </li>
+  </ol>
+</fieldset>
+<% end %>
+</div>
+
+<div id="wrapper">
+  <%= image_tag("spinner.gif", :id => "spinner", :style => "display:none") %>
+  <div id="resultado"></div>
+</div>

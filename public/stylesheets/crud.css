@@ -1,0 +1,52 @@
+/* CRUD
+------------------------------------------------------------------------------
+*/
+
+table.crud {
+  width: 100%;
+}
+
+table.crud th {
+  text-align: left;
+  background-color: #F5F5F5;
+  padding: 2px 4px 2px 0;
+}
+
+table.crud td {
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #EAEAEA;
+}
+
+a.incluir {
+  font-weight: bold;
+  color: green;
+  padding: 0 0 0 18px;
+  background: transparent url(../../images/icones/add.png) no-repeat 0 0;
+}
+
+a.remover {
+  font-weight: bold;
+  color: #E9584C;
+  padding: 0 0 0 18px;
+  background: transparent url(../../images/icones/delete.png) no-repeat 0 0;
+}
+
+.procurar {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-color: #F5F5F5;
+  margin: 0 0 20px;
+  padding: 10px;
+}
+
+.procurar fieldset {
+  margin: 0;
+}
+
+.procurar li {
+  float: left;
+  display: inline;
+  margin-right: 10px;
+}

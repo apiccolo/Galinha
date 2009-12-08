@@ -1,0 +1,17 @@
+<div>
+<% form_tag "/admin/automacao/processar_dados", :multipart => true do %>
+<fieldset>
+  <legend> Automação: entrada de dados</legend>
+  
+  <label for="file_content"><%= radio_button_tag "opcao", "arquivo", true %> arquivo</label>
+  <%= file_field_tag "arquivo" %>
+  
+  <label for="file_content"><%= radio_button_tag "opcao", "text-area" %> texto</label>
+  <%= text_area_tag "file_content", nil, :cols => 90, :rows => 10 %>
+  
+  <label for="submit">&nbsp;</label>
+  <%= submit_tag "Processar" %>
+
+</fieldset>
+<% end %>
+</div>

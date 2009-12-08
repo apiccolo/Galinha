@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Imprimir Nota Fiscal</title>
+  <%= javascript_include_tag :defaults %>
+</head>
+<style type="text/css" media="screen,print">
+#my_flash {
+  float:left;
+  width:500px;
+}
+#funcoes {
+  display:none;
+}
+</style>
+<style type="text/css" media="screen">
+#funcoes {
+  float:left;
+  margin:0 auto;
+  display:block;
+  padding:5px;
+  border:1px dotted gray;
+  width:260px;
+  background-color:#aaa;
+}
+#funcoes h2 {
+  margin-top:0;
+}
+#funcoes form {
+  display:block;
+}
+#funcoes input {
+  float:left;
+  margin-right:10px;
+}
+</style>
+</style>
+<body>
+
+<div id="my_flash">
+<OBJECT CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" CODEBASE="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" WIDTH="485" HEIGHT="825">
+     <PARAM NAME=movie VALUE="/flash/NF.swf?<%= querystring_para_notafiscal(pedido) %>">
+     <PARAM NAME=quality VALUE=high>
+     <PARAM NAME=menu VALUE=false>
+     <PARAM NAME=wmode VALUE=transparent>
+
+     <EMBED SRC="/flash/NF.swf?<%= querystring_para_notafiscal(pedido) %>" QUALITY=high MENU=false PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" TYPE="application/x-shockwave-flash" WIDTH="485" HEIGHT="825" wmode="transparent">   </EMBED>
+  </OBJECT>
+</div>
+  
+  <div id="funcoes">
+    <h2>Impressão de Nota Fiscal</h2>
+    <div id="input_dados">
+    <% form_remote_tag :url => {:action => "gravar_nota_fiscal", 
+                                :id => pedido.id} do %>
+      <p>Número da nota fiscal<br />
+      <%= text_field :pedido, :nota_fiscal, :size => 10 %>
+      <%= submit_to_remote "submit_pedido_#{pedido.id}", "Salvar", 
+                           :url => {:action => "gravar_nota_fiscal", :id => pedido.id} %></p>
+    <% end %>
+    </div>
+    <% if proximo -%>
+    <%= button_to "Próximo pedido &raquo;", 
+                  {:action => "print",
+                   :nota_fiscal => 1,
+                   :id => proximo.id } %>
+    <% end %>
+  </div>
+  <p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,17 @@
+Car<%= @pessoa.termina_o_a %> <%= @pessoa.primeiro_nome %>,
+
+Verificamos em nosso sistema que não foi efetuado o pagamento do boleto referente ao pedido nº <%= @pedido.id.to_s %> (DVD da Galinha Pintadinha).
+
+Lembramos que é possível efetuar o pagamento ainda nos próximos dias.
+Ficamos no aguardo!
+
+Caso prefira emitir uma nova via do boleto ou mesmo mudar a forma de pagamento, clique no link abaixo: 
+
+<%= @link2pedido %>
+
+e, nessa página referente a seu pedido, no botão à direita, dirija-se ao ambiente do UOL PagSeguro para efetuar seu pagamento.
+
+Atenciosamente
+Equipe da Galinha Pintadinha
+
+PS: Caso você já tenha efetuado esse pagamento ou houve duplicidade em seu pedido, por favor, desconsidere este aviso.

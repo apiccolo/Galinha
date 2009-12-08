@@ -1,6 +1,10 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
+  def ambiente_producao?
+    (RAILS_ENV=='production')
+  end
+  
   def flash_message
     if !flash.empty?
       mensagens = []

@@ -1,0 +1,46 @@
+<h3>Emails automáticos</h3>
+
+<% if old_pedidos -%>
+<p><a href="#" onclick="javascript:$('pedidos_antigos').toggle()">[+]</a>
+   <b><%= old_pedidos.size %></b> pedidos antigos (anteriores a <%= "#{15.days.ago.strftime('%d de %B')}" %>) que não foram pagos:</p>
+<ul id="pedidos_antigos" style="display:none;">
+  <% for pedido in old_pedidos -%>
+  <% pedido.cancelar! %>
+    <li>Pedido n. <%= pedido.id.to_s %> CANCELADO!<br />
+        Pedido feito em <%= pedido.created_at.strftime("%d de %B de %Y às %H:%M") %>.<br />
+        Email enviado para <b><%= pedido.pessoa.email %></b>.
+    </li>
+  <% end -%>
+</ul>
+<% end -%>
+<hr />
+
+<% if old_compras -%>
+<p><a href="#" onclick="javascript:$('compras_antigas').toggle()">[+]</a>
+   <b><%= old_compras.size %></b> compras já enviadas (anteriores a <%= "#{30.days.ago.strftime('%d de %B')}" %>), consideradas como recebidas pelos clientes:</p>
+<ul id="compras_antigas" style="display:none;">
+  <% for compra in old_compras %>
+  <% compra.encerrar! %>
+    <li>Compra n. <%= compra.id.to_s %> RECEBIDA!<br />
+        Compra feita em <%= compra.created_at.strftime("%d de %B de %Y às %H:%M") %>.<br />
+        Email enviado para <b><%= compra.pessoa.email %></b>.
+    </li>
+  <% end -%>
+</ul>
+<% end -%>
+<hr />
+
+<% if retry_boletos -%>
+<p><a href="#" onclick="javascript:$('retry_boletos').toggle()">[+]</a>
+   <b><%= retry_boletos.size %></b> pedidos não pagos por Boleto (feitos entre <%= "#{10.days.ago.strftime('%d de %B')}" %> e <%= "#{7.days.ago.strftime('%d de %B')}" %>):</p>
+<ul id="retry_boletos" style="display:none;">
+  <% for p in retry_boletos %>
+  <% p.notifica_retry_boleto %>
+    <li>Pedido n. <%= p.id.to_s %><br />
+        Pedido feito em <%= p.created_at.strftime("%d de %B de %Y às %H:%M") %>.<br />
+        Email enviado para <b><%= p.pessoa.email %></b>.
+    </li>
+  <% end -%>
+</ul>
+<% end -%>
+<hr />

@@ -1,47 +1,67 @@
-<div class="grid_10 alpha omega">
-  <img src="/images/decoracao/carrinho.png" alt="carrinho" />
+<div class="grid_10 alpha omega" id="meu_carrinho">
+  <div class="grid_10 alpha omega topo_carrinho">
+    <h5>Seu carrinho <%= link_to ".", :action => "esvaziar" %></h5>
+  </div>
+  <div class="grid_2 alpha">
+    <img src="/images/decoracao/carrinho.png" alt="carrinho" width="130" height="130" style="margin:30px 0 0 10px;" />
+  </div>
+  <div class="grid_8 omega">
 <% if @carrinho and (@carrinho.size > 0) -%>
 <table class="crud">
   <tr>
-    <!-- th>id</th -->
-    <th>qtd</th>
-    <th>nome</th>
-    <th>presente</th>
-    <th>preco</th>
-    <th></th>
+    <th>Qtd.</th>
+    <th>Produto</th>
+    <th>Para presente?</th>
+    <th style="text-align:center">Valor</th>
+    <th style="text-align:right">Tirar</th>
   </tr>
 <% total_qtd = total_preco = 0 %>
-<% @carrinho.each do |c| %>
+<% @carrinho.each_with_index do |c, i| %>
 <% prod = Produto.find(c.produto_id) %>
   <tr>
-    <!-- td><%= prod.id %></td -->
-    <td><%= text_field_tag "qtd_produto_#{prod.id}", c.qtd, :size => 3 %></td>
-    <td><%= prod.nome %></td>
-    <td>
-      <%= check_box_tag "presente_produto_#{prod.id}", 1, c.presente, :onclick => "embrulhar(#{prod.id})" %>
-      <abbr title="Acréscimo de <%= number_to_currency(prod.plus_presente) %>/item">+...?</abbr>
+    <td class="curta">
+      <%= text_field_tag "qtd_produto_#{prod.id}", c.qtd, { 
+                         :size => 2, 
+                         :style => "font-size:16px",
+                         :onblur => "alterarQtd('#{prod.id}', $F('qtd_produto_#{prod.id}'))" } %>
     </td>
-    <td><%= number_to_currency(calcular_preco(c, prod)) %></td>
-    <td><%= link_to "[x]", :action => "retirar", :produto_id => prod.id %></td>
+    <td class="larga">
+      <p style="margin:0">
+      <%= thumbnail_produto(prod) %>
+      <span class="pequeno"><%= prod.nome %></span>
+      </p>
+    </td>
+    <td>
+      <%= check_box_tag "presente_produto_#{prod.id}", 1, c.presente, :onclick => "javascript:embrulhar(#{prod.id})" %>
+      <span class="pequeno">+<%= number_to_currency(prod.plus_presente) %>/unid.</span>
+    </td>
+    <td class="valor verdinho"><%= number_to_currency(calcular_preco(c, prod)) %></td>
+    <td class="curta direita"><%= link_to_remote "[x]", 
+                                                 :url => { :action => "retirar",  
+                                                           :produto_id => prod.id },
+                                                 :title => "Tirar do carrinho" if (@carrinho.size > 1) -%>&nbsp;</td>
   </tr>
 <% total_qtd += c.qtd %>
 <% total_preco += calcular_preco(c, prod) %>
 <% end %>
   <tr id="total">
     <!--td></td-->
-    <td class="green"><%= total_qtd %> itens</td>
+    <td colspan="2">&nbsp;<%= pluralize(total_qtd, "item") %></td>
     <td></td>
-    <td></td>
-    <td class="green"><%= number_to_currency(total_preco) %></td>
+    <td class="valor grandao"><%= number_to_currency(total_preco) %></td>
     <td></td>    
   </tr>
 </table>
 <% else -%>
-<p>Seu carrinho está vazio.</p>
+<p class="centro" style="margin-top:20px">Seu carrinho de compras está vazio.</p>
 <% end -%>
+  </div>
 </div>
 <script type="text/javascript" charset="utf-8">
 function embrulhar(prod_id) {
-  location.href='/comprar/embrulhar?produto_id='+prod_id 
+  new Ajax.Request('/comprar/embrulhar?produto_id='+prod_id, {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>')}); return false;
+}
+function alterarQtd(prod_id, qtd) {
+  new Ajax.Request('/comprar/alterar_qtd?produto_id='+prod_id+'&qtd='+qtd, {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>')}); return false;
 }
 </script>
