@@ -1,0 +1,35 @@
+<p style="margin:0">
+  <%= thumbnail_produto(produto, :style => "float:left") -%><br />
+  <span class="produto_nome"><%= produto.nome %></span>
+  <% if options[:mostrar_preco] -%>
+  <br />
+    <% if options[:mostrar_desconto] -%>
+    De <span class="preco_mentira"><%= number2currency(produto.preco_fake) %></span> 
+    por <span class="preco_final"><%= number2currency(produto.preco) %></span>
+    <br />
+    Desconto de <span class="desconto"><%= number2currency(produto.desconto) -%></span>!
+    <% else -%>
+    <b><%= number_to_currency(produto.preco) %></b>
+    <% end -%>
+  <% end -%>
+</p>
+<% if options[:mostrar_itens] -%>
+<p class="pequeno">Contém:<br />
+  <% produto.produtos.each do |item| -%>
+  - <%= item.nome -%>
+  <%= link_to_remote "[x]", 
+                     :url => { 
+                       :action => "desfazer_combo",
+                       :combo_id => produto.id,
+                       :produto_id => item.id
+                     }, 
+                     :confirm => "Ao retirar um produto do combo, você perde o desconto da compra casada.\nTem certeza que deseja retirar este produto do combo?\n" %>
+  <br />
+  <% end -%>
+</p>
+<% end -%>
+<% if options[:link_to_carrinho] -%>
+<p><%= link_to_remote "Colocar #{image_tag('icones/adicionar_carrinho.png')}", 
+                      :url => { :action => "incluir", 
+                                :produto_id => produto.id } -%></p>
+<% end -%>

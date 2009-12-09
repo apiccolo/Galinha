@@ -1,24 +1,21 @@
-<p style="margin:0">
-  <%= thumbnail_produto(produto_combo) -%><br />
-  <span class="pequeno"><%= produto_combo.nome %></span>
-  <%= link_to_function "[+]", visual_effect(:blind_down, "mais_prod_#{produto_combo.id}") %>
+<% p_faltante = produto_faltante_para_completar_combo(produto_combo, carrinho) -%>
+<% if p_faltante -%>
+<div class="clearfix">
+<p class="produto_faltante">
+  <%= thumbnail_produto(p_faltante, :style => "float:left;margin:0 10px 0 0") -%><br />
+  <span class="pequeno"><%= p_faltante.nome %></span><br />
+  De <span class="preco_mentira"><%= number2currency(p_faltante.preco) %></span> 
+  por <span class="preco_final"><%= number2currency(p_faltante.preco - produto_combo.desconto) %></span>
 </p>
-<div style="margin:0;display:none" id="mais_prod_<%= produto_combo.id %>">
-  Contém:
-  <ul style="margin:0">
-  <% total = 0 %>
-  <% produto_combo.produtos.each do |p| %>
-    <% total += p.preco -%>
-    <li><%= p.nome %></li>
-  <% end -%>
-  </ul>
+<p class="lnk_levar_pacote">
+<%= link_to_remote "Levar o pacote!", 
+                    :url => { 
+                      :action => "trocar_por_combo", 
+                      :produto_id => produto_combo.id } if options[:link_to_carrinho] -%></p>
 </div>
+<p style="margin:0">Levando o <b><%= produto_combo.nome %></b>, você ganha um desconto de <span class="desconto"><%= number2currency(produto_combo.desconto) %></span>!</p>
 <p style="margin:0">
-  De <span class="preco_mentira"><%= number_to_currency(total) %></span>
-  por <span class="preco_final"><%= number_to_currency(produto_combo.preco) %></span><br />
-  Desconto de <span class="desconto"><%= number_to_currency(produto_combo.desconto) %></span>!</p>
-
-<p><%= link_to_remote "Levar!", 
-                      :url => { :action => "trocar_por_combo", 
-                                :produto_id => produto_combo.id } if options[:link_to_carrinho] -%></p>
-
+  <b><%= produto_combo.produtos.size %> produtos</b>, no total de <span class="preco_mentira"><%= number2currency(produto_combo.preco_fake) %></span>
+  por apenas <span class="preco_final"><%= number2currency(produto_combo.preco) %></span>. Ou seja, um
+  desconto de <span class="desconto"><%= number2currency(produto_combo.desconto) %></span>!</p>
+<% end -%>

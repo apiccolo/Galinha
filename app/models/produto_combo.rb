@@ -69,17 +69,21 @@ MYSTRING
   # PRECO do produto combo é o preco dos itens
   # decrescido do DESCONTO.
   def preco
-    meu_preco = 0
-    self.produtos.each { |p| meu_preco += p.preco }
+    meu_preco = preco_fake
     meu_preco -= self.desconto
     return meu_preco
   end
   
   def preco=(valor)
-    meu_preco = 0
-    self.produtos.each { |p| meu_preco += p.preco }
+    meu_preco  = preco_fake
     meu_preco -= self.desconto
     write_attribute(:preco, meu_preco)
+  end
+  
+  def preco_fake
+    meu_preco = 0
+    self.produtos.each { |p| meu_preco += p.preco }
+    return meu_preco
   end
   
   # A disponibilidade do combo é a disponibilidade

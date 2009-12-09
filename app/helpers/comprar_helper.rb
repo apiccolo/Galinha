@@ -10,12 +10,19 @@ module ComprarHelper
   
   # Dado um produto (obj), retorna a imagem
   # em formato pequeno (50 de altura) ~ thumbnail
-  def thumbnail_produto(produto, options = {})
+  def thumbnail_produto(produto, my_options = {})
     options = {
       :class => "thumbnail"
     }
-    options = options.merge!(options)
-    image_tag("produtos/#{produto.imagem_pequena}_thumb.png", :class => options[:class])
+    options = options.merge!(my_options)
+    image_tag("produtos/#{produto.imagem_pequena}_thumb.png", options)
+  end
+  
+  def produto_faltante_para_completar_combo(produto_combo, carrinho)
+    ids_no_carrinho = Carrinho.produto_ids(carrinho)
+    p_id = produto_combo.produto_ids - ids_no_carrinho
+    return ProdutoSimples.find(p_id[0]) if (p_id.size == 1)
+    return nil
   end
   
 end

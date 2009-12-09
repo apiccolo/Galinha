@@ -14,6 +14,13 @@ class ComprarController < ApplicationController
   end
   
   #------------------------------------------------------------
+  #   Mostra os produtos disponíveis
+  #
+  def produtos
+    @produtos = Produto.disponivel.paginate(:page => params[:page], :per_page => 20)
+  end
+  
+  #------------------------------------------------------------
   #   Formulário de confirmacao do pedido
   #
   verify :method => :post,
@@ -164,6 +171,23 @@ class ComprarController < ApplicationController
     end
   end
 
+  #-----------------------------------------------------------
+  #   Retira produto do combo (i.e. desfaz o combo)
+  #
+  verify :params => [:combo_id, :produto_id],
+         :method => :post,
+         :only => :desfazer_combo
+  def desfazer_combo
+    desmembrar_combo_em_produtos(params[:combo_id].to_i, params[:produto_id].to_i)
+    if request.xhr?
+      @carrinho = session[:carrinho]
+      refresh_carrinho_e_outros
+    else
+      redirect_to :action => :index
+    end
+  end
+
+
   #-----------------------------------------
   #   PRIVATE METHODS
   #
@@ -256,6 +280,14 @@ class ComprarController < ApplicationController
                                                  :qtd => 1,
                                                  :presente => false)
     session[:carrinho] << produto_no_carrinho
+  end
+  
+  def desmembrar_combo_em_produtos(combo_id, produto_id)
+    retirar_produto(combo_id)
+    combo = ProdutoCombo.find(combo_id)
+    combo.produto_ids.each do |item_id|
+      incluir_produto(item_id) if (item_id != produto_id)
+    end
   end
   
   protected

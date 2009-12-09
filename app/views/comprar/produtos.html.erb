@@ -1,0 +1,37 @@
+<div class="prefix_1 grid_10 suffix_1 alpha omega">
+  <h3 id="call2compra">Produtos da Galinha Pintadinha!</h3>
+  <ul id="lista_produtos">
+  <% @produtos.each do |produto| -%>
+    <li>
+      <%= infos_produto_box(produto, :link_to_carrinho => false,
+                                     :mostrar_preco => true,
+                                     :mostrar_desconto => true,
+                                     :mostrar_itens => true) -%>
+      <p><%= produto.descricao %></p>
+      <p><%= link_to "Comprar!", 
+                     { :action => "incluir", 
+                       :produto_id => produto.id },
+                     :method => :post,
+                     :class => "comprar" -%>
+    </li>
+  <% end -%>
+  </ul>
+</div>
+<style type="text/css" media="screen">
+ul#lista_produtos li {
+  margin:30px 0;
+  list-style:none;
+}
+ul#lista_produtos li p {
+  margin:1px 0;
+}
+ul#lista_produtos li p a.comprar {
+  padding:2px 10px;
+  background-color:red;
+  color:white;
+  font-weight:bold;
+}
+ul#lista_produtos li p a.comprar {
+  background-color:green;
+}
+</style>

@@ -1,7 +1,10 @@
 <p style="margin:0">
   <%= thumbnail_produto(produto) -%><br />
-  <span class="pequeno"><%= produto.nome %></span><br />
-  <b><%= number_to_currency(produto.preco) %></b></p>
+  <span class="pequeno"><%= produto.nome %></span>
+  <% if options[:mostrar_preco] -%>
+  <br /><b><%= number_to_currency(produto.preco) %></b>
+  <% end -%>
+</p>
 <% if options[:link_to_carrinho] -%>
 <p><%= link_to_remote "Colocar #{image_tag('icones/adicionar_carrinho.png')}", 
                       :url => { :action => "incluir", 

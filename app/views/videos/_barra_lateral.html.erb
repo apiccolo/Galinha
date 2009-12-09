@@ -13,7 +13,11 @@
   &nbsp;&nbsp;&nbsp;RN e RO, frete R$13,00)
 </p>
 
-	<p style="margin:0"><a href="/comprar"><img src="/images/produtos/dvd1_botao_compra.png" id="dvd_com_botao" alt="dvd botao"/></a></p>
+	<p style="margin:0"><%= link_to image_tag("produtos/dvd1_botao_compra.png", :id => "dvd_com_botao"), 
+	                                { :controller => "comprar", 
+	                                  :action => "incluir",
+	                                  :produto_id => 1 },
+	                                :method => :post %></p>
 	<p style="text-align:right;margin-right:15px;color:#007AC1">Produto disponível, <span class="negrito">pronta entrega</span></p>
 </div>
 

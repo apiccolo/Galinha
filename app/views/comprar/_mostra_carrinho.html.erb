@@ -26,10 +26,10 @@
                          :onblur => "alterarQtd('#{prod.id}', $F('qtd_produto_#{prod.id}'))" } %>
     </td>
     <td class="larga">
-      <p style="margin:0">
-      <%= thumbnail_produto(prod) %>
-      <span class="pequeno"><%= prod.nome %></span>
-      </p>
+      <%= infos_produto_box(prod, :link_to_carrinho => false,
+                                  :mostrar_preco => true,
+                                  :mostrar_desconto => true,
+                                  :mostrar_itens => true) -%>
     </td>
     <td>
       <%= check_box_tag "presente_produto_#{prod.id}", 1, c.presente, :onclick => "javascript:embrulhar(#{prod.id})" %>

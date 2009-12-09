@@ -2,10 +2,14 @@ module SharedHelper
 
   def infos_produto_box(produto, my_options = {})
     options = {
-      :link_to_carrinho => true
+      :link_to_carrinho => true,
+      :mostrar_preco => true,
+      :mostrar_desconto => false,
+      :mostrar_itens => false
     }
     options = options.merge!(my_options)
-    render :partial => "shared/infos_produto_box",
+    
+    render :partial => "shared/infos_#{produto.class.to_s.underscore.downcase}",
            :locals => { 
              :produto => produto,
              :options => options

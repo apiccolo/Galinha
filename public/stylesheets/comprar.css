@@ -52,12 +52,13 @@ tr#total {
   text-align:center;
   margin:0;
 }
-ul#lista_de_sugestoes {
+ul#lista_de_sugestoes,
+ul#lista_de_leve_tambem {
   margin:0;
 }
 ul#lista_de_sugestoes li.produtos {
   list-style:none;
-  margin:10px 0 0 10px;
+  margin:10px 0 0;
   padding:0;
   float:left;
   width:180px;
@@ -65,18 +66,42 @@ ul#lista_de_sugestoes li.produtos {
 ul#lista_de_sugestoes li.produtos p {
   text-align:center;
 }
-#leve_tambem .topo_colorido {
+ul#leve_tambem .topo_colorido {
   background-color:red;
 }
-#leve_tambem .topo_colorido h6 {
+ul#leve_tambem .topo_colorido h6 {
   color:#576F9E;
   font-weight:normal;
   text-align:center;
   margin:0;
 }
+ul#lista_de_leve_tambem li.produtos {
+  list-style:none;
+  margin:10px 0 0 30px;
+  padding:0;
+}
+ul#lista_de_leve_tambem li.produtos p.produto_faltante,
+ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote {
+  width:350px;
+  display:block;
+  float:left;
+}
+ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote {
+  margin-top:20px;
+}
+ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote a {
+  background-color:#009BCA; 
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  padding:10px;
+}
+ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote a:hover {
+  text-decoration:none;
+  background-color:#69C56A;
+}
 
-
-
+/* display de precos */
 span.preco_mentira {
   text-decoration: line-through;
   color:red;
