@@ -27,14 +27,14 @@
       <span class="pequeno cinza"><%= produto.descricao_simples %></span>
     </td>
     <td class="grandao green"><%= number2currency(produto.preco) %></td>
-    <td>
+    <td class="acoes">
       <% if (produto.class == ProdutoSimples) -%>
-        <%= link_to "Editar", edit_admin_produto_path(produto) %><br />
+        <%= link_to image_tag("icones/database_edit.png") + " Editar", edit_admin_produto_path(produto) %><br />
       <% elsif (produto.class == ProdutoCombo) -%>
-        <%= link_to "Editar", :action => "edit_combo", :id => produto %><br />
+        <%= link_to image_tag("icones/database_edit.png") + " Editar", :action => "edit_combo", :id => produto %><br />
       <% end -%>
-      <%= link_to "Relacionar", :action => "relacionar", :id => produto %><br />
-      <%= link_to "Remover", admin_produto_path(produto), :confirm => "Tem certeza?", :method => :delete %>
+      <%= link_to image_tag("icones/link_add.png") + " Relacionar", :action => "relacionar", :id => produto %><br />
+      <%= link_to image_tag("icones/cancel.png") + " Remover", admin_produto_path(produto), :confirm => "Tem certeza?", :method => :delete %>
     </td>
   </tr>
 <% end -%>

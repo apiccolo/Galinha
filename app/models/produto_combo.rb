@@ -20,19 +20,24 @@ class ProdutoCombo < Produto
   #   a fim de motivar a compra
   #
   def self.leve_tambem(carrinho)
-    return nil if (carrinho.nil? or (carrinho.size <= 0) or (carrinho.size > 3))
-    aux = []
+    return nil if (carrinho.nil? or (carrinho.size <= 0))
+    carrinho_ids = []
+    total_produtos = 0
     carrinho.each do |c|
       produto_no_carrinho = Produto.find(c.produto_id)
       if (produto_no_carrinho.class == ProdutoSimples)
-        ProdutoCombo.n_itens.each do |pc|
-          aux << pc if pc.produtos.include?(produto_no_carrinho)
-        end
-        #p = ProdutoCombo.find(:first, 
-        #                  :conditions => ["combo_tem_produtos.produto_id = ?", produto_no_carrinho.id], 
-        #                  :include => :produtos)
-        # aux << ProdutoCombo.find(p.id) # A consulta acima devolve rows estranhas... melhor devolver um legitimo ProdutoCombo
+        carrinho_ids << produto_no_carrinho.id
+        total_produtos += 1
+      elsif (produto_no_carrinho.class == ProdutoCombo)
+        produto_no_carrinho.produto_ids.each { |pid| carrinho_ids << pid }
+        total_produtos += produto_no_carrinho.produto_ids.size
       end
+    end
+    logger.debug("======> #{total_produtos}")
+    aux = []
+    ProdutoCombo.n_itens(:n_itens_pacote => (total_produtos+1)).each do |pc|
+      aux << pc if ((pc.produto_ids - carrinho_ids).size.to_i == 1)
+      
     end
     return aux
   end
@@ -41,13 +46,13 @@ class ProdutoCombo < Produto
   #   Retorna quantos itens tem em cada combo
   #
   def self.n_itens(my_options = {})
-    #condicoes = []
-    #condicoes << "1=1"
-    #condicoes << "locais.pais_id = #{options[:pais].id}" if options[:pais]
     options = {
       :order => "total ASC"
     }
     options = options.merge!(my_options)
+    condicoes = []
+    condicoes << "1=1"
+    condicoes << "total = #{options[:n_itens_pacote]}" if options[:n_itens_pacote]
     
     sql_string = <<MYSTRING.gsub(/\s+/, " ").strip
     SELECT produtos.*, Z.total FROM produtos
@@ -57,10 +62,13 @@ class ProdutoCombo < Produto
       GROUP BY combo_id
     ) Z
     ON (produtos.id = Z.combo_id)
+    WHERE #{condicoes.join(' AND ')}
     ORDER BY #{options[:order]}
 MYSTRING
     return ProdutoCombo.find_by_sql(sql_string)
   end
+  
+
 
   #======================================================#
   #                  OBJECT   METHODS                    #

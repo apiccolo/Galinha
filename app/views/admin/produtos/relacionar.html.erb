@@ -2,38 +2,59 @@
 
 <% form_for(@produto, :url => { :action => "gravar_relacionar", :id => @produto }, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
-  <%#= render :partial => "form_produto_combo", :locals => { :f => f } %>
-  <div class="grid_2 alpha">
-    <div>
-      <%= infos_produto_box(@produto, :link_to_carrinho => false) %>
-    </div>
     
-    <p>Produtos relacionados</p>
-    <ul>
-      <% @produto.produtos_relacionados.each do |s| -%>
-      <li><%= infos_produto_box(s, :link_to_carrinho => false) -%></li>
+  <div class="grid_4 alpha">
+    <div id="relacionados" style="background-color:#eee;padding:5px;border:1px solid gray">
+      <h3>Produtos relacionados</h3>
+      <% if @produto.produtos_relacionados.empty? -%>
+        <p>Ainda não há produtos relacionados ao <b><%= @produto.nome %></b>.</p>
+        <p>Crie já um relacionamento, arrastando os produtos à direita.</p>
+      <% else -%>
+      <ul>
+        <% @produto.produtos_relacionados.each do |s| -%>
+        <li id="relacionado_<%= s.id %>" class="sans-bullet">
+          <%= link_to image_tag("icones/link_break.png"), 
+                      { 
+                        :action => "remover_relacionar",
+                        :id => @produto.id,
+                        :relacionado => s.id 
+                      },
+                      :confirm => "Quer mesmo excluir essa relação?" -%> <b><%= s.nome -%></b>
+        </li>
+        <% end -%>
+      </ul>
+      <p class="legenda">Use o ícone <%= image_tag("icones/link_break.png") %> para remover o relacionamento.</p>
       <% end -%>
-    </ul>
-    
-    <div id="criar_relacao" style="width:120px;height:120px;background-color:yellow">
-      <p>Arraste para cá os produtos relacionados</p>
-      <%= drop_receiving_element("criar_relacao", 
-                                 :url => { :action => "add" },
-                                 :onDrop => "function(draggable_element, droppable_element, event) { relacionarProduto(#{@produto.id}, draggable_element.id) }",
-                                 :confirm => "Quer mesmo relacionar esse produto a '#{@produto.nome}'?") %>
     </div>
   </div>
   
-  <div class="grid_10 omega">
-    <p>Demais produtos</p>
+  <div class="grid_3">
+    <div id="criar_relacao" style="background-color:#FFE69F;padding:5px;border:1px solid yellow">
+      <h3>Relacionar!</h3>
+      <p>Arraste para cá os produtos que deseja relacionar a...</p>
+      <%= drop_receiving_element("criar_relacao", 
+                                 :url => { :action => "add" },
+                                 :onDrop => "function(draggable_element, droppable_element, event) { relacionarProduto(#{@produto.id}, draggable_element.id) }",
+                                 #:update => "relacionados",
+                                 :confirm => "Quer mesmo relacionar esse produto a '#{@produto.nome}'?") %>
+      <div id="em_questao">
+        <%= infos_produto_box(@produto, :link_to_carrinho => false) %>
+      </div>
+      <p class="legenda">Os produtos relacionados aqui aparecerão na <b>Sugestão da Galinha</b>.</p>
+    </div>
+  </div>
+  
+  <div class="grid_5 omega">
+    <h3>Demais produtos</h3>
     <ul>
     <% @demais_produtos.each do |p| -%>
-      <li id="produto_<%= p.id %>" value="<%= p.id %>"><%= infos_produto_box(p, :link_to_carrinho => false) %></li>
-      <%= draggable_element("produto_#{p.id}") %>
+      <li class="sans-bullet demais_produtos" id="produto_<%= p.id %>" value="<%= p.id %>">
+        <%= infos_produto_box(p, :link_to_carrinho => false) %>
+        <%= draggable_element("produto_#{p.id}") %>
+      </li>
     <% end -%>
     </ul>
   </div>
-  <p class="form_button"><%= f.submit "Salvar" %> ou <%= link_to "Voltar", admin_produtos_path %></p>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">

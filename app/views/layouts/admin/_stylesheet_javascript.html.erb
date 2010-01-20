@@ -1,4 +1,4 @@
-<% bundle :name => "admin_galinha_bundle", :compress => (RAILS_ENV=='production') do -%>
+<% bundle :name => "admin_galinha_bundle", :bundle_fu => (RAILS_ENV=='production') do -%>
 <%= stylesheet_link_tag "960/reset.css" %>
 <%= stylesheet_link_tag "960/960.css" %>
 <%= stylesheet_link_tag "960/text.css" %>
@@ -6,6 +6,7 @@
 <%= stylesheet_link_tag "admin/will_paginate.css" %>
 <%= stylesheet_link_tag "admin/crud.css" %>
 <%= stylesheet_link_tag "admin/forms.css" %>
+<%= stylesheet_link_tag "admin/fonts.css" %>
 <%= stylesheet_link_tag "admin/menu.css" %>
 <%= stylesheet_link_tag "admin/default.css" %>
 

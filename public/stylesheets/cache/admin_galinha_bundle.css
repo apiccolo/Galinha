@@ -735,6 +735,14 @@ table.crud td {
   border-top: 1px solid #EAEAEA;
 }
 
+table.crud td.acoes {
+  padding-top:0;
+}
+
+table.crud td.acoes a {
+  text-decoration:none;
+}
+
 a.incluir {
   font-weight: bold;
   color: green;
@@ -828,7 +836,8 @@ fieldset .dica {
 .green,
 .green input {
   color:green;
-}/* --------- /stylesheets/admin/menu.css --------- */ 
+}/* --------- /stylesheets/admin/fonts.css --------- */ 
+/* FILE READ ERROR! *//* --------- /stylesheets/admin/menu.css --------- */ 
 div#menu_admin {
   padding: 10px 0 6px;
   font-family:Verdana,Arial,sans-serif;

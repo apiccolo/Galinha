@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
   #config.gem "dancroak-validates_email_format_of", :lib => "validates_email_format_of", :source => "http://gems.github.com"
   #config.gem "aasm", :lib => "aasm", :source => "http://gems.github.com"
   config.gem "bcrypt-ruby", :lib => "bcrypt"#, :version => "~> 2.0.3"
+  config.gem 'rails-settings', :lib => 'settings' # http://github.com/Squeegy/rails-settings
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

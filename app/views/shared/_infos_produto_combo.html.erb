@@ -14,7 +14,7 @@
   <% end -%>
 </p>
 <% if options[:mostrar_itens] -%>
-<p class="pequeno">Contém:<br />
+<p class="pequeno margin0">Contém:<br />
   <% produto.produtos.each do |item| -%>
   - <%= item.nome -%>
   <%= link_to_remote "[x]", 
@@ -23,7 +23,7 @@
                        :combo_id => produto.id,
                        :produto_id => item.id
                      }, 
-                     :confirm => "Ao retirar um produto do combo, você perde o desconto da compra casada.\nTem certeza que deseja retirar este produto do combo?\n" %>
+                     :confirm => "Ao retirar um produto do combo, você perde o desconto da compra casada.\nTem certeza que deseja retirar este produto do combo?\n" if options[:mostrar_itens_links_retirar] %>
   <br />
   <% end -%>
 </p>

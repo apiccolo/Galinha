@@ -5,7 +5,8 @@ module SharedHelper
       :link_to_carrinho => true,
       :mostrar_preco => true,
       :mostrar_desconto => false,
-      :mostrar_itens => false
+      :mostrar_itens => false,
+      :mostrar_itens_links_retirar => true
     }
     options = options.merge!(my_options)
     

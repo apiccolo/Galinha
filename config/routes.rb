@@ -41,7 +41,8 @@ ActionController::Routing::Routes.draw do |map|
                                :member => { :edit_combo => :get,
                                             :update_combo => :put,
                                             :relacionar => :get,
-                                            :gravar_relacionar => :post,
+                                            #:gravar_relacionar => :post,
+                                            :remover_relacionar => :get,
                                             :print => :get }
     admin.resources :pedidos, :collection => { :print => :get,
                                                :lista_ceps => :get,

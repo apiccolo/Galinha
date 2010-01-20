@@ -7,7 +7,10 @@
 <%= stylesheet_link_tag "forms.css" %>
 <%= stylesheet_link_tag "errors.css" %>
 <%= stylesheet_link_tag "crud.css" %>
+<%= stylesheet_link_tag "fonts.css" %>
+<%= stylesheet_link_tag "modalbox.css" %>
 <%= stylesheet_link_tag "layout_galinha.css" %>
 <%= javascript_include_tag :defaults %>
+<%= javascript_include_tag "modalbox" %>
 <% end -%>
 <%= stylesheet_link_tag "#{controller.controller_name}.css" if File.exists?("#{RAILS_ROOT}/public/stylesheets/#{controller.controller_name}.css") -%>

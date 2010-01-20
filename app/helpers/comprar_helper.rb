@@ -19,7 +19,7 @@ module ComprarHelper
   end
   
   def produto_faltante_para_completar_combo(produto_combo, carrinho)
-    ids_no_carrinho = Carrinho.produto_ids(carrinho)
+    ids_no_carrinho = Carrinho.produto_simples_ids(carrinho)
     p_id = produto_combo.produto_ids - ids_no_carrinho
     return ProdutoSimples.find(p_id[0]) if (p_id.size == 1)
     return nil

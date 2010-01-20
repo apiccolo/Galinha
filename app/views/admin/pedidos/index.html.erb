@@ -28,7 +28,8 @@
       <%= descreve_comprador(pedido) %>
     </td>
     <td class="estreita <%= pedido.status %>">
-      <%= descreve_status(pedido) %>
+      <%= descreve_status(pedido) %><br />
+      <%= link_to "Alterar...", :action => "alterar_status", :id => pedido %><br />
     </td>
     <td>
       <%= descreve_produtos_pedido(pedido) %>
@@ -37,15 +38,14 @@
       <%= descreve_entrega(pedido) %>
     </td>
     <td class="grandao green"><%= number2currency(calcula_total_pedido(pedido)) %></td>
-    <td>
-      <%= link_to_remote "Detalhes", 
+    <td class="acoes">
+      <%= link_to_remote image_tag("icones/zoom.png") + " Detalhes", 
                          :url => { :action => "detalhes", 
                                    :id => pedido }, 
                          :update => "pedido_mais_#{pedido.id}",
                          :before => "$('pedido_#{pedido.id}').addClassName('carregando')",
                          :after => "$('pedido_#{pedido.id}').removeClassName('carregando');" + visual_effect(:highlight, "pedido_#{pedido.id}", :duration => 1.5) %><br />
-      <%= link_to "Alterar Status", :action => "alterar_status", :id => pedido %><br />
-      <%= link_to "Remover", admin_pedido_path(pedido), :confirm => "Tem certeza?", :method => :delete %>
+      <%= link_to image_tag("icones/cancel.png") + " Remover", admin_pedido_path(pedido), :confirm => "Tem certeza?", :method => :delete %>
     </td>
   </tr>
   <tr>
@@ -56,12 +56,3 @@
 </table>
 
 <%= will_paginate(@pedidos) %>
-
-<style type="text/css" media="screen">
-.pedido {
-  background-color:#eee;
-}
-.aguardando_pagamento {
-  background-color:#ddd;
-}
-</style>

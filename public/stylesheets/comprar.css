@@ -8,26 +8,6 @@
   text-align:center;
   margin:0;
 }
-.valor {
-  font-weight:bold;
-}
-.verdinho {
-  background-color:#BFDDBF;
-  text-align:center;
-}
-.grandao {
-  font-size:18px;
-  color:white;
-}
-.pequeno {
-  font-size:11px;
-}
-.direita {
-  text-align:right;
-}
-.centro {
-  text-align:center;
-}
 .curta {
   width:50px;
 }

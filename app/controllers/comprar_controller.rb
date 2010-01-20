@@ -21,6 +21,15 @@ class ComprarController < ApplicationController
   end
   
   #------------------------------------------------------------
+  #   Mostra ficha do produto 
+  #   ATENÇÃO: nao usa o layout, mostra produto em MODALBOX
+  #
+  def produto
+    @produto = Produto.find(params[:id])
+    render :layout => false, :template => "comprar/produto"
+  end
+  
+  #------------------------------------------------------------
   #   Formulário de confirmacao do pedido
   #
   verify :method => :post,
@@ -120,7 +129,7 @@ class ComprarController < ApplicationController
   #   Esvazia o carrinho
   #
   def esvaziar
-    session[:carrinho].clear
+    session[:carrinho].clear if session[:carrinho]
     redirect_to :action => :index
   end
   

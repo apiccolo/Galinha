@@ -71,6 +71,28 @@ module AdminHelper
     return str
   end
   
+  # Retorna <tr>...</tr> com os dados dos produtos do pedido
+  def descreve_produtos_pedido_em_tabela(pedido, my_options = {})
+    options = {
+      :com_preco_unitario => false,
+      :com_valor_total => false
+    }
+    options = options.merge!(my_options)
+    str = ""
+    pedido.produtos_quantidades.each do |pq|
+      str += "<tr>"
+      str += "  <td class=\"quantidade\">#{pq.qtd}</td>"
+      str += "  <td class=\"descricao\">#{pq.produto.descricao_simples}</td>"
+      str += "  <td class=\"presente\">"
+      str += image_tag('icones/para_presente.gif') if pq.presente
+      str += "  </td>"
+      str += "  <td class=\"preco_unitario\">#{number2currency(pq.preco_unitario)}/unid.</td>" if options[:com_preco_unitario]
+      str += "  <td class=\"valor_total\">#{number2currency(pq.qtd * pq.preco_unitario)}</td>" if options[:com_valor_total]
+      str += "</tr>"
+    end
+    return str
+  end
+  
   def descreve_entrega(pedido, options = {})
     tmp  = ""
     tmp += "<span class=\"para_nome\">"

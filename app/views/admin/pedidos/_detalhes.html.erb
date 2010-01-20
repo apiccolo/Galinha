@@ -18,10 +18,30 @@
   <div class="grid_6 alpha">
     <h3>Produtos e Valores</h3>
     <div class="infos_wrapper">
-      <%= descreve_produtos_pedido(pedido, :com_preco_unitario => true, :com_valor_total => true) %>
-      <p class="frete">Frete: <span class="valor_frete"><%= number2currency(pedido.frete) -%></span></p>
-      <p class="desconto">Descontos: <span class="valor_desconto">-<%= number2currency(pedido.desconto) %></span></p>
-      <p class="total">Total: <span class="valor_total"><%= number2currency(calcula_total_pedido(pedido)) %></span></p>
+      <table class="pedido_em_tabela">
+        <tr class="head">
+          <td>Qtd</td>
+          <td>Produto</td>
+          <td><%= image_tag("icones/para_presente.gif") %></td>
+          <td>Preço unit.</td>
+          <td>Total</td>
+        </tr>
+        <%= descreve_produtos_pedido_em_tabela(pedido, 
+                                              :com_preco_unitario => true, 
+                                              :com_valor_total => true) %>
+        <tr class="frete">
+          <td colspan="4">Frete</td>
+          <td><span class="valor_frete"><%= number2currency(pedido.frete) -%></span></td>
+        </tr>
+        <tr class="desconto">
+          <td colspan="4">Desconto</td>
+          <td><span class="valor_desconto">-<%= number2currency(pedido.desconto) %></span></td>
+        </tr>
+        <tr class="total">
+          <td colspan="4">Total</td>
+          <td><span class="valor_total"><%= number2currency(calcula_total_pedido(pedido)) %></span></td>
+        </tr>
+      </table>
     </div>
   </div>
   <div class="grid_6 omega">

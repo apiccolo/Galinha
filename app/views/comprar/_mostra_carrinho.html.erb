@@ -30,6 +30,7 @@
                                   :mostrar_preco => true,
                                   :mostrar_desconto => true,
                                   :mostrar_itens => true) -%>
+      <p class="margin0"><%= link_to_function "[Saiba...+]" , "Modalbox.show('/comprar/produto/#{prod.id}', {title: '#{prod.nome}', width: 600}); return false;" %></p>
     </td>
     <td>
       <%= check_box_tag "presente_produto_#{prod.id}", 1, c.presente, :onclick => "javascript:embrulhar(#{prod.id})" %>

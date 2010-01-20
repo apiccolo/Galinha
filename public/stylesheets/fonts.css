@@ -1,0 +1,57 @@
+.margin0 {
+  margin-bottom:0;
+}
+/**** ESTILOS ****/
+.italico {
+  font-style:italic;
+}
+.negrito {
+  font-weight:bold;
+}
+.sublinhado {
+  text-decoration:underline;
+}
+.riscado {
+  text-decoration: line-through;
+}
+/**** TAMANHO *****/
+.pequeno {
+  font-size:11px;
+}
+.medio {
+  font-size:1.1em;
+}
+.grande {
+  font-size:16px;
+}
+.grandao {
+  font-size:18px;
+/*  color:white; */
+}
+/***** POSICAO *****/
+.direita {
+  text-align:right;
+}
+.centro {
+  text-align:center;
+}
+/******* CORES *******/
+.azul_claro {
+  color:#0786E3;
+}
+.vermelho {
+  color:#E64101;
+}
+.branco {
+  color:white;
+}
+.verdinho {
+  background-color:#BFDDBF;
+  text-align:center;
+}
+.valor {
+  font-weight:bold;
+}
+.hint {
+  font-size:0.8em;
+}

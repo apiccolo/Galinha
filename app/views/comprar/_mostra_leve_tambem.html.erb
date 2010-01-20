@@ -1,5 +1,7 @@
 <div class="grid_10 alpha omega" id="leve_tambem">
-<% if @leve_tambem and not @leve_tambem.blank? -%>
+<% if (Settings.loja_aproveite_para_levar.to_i==1) and 
+      @leve_tambem and 
+      not @leve_tambem.blank? -%>
   <div class="grid_10 alpha omega topo_colorido2">
     <h6 style="margin-bottom:5px">Aproveite para levar...</h6>
   </div>

@@ -172,18 +172,6 @@
 #dados_pessoais {
   font-size:1em;
 }
-.azul_claro {
-  color:#0786E3;
-}
-.vermelho {
-  color:#E64101;
-}
-.hint {
-  font-size:0.8em;
-}
-.medio {
-  font-size:1.1em;
-}
 /*** form de compra ****/
 fieldset#dados_pessoais ol li,
 fieldset#produto ol li,

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091207134840) do
+ActiveRecord::Schema.define(:version => 20100118134031) do
 
   create_table "administradores", :force => true do |t|
     t.string   "nome"
@@ -137,6 +137,15 @@ ActiveRecord::Schema.define(:version => 20091207134840) do
 
   add_index "retornos_pgmtos", ["pedido_id"], :name => "index_retornos_pgmtos_on_pedido_id"
   add_index "retornos_pgmtos", ["transacaoid"], :name => "index_retornos_pgmtos_on_transacaoid"
+
+  create_table "settings", :force => true do |t|
+    t.string   "var",        :null => false
+    t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "settings", ["var"], :name => "index_settings_on_var"
 
   create_table "sugestoes", :force => true do |t|
     t.integer "produto_id"

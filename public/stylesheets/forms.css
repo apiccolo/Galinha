@@ -2,7 +2,7 @@
 
 form fieldset {
   border: 1px solid white;
-  padding: 10px 10px 0 10px;
+  /* padding: 10px 10px 0 10px; */
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
@@ -15,12 +15,10 @@ form fieldset.sem_bordas {
 }
 
 form fieldset legend {
-  font-size: 24px;
-  font-family: "Gill Sans", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  font-family: "Helvetica", "Verdana", "Arial", sans-serif;
   padding: 0 5px;
   font-weight: bold;
-  color: #73BE1E;
-  letter-spacing: -1px;
 }
 
 form fieldset ol {

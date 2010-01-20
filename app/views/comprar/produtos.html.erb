@@ -8,6 +8,7 @@
                                      :mostrar_desconto => true,
                                      :mostrar_itens => true) -%>
       <p><%= produto.descricao %></p>
+      <p><%= link_to_function "modalbox", "Modalbox.show('/comprar/produto/#{produto.id}', {title: '#{produto.nome}', width: 600}); return false;" %></p>
       <p><%= link_to "Comprar!", 
                      { :action => "incluir", 
                        :produto_id => produto.id },

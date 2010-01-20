@@ -1,7 +1,9 @@
 <div class="grid_10 alpha omega" id="sugestoes">
-<% if @sugestoes and not @sugestoes.blank? -%>
+<% if (Settings.loja_mostrar_sugestoes.to_i==1) and 
+      @sugestoes and 
+      not @sugestoes.blank? -%>
   <div class="grid_10 alpha omega topo_colorido">
-    <h6>Sugestões da Galinha Pintadinha</h6>
+    <h6>Sugestões da Galinha</h6>
   </div>
   <ul id="lista_de_sugestoes" class="clearfix">
   <% @sugestoes.each do |produto| %>

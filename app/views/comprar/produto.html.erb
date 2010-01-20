@@ -1,0 +1,13 @@
+<div class="grid_5 alpha omega">
+  <%= infos_produto_box(@produto, :link_to_carrinho => false,
+                                 :mostrar_preco => true,
+                                 :mostrar_desconto => true,
+                                 :mostrar_itens => true,
+                                 :mostrar_itens_links_retirar => false) -%>
+  <p><%= @produto.descricao %></p>
+  <!-- p><%= link_to "Comprar!", 
+                 { :action => "incluir", 
+                   :produto_id => @produto.id },
+                 :method => :post,
+                 :class => "comprar" -%></p>-->
+</div>

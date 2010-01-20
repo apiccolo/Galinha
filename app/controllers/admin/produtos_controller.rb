@@ -111,10 +111,18 @@ class Admin::ProdutosController < Admin::AdminController
   
   def relacionar
     @produto = Produto.find(params[:id])
-    @demais_produtos = Produto.find(:all, :conditions => ["produtos.id <> ?", params[:id]])
     if params[:produto_id] and params[:novo]
       @produto.produtos_relacionados << Produto.find(params[:produto_id])
     end
+    excluir_ids = [ @produto.produtos_relacionado_ids, @produto.id ].flatten!
+    @demais_produtos = Produto.find(:all, :conditions => ["produtos.id NOT IN (?)", excluir_ids])
+  end
+  
+  def remover_relacionar
+    produto = Produto.find(params[:id])
+    relacionado = Produto.find(params[:relacionado])
+    produto.produtos_relacionados.delete(relacionado)
+    redirect_to :action => "relacionar", :id => produto.id
   end
   
 end
