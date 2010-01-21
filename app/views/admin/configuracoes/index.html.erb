@@ -4,7 +4,7 @@
     <p>Gerais do sistema</p>
   </li>
   <li>
-    <p>Loja</p>
+    <p>Gôndola e Carrinho</p>
     <ul>
       <li>
         <%= image_tag "spinners/spinner.gif", :id => "spinner_aproveite_para_levar", :style => "display:none" %>
@@ -15,6 +15,7 @@
                           :before => "$('spinner_aproveite_para_levar').show()",
                           :after => "$('spinner_aproveite_para_levar').hide()" -%>
       </li>
+      <li>Quantas/limite...</li>
       <li>
         <%= image_tag "spinners/spinner.gif", :id => "spinner_mostrar_sugestoes", :style => "display:none" %>
         <%= check_box_tag "settings[loja_mostrar_sugestoes]", 1, (@settings["loja_mostrar_sugestoes"].to_i==1) %> Mostrar <b>Sugestões da Galinha</b> (i.e. inclui novos produtos no carrinho)
@@ -24,7 +25,14 @@
                           :before => "$('spinner_mostrar_sugestoes').show()",
                           :after => "$('spinner_mostrar_sugestoes').hide()" -%>
       </li>
+      <li>Quantas/limite...</li>
     </ul>
+  </li>
+  <li>
+    <p>Frete</p>
+    <%= radio_button_tag "settings[frete_tipo]", "embutido", (@settings["frete_tipo"].to_i=="embutido") %> Embutido (Frete = 0) <br />
+    <%= radio_button_tag "settings[frete_tipo]", "estadual", (@settings["frete_tipo"].to_i=="estadual") %> Por estado (<%= link_to "configurar valores...", :action => "index" %>) <br />
+    <%= radio_button_tag "settings[frete_tipo]", "correios", (@settings["frete_tipo"].to_i=="correios") %> Pelos Correios<br />
   </li>
   <li>
     <p>Descontos</p>

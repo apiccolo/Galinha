@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
+  before_filter :check_access
+  
   include ExceptionNotifiable
 
   # Scrub sensitive parameters from your log
@@ -18,4 +20,15 @@ class ApplicationController < ActionController::Base
 
    # Oferece autenticação, login, logout, etc.
    include Galinha::Autenticacao
+   
+   private
+   
+   def check_access
+     if (RAILS_ENV == "production")
+       authenticate_or_request_with_http_basic do |user_name, password|
+         user_name == "galinha" && password == "pintinho-molhado"
+       end
+     end
+   end
+   
 end

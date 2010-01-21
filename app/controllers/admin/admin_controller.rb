@@ -3,4 +3,5 @@ class Admin::AdminController < ApplicationController
   layout "admin"
 
   before_filter :admin_login_required
+
 end
