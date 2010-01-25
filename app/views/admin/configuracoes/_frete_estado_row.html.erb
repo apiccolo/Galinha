@@ -1,0 +1,6 @@
+<li>
+  <span>Estado:</span> <%= text_field_tag "settings[frete_por_estado][][estado]", estado, :size => 3 %>
+  <span>Frete (R$):</span> <%= text_field_tag "settings[frete_por_estado][][frete]", frete, :size => 5 %>
+  <%= link_to_remote "[+]", :url => { :action => "frete_por_estado_incluir_row" } %>
+  <%= link_to_function "[-]", "this.ancestors().first().update('')" %>
+</li>

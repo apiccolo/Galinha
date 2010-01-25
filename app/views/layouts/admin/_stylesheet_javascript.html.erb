@@ -11,5 +11,7 @@
 <%= stylesheet_link_tag "admin/default.css" %>
 
 <%= javascript_include_tag :defaults %>
+<%= javascript_include_tag "livepipe-ui/src/livepipe" %>
+<%= javascript_include_tag "livepipe-ui/src/tabs" %>
 <% end -%>
 <%= stylesheet_link_tag "admin/#{controller.controller_name}.css" if File.exists?("#{RAILS_ROOT}/public/stylesheets/admin/#{controller.controller_name}.css") -%>

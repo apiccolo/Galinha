@@ -7,26 +7,10 @@ class ComprarController < ApplicationController
   #
   def index
     @carrinho = session[:carrinho]
-    recolhe_outros_produtos(@carrinho)
+    recolhe_outros_produtos(@carrinho)    
 
     @pedido = Pedido.new(params[:pedido])
     @pessoa = Pessoa.new(params[:pessoa])
-  end
-  
-  #------------------------------------------------------------
-  #   Mostra os produtos disponíveis
-  #
-  def produtos
-    @produtos = Produto.disponivel.paginate(:page => params[:page], :per_page => 20)
-  end
-  
-  #------------------------------------------------------------
-  #   Mostra ficha do produto 
-  #   ATENÇÃO: nao usa o layout, mostra produto em MODALBOX
-  #
-  def produto
-    @produto = Produto.find(params[:id])
-    render :layout => false, :template => "comprar/produto"
   end
   
   #------------------------------------------------------------
@@ -40,7 +24,7 @@ class ComprarController < ApplicationController
     
     @pedido = Pedido.new(params[:pedido])
     @pessoa = Pessoa.new(params[:pessoa])
-    @pedido.pessoa = @pessoa
+    @pedido.pessoa = @pessoa if (@pedido and @pessoa)
     if @carrinho
       @carrinho.each do |c|
         @pedido.produtos_quantidades.build(:produto_id => c.produto_id,
@@ -87,6 +71,26 @@ class ComprarController < ApplicationController
     else
       @pedido.iniciar! if @pedido.pedido?
     end
+  end
+
+  #==================================================================#
+  #                             PRODUTOS                             #
+  #==================================================================#  
+  
+  #------------------------------------------------------------
+  #   Mostra os produtos disponíveis
+  #
+  def produtos
+    @produtos = Produto.disponivel.paginate(:page => params[:page], :per_page => 20)
+  end
+  
+  #------------------------------------------------------------
+  #   Mostra ficha do produto 
+  #   ATENÇÃO: nao usa o layout, mostra produto em MODALBOX
+  #
+  def produto
+    @produto = Produto.find(params[:id])
+    render :layout => false, :template => "comprar/produto"
   end
   
   #==================================================================#
@@ -196,6 +200,20 @@ class ComprarController < ApplicationController
     end
   end
 
+  #-----------------------------------------------------------
+  #   Altera valor e label de acordo com o estado escolhido
+  #
+  verify :params => [:estado],
+         :only => :atualiza_frete_por_estado
+  def atualiza_frete_por_estado
+    valor = @settings["frete_por_estado"][params[:estado]].to_f
+    #@pedido.frete = valor
+    render :update do |page|
+      page << "$('pedido_frete').value=#{valor};"
+      page.replace_html :frete_por_estado, :text => number_to_currency(valor)
+      page.replace_html :estado_label, :text => params[:estado]
+    end
+  end
 
   #-----------------------------------------
   #   PRIVATE METHODS
@@ -219,7 +237,7 @@ class ComprarController < ApplicationController
   #   PRIVATE METHODS
   #
   private
-  
+    
   def recolhe_outros_produtos(carrinho)
     @leve_tambem = ProdutoCombo.leve_tambem(@carrinho)
     @sugestoes = Produto.sugere_demais_produtos(@carrinho)

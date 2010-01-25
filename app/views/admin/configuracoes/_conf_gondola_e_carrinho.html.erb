@@ -1,0 +1,22 @@
+<ul class="sans-bullets">
+  <li>
+    <%= image_tag "spinners/spinner.gif", :id => "spinner_aproveite_para_levar", :style => "display:none" %>
+    <%= check_box_tag "settings[loja_aproveite_para_levar]", 1, (@settings["loja_aproveite_para_levar"].to_i==1) %> Mostrar <b>Aproveite para levar</b> (i.e. troca produtos no carrinho por combo)
+    <%= observe_field "settings_loja_aproveite_para_levar", 
+                      :url => { :action => "update_check_box" },
+                      :with => "settings[loja_aproveite_para_levar]",
+                      :before => "$('spinner_aproveite_para_levar').show()",
+                      :after => "$('spinner_aproveite_para_levar').hide()" -%>
+  </li>
+  <li>Quantas/limite...</li>
+  <li>
+    <%= image_tag "spinners/spinner.gif", :id => "spinner_mostrar_sugestoes", :style => "display:none" %>
+    <%= check_box_tag "settings[loja_mostrar_sugestoes]", 1, (@settings["loja_mostrar_sugestoes"].to_i==1) %> Mostrar <b>Sugestões da Galinha</b> (i.e. inclui novos produtos no carrinho)
+    <%= observe_field "settings_loja_mostrar_sugestoes", 
+                      :url => { :action => "update_check_box" },
+                      :with => "settings[loja_mostrar_sugestoes]",
+                      :before => "$('spinner_mostrar_sugestoes').show()",
+                      :after => "$('spinner_mostrar_sugestoes').hide()" -%>
+  </li>
+  <li>Quantas/limite...</li>
+</ul>

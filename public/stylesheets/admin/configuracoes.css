@@ -1,0 +1,21 @@
+ul.sans-bullets {
+  list-style:none;
+}
+
+ul#estados_e_fretes {
+  list-style:none;
+  width:600px;
+}
+ul#estados_e_fretes li {
+  border-bottom:1px dotted gray;
+  margin:10px 0;
+  padding:0 0 8px 0;
+}
+ul#estados_e_fretes li span {
+  margin:0 0 0 100px;
+}
+ul#estados_e_fretes li a {
+  font-size:9px;
+  font-weight:bold;
+  text-decoration:none;
+}

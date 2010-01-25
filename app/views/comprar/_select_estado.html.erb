@@ -1,42 +1,36 @@
-<select class="validate-selection" id="pedido_estado" name="pedido[entrega_estado]" title="Escolha o estado 
-da entrega">
-<option value=""></option>
-<option value="AC">AC</option>
-<option value="AL">AL</option>
-<option value="AM">AM</option>
-<option value="AP">AP</option>
-<option value="BA">BA</option>
-<option value="CE">CE</option>
-<option value="DF">DF</option>
-<option value="ES">ES</option>
-<option value="GO">GO</option>
-<option value="MA">MA</option>
-<option value="MG">MG</option>
-<option value="MS">MS</option>
-<option value="MT">MT</option>
-<option value="PA">PA</option>
-<option value="PB">PB</option>
-<option value="PE">PE</option>
-<option value="PI">PI</option>
-<option value="PR">PR</option>
-<option value="RJ">RJ</option>
-<option value="RN">RN</option>
-<option value="RO">RO</option>
-<option value="RR">RR</option>
-<option value="RS">RS</option>
-<option value="SC">SC</option>
-<option value="SE">SE</option>
-<option value="SP">SP</option>
-<option value="TO">TO
-</option>
+<select id="estado" name="estado" title="Escolha o estado da entrega">
+  <option value=""></option>
+  <option value="AC" <%= "selected" if (@pedido.entrega_estado=="AC") -%>>AC</option>
+  <option value="AL" <%= "selected" if (@pedido.entrega_estado=="AL") -%>>AL</option>
+  <option value="AM" <%= "selected" if (@pedido.entrega_estado=="AM") -%>>AM</option>
+  <option value="AP" <%= "selected" if (@pedido.entrega_estado=="AP") -%>>AP</option>
+  <option value="BA" <%= "selected" if (@pedido.entrega_estado=="BA") -%>>BA</option>
+  <option value="CE" <%= "selected" if (@pedido.entrega_estado=="CE") -%>>CE</option>
+  <option value="DF" <%= "selected" if (@pedido.entrega_estado=="DF") -%>>DF</option>
+  <option value="ES" <%= "selected" if (@pedido.entrega_estado=="ES") -%>>ES</option>
+  <option value="GO" <%= "selected" if (@pedido.entrega_estado=="GO") -%>>GO</option>
+  <option value="MA" <%= "selected" if (@pedido.entrega_estado=="MA") -%>>MA</option>
+  <option value="MG" <%= "selected" if (@pedido.entrega_estado=="MG") -%>>MG</option>
+  <option value="MS" <%= "selected" if (@pedido.entrega_estado=="MS") -%>>MS</option>
+  <option value="MT" <%= "selected" if (@pedido.entrega_estado=="MT") -%>>MT</option>
+  <option value="PA" <%= "selected" if (@pedido.entrega_estado=="PA") -%>>PA</option>
+  <option value="PB" <%= "selected" if (@pedido.entrega_estado=="PB") -%>>PB</option>
+  <option value="PE" <%= "selected" if (@pedido.entrega_estado=="PE") -%>>PE</option>
+  <option value="PI" <%= "selected" if (@pedido.entrega_estado=="PI") -%>>PI</option>
+  <option value="PR" <%= "selected" if (@pedido.entrega_estado=="PR") -%>>PR</option>
+  <option value="RJ" <%= "selected" if (@pedido.entrega_estado=="RJ") -%>>RJ</option>
+  <option value="RN" <%= "selected" if (@pedido.entrega_estado=="RN") -%>>RN</option>
+  <option value="RO" <%= "selected" if (@pedido.entrega_estado=="RO") -%>>RO</option>
+  <option value="RR" <%= "selected" if (@pedido.entrega_estado=="RR") -%>>RR</option>
+  <option value="RS" <%= "selected" if (@pedido.entrega_estado=="RS") -%>>RS</option>
+  <option value="SC" <%= "selected" if (@pedido.entrega_estado=="SC") -%>>SC</option>
+  <option value="SE" <%= "selected" if (@pedido.entrega_estado=="SE") -%>>SE</option>
+  <option value="SP" <%= "selected" if (@pedido.entrega_estado=="SP") -%>>SP</option>
+  <option value="TO" <%= "selected" if (@pedido.entrega_estado=="TO") -%>>TO</option>
 </select>
-<%#= select "pedido", "entrega_estado", File.read("#{RAILS_ROOT}/vendor/extensions/galinha_system/app/views/comprar/localizacao/estados.txt"), {:include_blank => true}, :id => "pedido_estado", :class => "validate-selection", :title => "Escolha o estado da entrega" %>
-<%#= observe_field "pedido_estado", 
-                  :url => {
-                    :controller => 'comprar',
-                    :action => 'atualiza_cidades'
-                    },
-                  :with => 'estado',
-                  :update => 'pedido_cidade',
-                  :before => "$('spinner_estado_e_cidade').show();",
-                  :complete => "$('spinner_estado_e_cidade').hide();" if observe -%>
+<!-- after the select above has been changed, updates the real hidden field value... -->
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+new Form.Element.EventObserver('estado', function(element, value) { $('pedido_entrega_estado').value = value; } )
+//]]>
+</script>

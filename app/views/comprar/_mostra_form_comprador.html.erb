@@ -120,7 +120,13 @@
     <tr>
       <td class="nome_do_campo">Estado</td>
       <td>
-        <%= render :partial => 'select_estado', :locals => { :observe => false } -%>
+        <%= hidden_field :pedido, :frete %>
+        <%= hidden_field :pedido, :entrega_estado, :class => "required" %>
+        <% if (@settings["frete_tipo"] == "estadual") -%>
+          <span id="estado_label"><%= @pedido.entrega_estado %></span>
+        <% else -%>
+          <%= render :partial => 'select_estado' -%>
+        <% end -%>
       </td>
     </tr>
     <tr>
@@ -166,10 +172,13 @@
   width:120px;
   margin:10px 0;
 }
+span#estado_label {
+  font-weight:bold;
+  font-size:16px;
+}
 .hint {
   line-height:0.6em;
 }
-
 
 /* legado.... */
 #calculando_frete p {

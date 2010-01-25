@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  before_filter :check_access
+  before_filter :check_access, :get_settings
   
   include ExceptionNotifiable
 
@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
    include Galinha::Autenticacao
    
    private
+   
+   def get_settings
+     @settings = Settings.all
+   end
    
    def check_access
      if (RAILS_ENV == "production")

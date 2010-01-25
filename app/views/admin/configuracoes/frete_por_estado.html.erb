@@ -1,0 +1,24 @@
+<% form_for :configuracoes, :url => { :action => "frete_por_estado_salvar" } do |f| %>
+<h1>Valores de Frete por Estado</h1>
+<p class="form_button"><%= f.submit "Salvar" %> ou <%= link_to "Voltar", admin_configuracoes_path() +"#three" %></p>
+
+<ul id="estados_e_fretes">
+  <% if @settings["frete_por_estado"] and not @settings["frete_por_estado"].blank? -%>
+    <% for my_hash in @settings["frete_por_estado"] -%>
+  <%= render :partial => "frete_estado_row", 
+             :locals => { 
+               :estado => my_hash[0], 
+               :frete => my_hash[1] 
+             } -%>
+    <% end -%>
+  <% else -%>
+  <%= render :partial => "frete_estado_row",
+             :locals => { 
+               :estado => "", 
+               :frete => "" 
+             } %>
+  <% end -%>
+</ul>
+
+<p class="dica">Use as siglas dos estados em maiúsculas. Para valores decimais do frete, use ponto como separador.</p>
+<% end %>

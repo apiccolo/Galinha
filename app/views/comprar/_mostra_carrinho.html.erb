@@ -45,12 +45,44 @@
 <% total_qtd += c.qtd %>
 <% total_preco += calcular_preco(c, prod) %>
 <% end %>
-  <tr id="total">
-    <!--td></td-->
+  <tr id="parcial"><!-- PARCIAL = SOMA DOS PRODUTOS -->
     <td colspan="2">&nbsp;<%= pluralize(total_qtd, "item") %></td>
     <td></td>
-    <td class="valor grandao"><%= number_to_currency(total_preco) %></td>
-    <td></td>    
+    <td colspan="2" class="valor"><%= number_to_currency(total_preco) %></td>   
+  </tr>
+  <% if (@settings["frete_tipo"]=="embutido") -%><!-- FRETE INCLUSO -->
+  <tr id="frete">
+    <td colspan="3">&nbsp;Frete</td>
+    <td colspan="2" class="valor">Incluso</td>   
+  </tr>
+  <% elsif (@settings["frete_tipo"]=="estadual") -%><!-- FRETE POR ESTADO -->
+  <tr id="frete">
+    <td colspan="3">&nbsp;Frete
+    <span style="margin-left:140px">
+      escolha o estado de entrega <%= render :partial => 'select_estado' -%>
+      <%= observe_field "estado", 
+                        :url => { :action => "atualiza_frete_por_estado" },
+                        :with => "estado" -%>
+    </span>
+    </td>
+    <td colspan="2" class="valor"><span id="frete_por_estado"><%= number_to_currency(@pedido.frete) %></span></td>
+  </tr>  
+  <% elsif (@settings["frete_tipo"]=="correios") -%><!-- FRETE CALCULADO PELO CORREIO -->
+  <tr id="frete">
+    <td colspan="2">&nbsp;Frete</td>
+    <td>digite seu cep <input type="text"></td>
+    <td colspan="2" class="valor"><%= number_to_currency(0) %></td>  
+  </tr>
+  <% end -%>
+  <% if (@settings["desconto_ligado"].to_i == 1) -%><!-- DESCONTO -->
+  <tr id="desconto">
+    <td colspan="3">&nbsp;Desconto</td>
+    <td colspan="2" class="valor"><%= number_to_currency(0) %></td>
+  </tr>
+  <% end -%>
+  <tr id="total"><!-- TOTAL -->
+    <td colspan="3">&nbsp;Total</td>
+    <td colspan="2" class="valor grandao"><%= number_to_currency(@pedido.total) %></td> 
   </tr>
 </table>
 <% else -%>

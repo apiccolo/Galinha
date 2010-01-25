@@ -1,0 +1,13 @@
+<ul>
+  <li>
+    <%= image_tag "spinners/spinner.gif", :id => "spinner_desconto_ligado", :style => "display:none" %>
+    <%= check_box_tag "settings[desconto_ligado]", 1, (@settings["desconto_ligado"].to_i==1) %> Permitir uso de descontos (i.e. ligado no carrinho de compras)
+    <%= observe_field "settings_desconto_ligado", 
+                      :url => { :action => "update_check_box" },
+                      :with => "settings[desconto_ligado]",
+                      :before => "$('spinner_desconto_ligado').show()",
+                      :after => "$('spinner_desconto_ligado').hide()" -%>
+  </li>
+  <li>Valor padrão do cupom de desconto</li>
+  <li>Prazo de validade padrão do cupom de desconto</li>
+</ul>

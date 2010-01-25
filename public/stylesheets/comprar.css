@@ -14,8 +14,22 @@
 .larga {
   width:240px;
 }
+tr#parcial {
+  background-color:#EEE;
+  line-height:0.1em;
+}
+tr#frete {
+  background-color:#CCC;
+  line-height:0.1em;
+}
+tr#desconto {
+  background-color:#3D3;
+  line-height:0.1em;
+}
 tr#total {
-  background-color:#69C56A;
+  font-weight:bold;
+  color:white;
+  background-color:#576F9E;
   line-height:0.25em;
 }
 /* LISTA DE SUGESTOES */

@@ -51,7 +51,11 @@ ActionController::Routing::Routes.draw do |map|
     
     admin.resources :descontos
     admin.resources :configuracoes, :collection => { :editar_arquivo => :post,
-                                                     :salvar_arquivo => :post }
+                                                     :salvar_arquivo => :post,
+                                                     :salvar => :post,
+                                                     :frete_por_estado => :get,
+                                                     :frete_por_estado_salvar => :post,
+                                                     :frete_por_estado_incluir_row => :post }
     admin.resources :relatorios
     admin.resources :automacoes, :collection => { :entrar_arquivo => :get,
                                                   :processar_dados => :post,

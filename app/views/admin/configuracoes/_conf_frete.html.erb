@@ -1,0 +1,3 @@
+<%= radio_button_tag "settings[frete_tipo]", "embutido", (@settings["frete_tipo"]=="embutido") %> Embutido (Frete = 0) <br />
+<%= radio_button_tag "settings[frete_tipo]", "estadual", (@settings["frete_tipo"]=="estadual") %> Por estado (<%= link_to "configurar valores...", :action => "frete_por_estado" %>) <br />
+<%= radio_button_tag "settings[frete_tipo]", "correios", (@settings["frete_tipo"]=="correios") %> Pelos Correios<br />

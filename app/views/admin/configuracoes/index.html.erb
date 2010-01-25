@@ -1,57 +1,62 @@
-<h1>Configurações</h1>
-<ul>
-  <li>
-    <p>Gerais do sistema</p>
-  </li>
-  <li>
-    <p>Gôndola e Carrinho</p>
-    <ul>
-      <li>
-        <%= image_tag "spinners/spinner.gif", :id => "spinner_aproveite_para_levar", :style => "display:none" %>
-        <%= check_box_tag "settings[loja_aproveite_para_levar]", 1, (@settings["loja_aproveite_para_levar"].to_i==1) %> Mostrar <b>Aproveite para levar</b> (i.e. troca produtos no carrinho por combo)
-        <%= observe_field "settings_loja_aproveite_para_levar", 
-                          :url => { :action => "update_check_box" },
-                          :with => "settings[loja_aproveite_para_levar]",
-                          :before => "$('spinner_aproveite_para_levar').show()",
-                          :after => "$('spinner_aproveite_para_levar').hide()" -%>
-      </li>
-      <li>Quantas/limite...</li>
-      <li>
-        <%= image_tag "spinners/spinner.gif", :id => "spinner_mostrar_sugestoes", :style => "display:none" %>
-        <%= check_box_tag "settings[loja_mostrar_sugestoes]", 1, (@settings["loja_mostrar_sugestoes"].to_i==1) %> Mostrar <b>Sugestões da Galinha</b> (i.e. inclui novos produtos no carrinho)
-        <%= observe_field "settings_loja_mostrar_sugestoes", 
-                          :url => { :action => "update_check_box" },
-                          :with => "settings[loja_mostrar_sugestoes]",
-                          :before => "$('spinner_mostrar_sugestoes').show()",
-                          :after => "$('spinner_mostrar_sugestoes').hide()" -%>
-      </li>
-      <li>Quantas/limite...</li>
-    </ul>
-  </li>
-  <li>
-    <p>Frete</p>
-    <%= radio_button_tag "settings[frete_tipo]", "embutido", (@settings["frete_tipo"].to_i=="embutido") %> Embutido (Frete = 0) <br />
-    <%= radio_button_tag "settings[frete_tipo]", "estadual", (@settings["frete_tipo"].to_i=="estadual") %> Por estado (<%= link_to "configurar valores...", :action => "index" %>) <br />
-    <%= radio_button_tag "settings[frete_tipo]", "correios", (@settings["frete_tipo"].to_i=="correios") %> Pelos Correios<br />
-  </li>
-  <li>
-    <p>Descontos</p>
-    <ul>
-      <li>Valor padrão do cupom de desconto</li>
-      <li>Prazo de validade padrão do cupom de desconto</li>
-    </ul>
-  </li>
-  <li>
-    <p>Emails</p>
-    <ul>
-      <li><%= link_to "Rodapé dos emails", 
-                      { :action => "editar_arquivo", 
-                        :file => "/app/views/mailer/_rodape.html.erb",
-                        :nome_arquivo => "Rodapé padrão dos emails",
-                        :rows => 8, :cols => 70 },
-                      :method => :post -%></li>
-      <li><%= link_to "Emails administrativos",
-                      { :action => "emails_admin" } %></li>
-    </ul>
-  </li>  
-</ul>
+<% form_for :configuracoes, :url => { :action => "salvar" } do |f| %>
+<div class="grid_12 alpha omega">
+  <h1 id="especial">Configurações</h1>
+  <p class="form_button"><%= f.submit "Salvar" %><!-- ou <%= link_to "Voltar", admin_produtos_path %> --></p>
+</div>
+
+<div class="grid_3 alpha">
+  <ul id="tabs_configuracoes" class="subsection_tabs">
+    <li class="tab"><a href="#one">Gerais do sistema</a></li>
+    <li class="tab"><a href="#two">Gôndola e Carrinho</a></li>
+    <li class="tab"><a href="#three">Frete</a></li>
+    <li class="tab"><a href="#four">Descontos</a></li>
+    <li class="tab"><a href="#five">Emails</a></li>
+  </ul>
+</div>
+
+<div class="grid_9 omega">
+  <div id="one"><%= render :partial => "conf_gerais" %></div>
+  <div id="two"><%= render :partial => "conf_gondola_e_carrinho" %></div>
+  <div id="three"><%= render :partial => "conf_frete" %></div>
+  <div id="four"><%= render :partial => "conf_descontos" %></div>
+  <div id="five"><%= render :partial => "conf_emails" %></div>
+</div>
+<% end %><!-- FORM -->
+
+<script type="text/javascript" charset="utf-8">
+new Control.Tabs('tabs_configuracoes');  
+</script>
+
+<style type="text/css" media="screen">
+h1#especial {
+  margin:0 0 10px 0;
+  float:left;
+}
+ul.subsection_tabs {
+  border-right:1px solid #CCCCCC;
+  clear:both;
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  margin:0 0 5px;
+  padding:0;
+  height:300px;
+}
+ul.subsection_tabs li.tab {
+  margin:0 0 10px 0;
+  text-align:right;
+}
+ul.subsection_tabs li.tab a.active {
+  background-color:#DDDDDD;
+  -moz-border-radius-topleft:8px;
+  -moz-border-radius-bottomleft:8px;
+}
+ul.subsection_tabs li.tab a {
+  background-color:#FFFFFF;
+  color:#666666;
+  display:block;
+  padding:5px 15px 5px 0;
+  font-weight:bold;
+  text-decoration:none;
+}
+</style>
