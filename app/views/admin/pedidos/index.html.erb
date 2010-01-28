@@ -37,7 +37,7 @@
     <td>
       <%= descreve_entrega(pedido) %>
     </td>
-    <td class="grandao green"><%= number2currency(calcula_total_pedido(pedido)) %></td>
+    <td class="grandao green"><%= number2currency(pedido.total) %></td>
     <td class="acoes">
       <%= link_to_remote image_tag("icones/zoom.png") + " Detalhes", 
                          :url => { :action => "detalhes", 

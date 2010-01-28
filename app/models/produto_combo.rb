@@ -33,11 +33,11 @@ class ProdutoCombo < Produto
         total_produtos += produto_no_carrinho.produto_ids.size
       end
     end
-    logger.debug("======> #{total_produtos}")
+    #logger.debug("======> #{total_produtos}")
     aux = []
     ProdutoCombo.n_itens(:n_itens_pacote => (total_produtos+1)).each do |pc|
-      aux << pc if ((pc.produto_ids - carrinho_ids).size.to_i == 1)
-      
+      aux << pc if (pc.disponivel and 
+                    ((pc.produto_ids - carrinho_ids).size.to_i == 1))
     end
     return aux
   end
@@ -97,15 +97,15 @@ MYSTRING
   # A disponibilidade do combo é a disponibilidade
   # dos itens (AND) sua propria disponibilidade.
   def disponivel
-    a_priori = true
+    a_priori = read_attribute(:disponivel)
     self.produtos.each { |p| a_priori = a_priori && p.disponivel }
     return a_priori    
   end
   
   def disponivel=(valor)
-    a_priori = true
-    self.produtos.each { |p| a_priori = a_priori && p.disponivel }
-    write_attribute(:disponivel, a_priori)
+    demais = valor
+    #self.produtos.each { |p| demais = demais && p.disponivel }
+    write_attribute(:disponivel, demais)
   end
 
 end

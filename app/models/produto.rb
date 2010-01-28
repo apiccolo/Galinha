@@ -27,7 +27,7 @@ class Produto < ActiveRecord::Base
   #   Dado um carrinho com produtos, devolve os 
   #   produtos relacionados
   #
-  def self.sugere_demais_produtos(carrinho)
+  def self.sugere_demais_produtos(carrinho, default_on_empty)
     if carrinho and not carrinho.blank?
       s = []
       carrinho.each do |c|
@@ -35,7 +35,8 @@ class Produto < ActiveRecord::Base
         p.produtos_relacionados.each { |p| s << p }
       end
     else
-      s = self.find(:all, :limit => 4, :order => "RANDOM()")
+      #logger.debug("# ====> #{default_on_empty}")
+      s = self.find(:all, :conditions => ["id IN (?)", default_on_empty.split(',')])
     end
     return s
   end

@@ -1,21 +1,18 @@
 <% p_faltante = produto_faltante_para_completar_combo(produto_combo, carrinho) -%>
+<% acrescimo = 0 -%>
+<% carrinho.each { |r| acrescimo += r.produto.desconto if (r.produto.class == ProdutoCombo) } -%>
 <% if p_faltante -%>
 <div class="clearfix">
 <p class="produto_faltante">
   <%= thumbnail_produto(p_faltante, :style => "float:left;margin:0 10px 0 0") -%><br />
-  <span class="pequeno"><%= p_faltante.nome %></span><br />
+  <span class="pequeno negrito"><%= p_faltante.nome %></span><br />
   De <span class="preco_mentira"><%= number2currency(p_faltante.preco) %></span> 
-  por <span class="preco_final"><%= number2currency(p_faltante.preco - produto_combo.desconto) %></span>
+  por <span class="preco_final"><%= number2currency(p_faltante.preco - produto_combo.desconto + acrescimo) %></span>
 </p>
 <p class="lnk_levar_pacote">
-<%= link_to_remote "Levar o pacote!", 
+<%= link_to_remote "#{image_tag('icones/carrinho_troca.png')} Levar com desconto!", 
                     :url => { 
                       :action => "trocar_por_combo", 
                       :produto_id => produto_combo.id } if options[:link_to_carrinho] -%></p>
 </div>
-<p style="margin:0">Levando o <b><%= produto_combo.nome %></b>, você ganha um desconto de <span class="desconto"><%= number2currency(produto_combo.desconto) %></span>!</p>
-<p style="margin:0">
-  <b><%= produto_combo.produtos.size %> produtos</b>, no total de <span class="preco_mentira"><%= number2currency(produto_combo.preco_fake) %></span>
-  por apenas <span class="preco_final"><%= number2currency(produto_combo.preco) %></span>. Ou seja, um
-  desconto de <span class="desconto"><%= number2currency(produto_combo.desconto) %></span>!</p>
 <% end -%>

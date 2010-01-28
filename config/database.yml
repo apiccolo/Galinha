@@ -17,8 +17,8 @@ test:
 
 production:
   adapter: mysql
-  database: galinha
-  username: root
-  password: Galo50Pintado
+  database: galinha_prod1
+  username: galinha
+  password: pintinho-molhado
   host: localhost
 #  encoding: latin1

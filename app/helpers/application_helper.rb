@@ -30,4 +30,9 @@ module ApplicationHelper
                                :format => "<span class=\"real\">%u</span> %n")
   end
   
+  # Retorna TRUE se o valor guardado nas settings é "1"
+  def settings_checked?(var)
+    return (var == "1")
+  end
+  
 end

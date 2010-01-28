@@ -766,15 +766,16 @@ select#usuario_cidade_id {
   margin-bottom: 20px;
   background-color: #FFE9E9;
   -moz-border-radius: 5px;
+  width:90%;
 }
 
 #errorExplanation h2 {
   font-size: 18px;
-  margin-bottom: 10px;
-  background-color: #F1EE3E;
+  margin: 0 0 2px 0;
+/*  background-color: #F1EE3E;
   background-image: url(/images/icones/exclamation.png);
   background-repeat: no-repeat;
-  background-position:190px 6px;
+  background-position:190px 6px; */
   color:#D72A2A;
   font-weight:bold;
   text-align:center;
@@ -1127,7 +1128,7 @@ a.remover {
   background-color: #dae02b;
 }
 #header #header_content #link2home {
-  margin:0 0 0 30px;
+  margin:0 0 0 20px;
   width:500px;
 }
 #header #header_content h2#usp {
@@ -1153,6 +1154,8 @@ a.remover {
   background-image: url(/images/decoracao/box_player.png);
   background-repeat: no-repeat;
   background-color: transparent;
+  position:relative;
+  left:-10px;
 }
 #player #video_youtube {
   width:425px;

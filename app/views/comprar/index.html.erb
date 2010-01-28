@@ -1,32 +1,34 @@
-<div class="prefix_1 grid_10 suffix_1 alpha omega">
+<div class="grid_12 alpha omega" style="padding-left:30px">
   <%= error_messages_for 'pedido', 'pessoa', :header_message => "Atenção: Pedido com problemas" -%>
-  <div>
+  <div class="grid_12 alpha omega">
     <h3 id="call2compra">Peça já os produtos da Galinha Pintadinha!</h3>
     <%= render :partial => "instrucoes_iniciais",
                :locals => { :i => 1 } %>
   </div>
 
-<!-- CARRINHO -->
-<%= render :partial => "mostra_carrinho" %>
+  <div class="grid_8 alpha">
+  <% form_for :pedido, :url => "/comprar/confirmar_pedido" do |f| %>
+    <!-- CARRINHO -->
+    <%= render :partial => "mostra_carrinho" %>
 
-<!-- APROVEITE PARA LEVAR -->
-<%= render :partial => "mostra_leve_tambem" %>
+    <!-- FORM DO COMPRADOR -->
+    <%= render :partial => "mostra_form_comprador" %>
 
-<!-- LISTA DE SUGESTOES -->
-<%= render :partial => "mostra_sugestoes" %>
+    <!-- FRETE, DESCONTO, TOTAL -->
+    <%= render :partial => "frete_desconto_total" %>
 
-<!-- FORM DO COMPRADOR -->
-<%= render :partial => "mostra_form_comprador" %>
-
-<hr />
-  <p>Variable debug</p>
-  <div class="grid_5 alpha">
-    
-    <b>Carrinho size: <b><%= session[:carrinho].size if session[:carrinho] %></b>
-    <br />
-    <i><%= debug session[:carrinho] %></i>
+      <div class="grid_1 alpha omega direita" style="padding:2px">
+      <%= image_submit_tag('icones/seta_direita.png') %>
+      </div>
+  <% end %>
   </div>
-  <div class="grid_5 alpha">
-    <b><%= debug @leve_tambem %></b>
+
+  <div class="grid_3 omega" style="border-left:1px dotted gray">
+  <!-- APROVEITE PARA LEVAR -->
+  <%= render :partial => "mostra_leve_tambem" %>
+
+  <!-- LISTA DE SUGESTOES -->
+  <%= render :partial => "mostra_sugestoes" %>
   </div>
 </div>
+<%= render :partial => "debug" %>

@@ -1,0 +1,28 @@
+<div class="grid_12 alpha omega" style="padding-left:30px">
+  <%= error_messages_for 'pedido', 'pessoa', :header_message => "Atenção: Pedido com problemas" -%>
+  <div>
+    <h3 id="call2compra">Peça já os produtos da Galinha Pintadinha!</h3>
+    <%= render :partial => "instrucoes_iniciais",
+               :locals => { :i => 2 } -%>
+  </div>
+
+<% form_for :pedido, :url => "/comprar/gravar" do |f| %>
+
+<!-- RESUMO DO CARRINHO -->
+<%= render :partial => "resumo_carrinho" %>
+
+<!-- FORM RESUMO DO PEDIDO -->
+<%= render :partial => "resumo_pedido" %>
+
+<div class="grid_11 alpha omega topo_carrinho" style="padding:2px">
+  <div class="grid_5 alpha">
+    <%= button_to_function '&laquo; ALTERAR', "history.back()" %>
+  </div>
+  <div class="grid_6 omega direita">
+    <%= submit_tag 'CONTINUAR &raquo;' %>
+  </div>
+</div>
+
+<% end %>
+</div>
+<%= render :partial => "debug" %>

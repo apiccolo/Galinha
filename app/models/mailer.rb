@@ -106,9 +106,10 @@ class Mailer < ActionMailer::Base
     @body[:pedido] = pedido
     @body[:pessoa] = pedido.pessoa
     
-    rodape = File.open("#{RAILS_ROOT}/app/views/mailer/_rodape.html.erb")
+      rodape = File.open("#{RAILS_ROOT}/app/views/mailer/_rodape.html.erb")
     @body[:rodape] = rodape.readlines
-    dominio = ActionMailer::Base.smtp_settings[:domain]
+    
+      dominio = ActionMailer::Base.smtp_settings[:domain]
     @body[:link2pedido]   = "http://#{dominio}/comprar/seu_pedido?pid=#{pedido.id}&pbase=#{pedido.base50}&chkpid=#{pessoa.id}&md5=#{pessoa.md5}"
     @body[:link2feedback] = "http://#{dominio}/comprar/feedback?pid=#{pedido.id}&pbase=#{pedido.base50}&chkpid=#{pessoa.id}&md5=#{pessoa.md5}"
   end

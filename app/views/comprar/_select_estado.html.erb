@@ -1,4 +1,4 @@
-<select id="estado" name="estado" title="Escolha o estado da entrega">
+<select id="pedido_entrega_estado" name="pedido[entrega_estado]" class="required" title="Escolha o estado da entrega">
   <option value=""></option>
   <option value="AC" <%= "selected" if (@pedido.entrega_estado=="AC") -%>>AC</option>
   <option value="AL" <%= "selected" if (@pedido.entrega_estado=="AL") -%>>AL</option>
@@ -28,9 +28,3 @@
   <option value="SP" <%= "selected" if (@pedido.entrega_estado=="SP") -%>>SP</option>
   <option value="TO" <%= "selected" if (@pedido.entrega_estado=="TO") -%>>TO</option>
 </select>
-<!-- after the select above has been changed, updates the real hidden field value... -->
-<script type="text/javascript" charset="utf-8">
-//<![CDATA[
-new Form.Element.EventObserver('estado', function(element, value) { $('pedido_entrega_estado').value = value; } )
-//]]>
-</script>

@@ -1,19 +1,16 @@
-<div class="grid_10 alpha omega" id="sugestoes">
-<% if (Settings.loja_mostrar_sugestoes.to_i==1) and 
+<div class="grid_3 omega" id="sugestoes">
+<% if (settings_checked?(@settings['loja_mostrar_sugestoes']) and 
       @sugestoes and 
-      not @sugestoes.blank? -%>
-  <div class="grid_10 alpha omega topo_colorido">
-    <h6>Sugestões da Galinha</h6>
-  </div>
+      not @sugestoes.blank?) -%>
+  <h6>Sugestões da Galinha</h6>
   <ul id="lista_de_sugestoes" class="clearfix">
-  <% @sugestoes.each do |produto| %>
+  <% @sugestoes.each_with_index do |produto, j| %>
+    <% if (j < @settings['loja_mostrar_sugestoes_maximo'].to_i) -%>
     <li id="produto_<%= produto.id %>" class="produtos">
       <%= infos_produto_box(produto) %>
     </li>
+    <% end -%>
   <% end %>
   </ul>
-  <div class="grid_10 alpha omega topo_sugestoes">
-    <p class="direita pequeno" style="margin:0 10px 0 0"><%= link_to_function "não, obrigado.", visual_effect(:blind_up, "sugestoes") -%></p>
-  </div>
 <% end -%>
 </div>

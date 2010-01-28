@@ -1,0 +1,60 @@
+<table class="ficha">
+  <tr>
+    <td class="nome_do_campo">Para</td>
+    <td>
+      <%= text_field :pedido, :entrega_nome_pacote %>
+      <br />
+      <span class="hint">Ex.: nome da criança presenteada</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="nome_do_campo">Endereço</td>
+    <td>
+      <%= text_field :pedido, :entrega_endereco, :class => "required", :title => "Preencha o endereço da entrega" %>
+    </td>
+  </tr>
+  <tr>
+    <td class="nome_do_campo">Número</td>
+    <td>
+      <%= text_field :pedido, :entrega_numero, :size => 12, :class => "required", :title => "Preencha o número do endereço de entrega" %>
+    </td>
+  </tr>
+  <tr>
+    <td class="nome_do_campo">Complemento*</td>
+    <td>
+      <%= text_field :pedido, :entrega_complemento %>
+    </td>
+  </tr>
+  <tr>
+    <td class="nome_do_campo">Bairro*</td>
+    <td>
+      <%= text_field :pedido, :entrega_bairro %>
+    </td>
+  </tr>
+  <tr>
+    <td class="nome_do_campo">CEP</td>
+    <td>
+      <%= text_field :pedido, :entrega_cep, :size => 12, :maxlength => 8, :class => "required validate-digits", :title => "Digite o CEP do endereço de entrega - use apenas números" %>
+      <br />
+      <span class="hint">Use apenas números</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="nome_do_campo">Estado</td>
+    <td>
+      <%= hidden_field :pedido, :frete %>
+      <%= hidden_field :pedido, :entrega_estado, :class => "required" %>
+      <% if (@settings["frete_tipo"] == "estadual") -%>
+        <span id="estado_label"><%= @pedido.entrega_estado %></span>
+      <% else -%>
+        <%= render :partial => 'select_estado' -%>
+      <% end -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="nome_do_campo">Cidade</td>
+    <td>
+      <%= render :partial => 'text_cidade' -%>
+    </td>
+  </tr>
+</table>

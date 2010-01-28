@@ -1,11 +1,10 @@
-<div class="grid_5 alpha">
-<p class="negrito">É rápido, fácil e seguro! Siga os passos abaixo:</p>
-<ol id="passos">
-  <li <% if (i==1) %>class="marcada"<% end -%>>Preencha corretamente os dados da compra;</li>
-  <li <% if (i==2) %>class="marcada"<% end -%>>Confirme seus dados e os dados do pedido;</li>
-  <li <% if (i==3) %>class="marcada"<% end -%>>Faça o pagamento no UOL PagueSeguro.</li>
-</ol>
-<p>Pronto! Em breve você receberá seus produtos em casa!</p>
+<div class="grid_6 alpha">
+  <p class="negrito">É rápido, fácil e seguro! Siga os passos abaixo:</p>
+  <ol id="passos" class="clearfix">
+    <li <% if (i==1) %>class="marcada"<% end -%>>Preencha corretamente os dados da compra;</li>
+    <li <% if (i==2) %>class="marcada"<% end -%>>Revise e confirme todas essas informações;</li>
+    <li <% if (i==3) %>class="marcada"<% end -%>>Faça o pagamento no UOL PagueSeguro.</li>
+  </ol>
 </div>
 <div class="grid_5 omega">
 <p>Compra segura através do UOL PAGSEGURO</p>
@@ -22,7 +21,7 @@ ol#passos {
   margin-bottom:5px;
 }
 ol#passos li {
-  color:#666;
+  color:#999;
 }
 ol#passos li.marcada {
   font-weight:bold;

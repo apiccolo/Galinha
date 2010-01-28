@@ -8,11 +8,19 @@
   text-align:center;
   margin:0;
 }
+#meu_carrinho h5 {
+  font-family:"Helvetica","Verdana","Arial",sans-serif;
+  font-size:14px;
+  font-weight:bold;
+  padding:0 5px;
+  border-bottom:1px solid gray;
+  margin:0 0 1px 0;
+}
 .curta {
   width:50px;
 }
 .larga {
-  width:240px;
+  width:260px;
 }
 tr#parcial {
   background-color:#EEE;
@@ -34,8 +42,7 @@ tr#total {
 }
 /* LISTA DE SUGESTOES */
 #sugestoes {
-  margin:0 0 20px;
-  background-color:#F5F5C4;
+  margin:0 0 10px 10px;
 }
 .topo_colorido {
   background-color:#EBEB95;
@@ -48,17 +55,31 @@ tr#total {
 }
 ul#lista_de_sugestoes,
 ul#lista_de_leve_tambem {
-  margin:0;
+  margin:20px 0 0;
 }
 ul#lista_de_sugestoes li.produtos {
   list-style:none;
-  margin:10px 0 0;
+  margin:10px 0 30px;
   padding:0;
   float:left;
-  width:180px;
+  width:260px;
 }
 ul#lista_de_sugestoes li.produtos p {
-  text-align:center;
+  text-align:left;
+}
+ul#lista_de_sugestoes li.produtos img.thumbnail { 
+  float:left;
+  margin-right:10px;
+}
+ul#lista_de_sugestoes li.produtos p.colocar_no_carrinho {
+  margin-top:20px;
+}
+ul#lista_de_sugestoes li.produtos p.colocar_no_carrinho a {
+  background-color:#009BCA;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  padding:5px;
 }
 ul#leve_tambem .topo_colorido {
   background-color:red;
@@ -71,24 +92,24 @@ ul#leve_tambem .topo_colorido h6 {
 }
 ul#lista_de_leve_tambem li.produtos {
   list-style:none;
-  margin:10px 0 0 30px;
+  margin:10px 0 30px;
   padding:0;
 }
 ul#lista_de_leve_tambem li.produtos p.produto_faltante,
 ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote {
-  width:350px;
+  width:230px;
   display:block;
   float:left;
 }
 ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote {
-  margin-top:20px;
+  margin-top:0;
 }
 ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote a {
   background-color:#009BCA; 
   color:white;
-  font-size:16px;
+  font-size:12px;
   font-weight:bold;
-  padding:10px;
+  padding:5px;
 }
 ul#lista_de_leve_tambem li.produtos p.lnk_levar_pacote a:hover {
   text-decoration:none;

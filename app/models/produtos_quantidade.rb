@@ -5,9 +5,9 @@ class ProdutosQuantidade < ActiveRecord::Base
   #===========================================================================#
   #                              VALIDATIONS                                  #
   #===========================================================================#
-  validates_presence_of :produto_id, :qtd
-  validates_presence_of :pedido_id, :if => Proc.new { |pq| not pq.criando_pedido }
-  
+  validates_presence_of :produto, :qtd
+  validates_numericality_of :qtd, :greater_than => 0
+  #validates_presence_of :pedido, :if => Proc.new { |pq| not pq.criando_pedido }
   
   #===========================================================================#
   #                                 METHODS                                   #
@@ -55,7 +55,7 @@ class ProdutosQuantidade < ActiveRecord::Base
   # não foi salvo, por exemplo "Pedido.new(...)" ),
   # retorna TRUE; senão FALSE.
   def criando_pedido
-    self.new_record?
+    (pedido and pedido.new_record?)
   end
   
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100118134031) do
+ActiveRecord::Schema.define(:version => 20100128030347) do
 
   create_table "administradores", :force => true do |t|
     t.string   "nome"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20100118134031) do
   add_index "produtos", ["nome"], :name => "index_produtos_on_nome"
   add_index "produtos", ["preco"], :name => "index_produtos_on_preco"
 
-  create_table "produtos_quantidades", :id => false, :force => true do |t|
+  create_table "produtos_quantidades", :force => true do |t|
     t.integer  "pedido_id"
     t.integer  "produto_id"
     t.integer  "qtd"
@@ -137,6 +137,16 @@ ActiveRecord::Schema.define(:version => 20100118134031) do
 
   add_index "retornos_pgmtos", ["pedido_id"], :name => "index_retornos_pgmtos_on_pedido_id"
   add_index "retornos_pgmtos", ["transacaoid"], :name => "index_retornos_pgmtos_on_transacaoid"
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "settings", :force => true do |t|
     t.string   "var",        :null => false

@@ -1,20 +1,25 @@
 module AdminHelper
-  
+    
   def descreve_comprador(pedido, options = {})
-    str = "#{pedido.pessoa.nome}<br />"
-    str += "#{mail_to(pedido.pessoa.email)}<br />"
-    str += formata_cpf(pedido.pessoa.cpf)
-    if pedido.processando_envio? or pedido.processando_envio_envelopado?
-      str += "<br />"
-      str += link_to('imprimir nota fiscal', 
-                    { :action => 'print', 
-                      :id => pedido.id,
-                      :nota_fiscal => 1 }, 
-                      :class => 'etiqueta', 
-                      :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
-    elsif pedido.processando_envio_notafiscal? or pedido.produto_enviado? or pedido.produto_enviado_cod_postagem? or pedido.recebido_pelo_cliente? or pedido.encerrado?
-      str += "<br />"
-      str += "NF: <b>#{pedido.nota_fiscal}</b>"
+    str = ""
+    if pedido.pessoa
+      str += "#{pedido.pessoa.nome}<br />"
+      str += "#{mail_to(pedido.pessoa.email)}<br />"
+      str += formata_cpf(pedido.pessoa.cpf)
+      if pedido.processando_envio? or pedido.processando_envio_envelopado?
+        str += "<br />"
+        str += link_to('imprimir nota fiscal', 
+                      { :action => 'print', 
+                        :id => pedido.id,
+                        :nota_fiscal => 1 }, 
+                        :class => 'etiqueta', 
+                        :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
+      elsif pedido.processando_envio_notafiscal? or pedido.produto_enviado? or pedido.produto_enviado_cod_postagem? or pedido.recebido_pelo_cliente? or pedido.encerrado?
+        str += "<br />"
+        str += "NF: <b>#{pedido.nota_fiscal}</b>"
+      end
+    else
+      str = "pedido sem pessoa!"
     end
     return str
   end
@@ -61,12 +66,16 @@ module AdminHelper
     }
     options = options.merge!(my_options)
     str = ""
-    pedido.produtos_quantidades.each do |pq|
-      str += "<p class=\"item_produto\"><b>#{pq.qtd}</b> #{pq.produto.descricao_simples} "
-      str += image_tag("icones/para_presente.gif") if pq.presente
-      str += "<span class=\"preco_unitario\">#{number2currency(pq.preco_unitario)}/unid.</span>" if options[:com_preco_unitario]
-      str += "<span class=\"valor_total\">#{number2currency(pq.qtd * pq.preco_unitario)}</span>" if options[:com_valor_total]
-      str += "</p>"
+    if pedido.produtos_quantidades and not pedido.produtos_quantidades.empty?
+      pedido.produtos_quantidades.each do |pq|
+        str += "<p class=\"item_produto\"><b>#{pq.qtd}</b> #{pq.produto.descricao_simples} " if pq.produto
+        str += image_tag("icones/para_presente.gif") if pq.presente
+        str += "<span class=\"preco_unitario\">#{number2currency(pq.preco_unitario)}/unid.</span>" if options[:com_preco_unitario]
+        str += "<span class=\"valor_total\">#{number2currency(pq.qtd * pq.preco_unitario)}</span>" if options[:com_valor_total]
+        str += "</p>"
+      end
+    else
+      str += "pedido sem produtos"
     end
     return str
   end
@@ -110,14 +119,6 @@ module AdminHelper
                     :class => 'etiqueta', 
                     :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"]) if pedido.processando_envio? or pedido.processando_envio_envelopado?
     return tmp
-  end
-  
-  def calcula_total_pedido(pedido)
-    t = 0
-    pedido.produtos_quantidades.each do |pq|
-      t += pq.qtd * pq.produto.preco
-    end
-    return t
   end
   
   def formata_cpf(cpf)

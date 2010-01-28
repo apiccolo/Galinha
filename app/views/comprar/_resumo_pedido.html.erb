@@ -1,0 +1,155 @@
+<div class="grid_11 alpha omega">
+  
+  <div class="grid_5 alpha">
+  <fieldset id="comprador">
+    <legend>Comprador</legend>
+    <table class="ficha">
+      <tr>
+        <td class="nome_do_campo">Seu nome</td>
+        <td>
+          <%= @pedido.pessoa.nome %>
+          <%#= hidden_field :pessoa, :nome %>
+        </td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">Seu email</td>
+        <td>
+          <%= @pedido.pessoa.email %>
+          <%#= hidden_field :pessoa, :email %>
+        </td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">Sexo</td>
+        <td>
+          <%= @pedido.pessoa.qual_sexo %>
+          <%#= hidden_field :pessoa, :sexo %>
+        </td>
+      </tr>
+      <% if @pedido.pessoa.fone_ddd and @pedido.pessoa.fone_str -%>
+      <tr>
+        <td class="nome_do_campo">Telefone</td>
+        <td>
+          (<%= @pedido.pessoa.fone_ddd %>) <%= @pedido.pessoa.fone_str %>
+          <%#= hidden_field :pessoa, :fone_ddd %>
+          <%#= hidden_field :pessoa, :fone_str %>          
+        </td>
+      </tr>
+      <% end -%>
+      <% if @pedido.pessoa.cpf -%>
+      <tr>
+        <td class="nome_do_campo">CPF*</td>
+        <td>
+          <%= @pedido.pessoa.cpf %>
+          <%#= hidden_field :pessoa, :cpf %>
+        </td>
+      </tr>
+      <% end -%>
+      <tr>
+        <td class="nome_do_campo">&nbsp;</td>
+        <td>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  </div>
+
+  <div class="grid_6 omega">
+  <fieldset id="entrega">
+    <legend>Entrega</legend>
+    <table class="ficha">
+      <tr>
+        <td class="nome_do_campo">Para</td>
+        <td>
+          <%= @pedido.para -%>
+          <%#= hidden_field :pedido, :entrega_nome_pacote %>
+        </td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">Endereço</td>
+        <td>
+          <%= @pedido.entrega_endereco -%>
+          <%#= hidden_field :pedido, :entrega_endereco %>
+        </td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">Número</td>
+        <td>
+          <%= @pedido.entrega_numero -%>
+          <%#= hidden_field :pedido, :entrega_numero %>
+        </td>
+      </tr>
+      <% unless @pedido.entrega_complemento.blank? -%>
+      <tr>
+        <td class="nome_do_campo">Complemento</td>
+        <td>
+          <%= @pedido.entrega_complemento -%>
+          <%#= hidden_field :pedido, :entrega_complemento %>
+        </td>
+      </tr>
+      <% end -%>
+      <% unless @pedido.entrega_bairro.blank? -%>
+      <tr>
+        <td class="nome_do_campo">Bairro</td>
+        <td>
+          <%= @pedido.entrega_bairro -%>
+          <%#= hidden_field :pedido, :entrega_bairro %>
+        </td>
+      </tr>
+      <% end -%>
+      <tr>
+        <td class="nome_do_campo">CEP</td>
+        <td>
+          <%= @pedido.entrega_cep -%>
+          <%#= hidden_field :pedido, :entrega_cep %>
+        </td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">Estado</td>
+        <td>
+          <%= @pedido.entrega_estado -%>
+          <%#= hidden_field :pedido, :entrega_estado %>
+          <%#= hidden_field :pedido, :frete %>
+        </td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">Cidade</td>
+        <td>
+          <%= @pedido.entrega_cidade -%>
+          <%#= hidden_field :pedido, :entrega_cidade %>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  </div>
+  
+</div>
+
+<style type="text/css" media="screen">
+#entrega, #comprador {
+  margin:10px 0 0;
+}
+#entrega legend,
+#comprador legend {
+  padding:5px 30px;
+  background-color:#ddd;
+  border-top:1px dotted gray;
+  border-left:1px dotted gray;
+  border-right:1px dotted gray;
+  font-weight:bold;
+}
+#entrega table.ficha,
+#comprador table.ficha {
+  width:100%;
+  border:1px dotted gray;
+  padding:10px 10px 0;
+  font-weight:bold;
+}
+#entrega table.ficha tr td.nome_do_campo,
+#comprador table.ficha tr td.nome_do_campo {
+  text-align:right;
+  padding:5px 20px;
+  width:120px;
+  margin:10px 0;
+  font-weight:normal;
+}
+</style>

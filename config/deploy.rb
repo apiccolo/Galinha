@@ -5,6 +5,7 @@ ssh_options[:forward_agent] = false
 #set :scm, "git"
 #set :scm_passphrase, "Galo50Pintado" #This is your custom users password
 #set :branch, "master"
+#set :git_shallow_clone, 1     # only copy the most recent, not the entire repository
 
 # Using COPY to deploy...
 set :scm, :none

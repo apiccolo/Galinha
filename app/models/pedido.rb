@@ -3,8 +3,8 @@ class Pedido < ActiveRecord::Base
   belongs_to :pessoa
   
   # Produtos e Quantidades associados
-  has_many :produtos, :through => :produtos_quantidades
   has_many :produtos_quantidades
+  has_many :produtos, :through => :produtos_quantidades
   
   # Retornos do UOLPagSeguro
   has_many :retornos_pgmtos
@@ -15,8 +15,10 @@ class Pedido < ActiveRecord::Base
   #===========================================================================#
   #                             VALIDATIONS                                   #
   #===========================================================================#
+  validate :must_have_one_produto
+  validate :must_not_have_produtos_iguais
+  #validate :validate_pessoa
   validates_associated :pessoa
-  validates_associated :produtos_quantidades
   validates_presence_of :entrega_endereco
   validates_presence_of :entrega_numero
   validates_presence_of :entrega_cep
@@ -28,17 +30,31 @@ class Pedido < ActiveRecord::Base
   validates_length_of :entrega_estado, :maximum => 2, :allow_nil => true
   validates_length_of :entrega_cep, :is => 8
   validates_numericality_of :entrega_cep, :only_integer => true
-  validate :must_have_produto
   
-  def must_have_produto
-    if produtos_quantidades.size <= 0
+  def must_have_one_produto
+    if (produtos_quantidades.size <= 0)
       errors.add_to_base("Carrinho precisa de ao menos um produto")
     end
   end
+  
+  def must_not_have_produtos_iguais
+    produtos_ids = []
+    produtos_quantidades.each { |c| produtos_ids << c.produto_id }
+    if produtos_ids.size != produtos_ids.uniq.size
+      errors.add_to_base("Carrinho tem rows com produtos iguais")
+    end
+  end
+  
+  # Another option to validate pessoa...
+  def validate_pessoa
+    if pessoa && !pessoa.valid?
+      pessoa.errors.each { |attr, msg| errors.add(attr, msg) }
+    end
+  end
 
-  #==========================================================================#
-  #                               NAMED SCOPES                               #
-  #==========================================================================#
+  #===============================================================================#
+  #                               NAMED SCOPES                                    #
+  #===============================================================================#
   named_scope :posteriores_a, lambda { |data|
     if data.blank?
       {}
@@ -77,8 +93,7 @@ class Pedido < ActiveRecord::Base
       pq = ProdutosQuantidade.new(:pedido_id => self.id,
                                   :produto_id => options[:id],
                                   :qtd => options[:qtd],
-                                  :presente => options.include?('presente')
-                                  )
+                                  :presente => options.include?('presente'))
       pq.save!
     end
   end
@@ -88,7 +103,11 @@ class Pedido < ActiveRecord::Base
     if not self.entrega_nome_pacote.blank?
       self.entrega_nome_pacote
     else
-      self.pessoa.nome
+      if self.pessoa
+        self.pessoa.nome
+      else
+        "Pedido sem pessoa relacionada"
+      end
     end
   end
   
@@ -96,16 +115,20 @@ class Pedido < ActiveRecord::Base
   def total
     t = 0
     if self.produtos_quantidades
-      preco_unit = 0
       for p in self.produtos_quantidades
-        preco_unit  = p.produto.preco
-        preco_unit += p.produto.plus_presente if p.presente
-        t += p.qtd.to_i * preco_unit.to_f
+        t += p.qtd.to_i * p.preco_unitario.to_f
       end
     end
     t += self.frete.to_f if self.frete
     t -= self.desconto.to_f if self.desconto
     return t.to_f
+  end
+  
+  # Retorna quantos itens tem o pedido
+  def n_itens
+    n = 0
+    self.produtos_quantidades.each { |c| n += c.qtd }
+    return n
   end
   
   # Transforma o Id em Letras(=Base50)

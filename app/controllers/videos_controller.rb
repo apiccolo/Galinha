@@ -25,4 +25,7 @@ class VideosController < ApplicationController
     render :template => "videos/filme"
   end
   
+  def pelucia
+    render :template => "videos/pelucia"
+  end
 end

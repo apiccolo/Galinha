@@ -7,7 +7,7 @@
     De <span class="preco_mentira"><%= number2currency(produto.preco_fake) %></span> 
     por <span class="preco_final"><%= number2currency(produto.preco) %></span>
     <br />
-    Desconto de <span class="desconto"><%= number2currency(produto.desconto) -%></span>!
+    Desconto do combo: <span class="desconto"><%= number2currency(produto.desconto) -%></span>!
     <% else -%>
     <b><%= number_to_currency(produto.preco) %></b>
     <% end -%>
@@ -29,7 +29,7 @@
 </p>
 <% end -%>
 <% if options[:link_to_carrinho] -%>
-<p><%= link_to_remote "Colocar #{image_tag('icones/adicionar_carrinho.png')}", 
+<p class="colocar_no_carrinho"><%= link_to_remote "Colocar no #{image_tag('icones/carrinho_adicionar.png')}", 
                       :url => { :action => "incluir", 
                                 :produto_id => produto.id } -%></p>
 <% end -%>

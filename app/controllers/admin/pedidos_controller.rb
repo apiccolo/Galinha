@@ -27,6 +27,17 @@ class Admin::PedidosController < Admin::AdminController
   def alterar_status
   end
   
+  # DELETE /produtos/1
+  # DELETE /produtos/1.xml
+  def destroy
+    @pedido = Pedido.find(params[:id])
+    @pedido.destroy
+    respond_to do |format|
+      format.html { redirect_to(admin_pedidos_path) }
+      format.xml  { head :ok }
+    end
+  end
+  
   # Mostra pagina de impressao dos envelopes de pedidos.
   before_filter :busca_pedido_para_impressao, 
                 :only => :print
