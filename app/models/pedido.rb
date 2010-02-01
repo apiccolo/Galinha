@@ -88,6 +88,7 @@ class Pedido < ActiveRecord::Base
   #                           METHODS                                #
   #==================================================================#
   # Inclui os produtos e suas respectivas qtds no pedido
+  # TODO: onde isto é usado?? REMOVE-ME!!!
   def inclui_produtos_qtd(options = {})
     if options.include?('id') and options.include?('qtd')
       pq = ProdutosQuantidade.new(:pedido_id => self.id,
@@ -131,6 +132,11 @@ class Pedido < ActiveRecord::Base
     return n
   end
   
+  # CEP no formato DDDDD-DDD
+  def cep
+    self.entrega_cep[0..4]+"-"+self.entrega_cep[5..8] if self.entrega_cep
+  end
+  
   # Transforma o Id em Letras(=Base50)
   # Vide: lib/salt.rb
   def base50
@@ -149,20 +155,16 @@ class Pedido < ActiveRecord::Base
   # Métodos para ACTIVE SCAFFOLD
   # Reescritos no Helper.
   #=============================
-  def to_label
-    "PedidoId #{self.id}, feito por #{self.pessoa.primeiro_nome} em #{self.created_at.strftime('%d de %B')}"
-  end
+  # REMOVE-ME!!!
+  #def to_label
+  #  "PedidoId #{self.id}, feito por #{self.pessoa.primeiro_nome} em #{self.created_at.strftime('%d de %B')}"
+  #end
   
   def endereco
   end
   
   def change_status
-  end
-  
-  # CEP no formato DDDDD-DDD
-  def cep
-    self.entrega_cep[0..4]+"-"+self.entrega_cep[5..8] if self.entrega_cep
-  end
+  end  
     
   #============================================================================#
   #                            ESTADOS dos PEDIDOS                             #
@@ -246,6 +248,15 @@ class Pedido < ActiveRecord::Base
   # Métodos usados pelos EVENTOS
   #=============================
   
+  # Retorna string descrevendo o status
+  # atual do pedido, de modo simplificado.
+  def status_agora
+    "Cancelado" if (self.pedido_cancelado?)
+    "Processando pedido" if (self.processando_envio? or self.processando_envio_envelopado? or self.processando_envio_notafiscal?)
+    "Pedido postado" if (self.produto_enviado? or self.produto_enviado_cod_postagem?)
+    self.status.humanize
+  end
+  
   # Marca quando o pedido foi submetido.
   def inicia_pedido
     self.data_pedido = self.updated_at #Time.now.utc
@@ -313,13 +324,28 @@ class Pedido < ActiveRecord::Base
   # Incrementa o Reenvio e retorna TRUE
   # para mudar de estado no ACTS_as_state...
   def pago_e_pode_reenviar?
-    if self.recebido_pelo_cliente?
+    if self.pode_reenviar?
       return false # como reenviar se o cliente já recebeu??
     else
       self.reenvio += 1
       self.reenviado = true
       self.reenviado_em = Time.now.utc
       self.save(false)
+      return true
+    end
+  end
+  
+  # Pode reenviar pedido? em quais estados?
+  def pode_reenviar?
+    # Nestes estados, impossivel reenviar...
+    if self.recebido_pelo_cliente? or 
+       self.pedido? or 
+       self.aguardando_pagamento? or
+       self.processando_envio? or
+       self.processando_envio_envelopado? or
+       self.processando_envio_notafiscal?
+      return false
+    else
       return true
     end
   end

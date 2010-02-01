@@ -28,8 +28,9 @@
       <%= descreve_comprador(pedido) %>
     </td>
     <td class="estreita <%= pedido.status %>">
-      <%= descreve_status(pedido) %><br />
-      <%= link_to "Alterar...", :action => "alterar_status", :id => pedido %><br />
+      <%= descreve_status(pedido) %>
+      <%= render :partial => "alterar_status", :locals => { :pedido => pedido } %>
+      <%= link_to_function "Alterar...", "displayAlterarStatus(#{pedido.id})", :class => "pequeno" %>
     </td>
     <td>
       <%= descreve_produtos_pedido(pedido) %>
@@ -56,3 +57,43 @@
 </table>
 
 <%= will_paginate(@pedidos) %>
+
+<script type="text/javascript" charset="utf-8">
+function displayAlterarStatus(pedidoId) {
+  var elem = 'alterar_status_'+pedidoId;
+  $(elem).show();
+}
+</script>
+<style type="text/css" media="screen">
+div.d_status {
+  position:absolute;
+  border:1px solid gray;
+  background:#fff;
+  padding:1px 0;
+  font-size:11px;
+}
+table.p_status {
+  background:#eee;
+  margin:0 1px;
+}
+table.p_status tr td {
+  padding:2px 7px;
+  text-align:center;
+}
+table.p_status tr td.atual { font-style:italic;}
+table.p_status tr td.aguardando { background:#FFE69F;}
+table.p_status tr td.processando { background:#cc3333;}
+table.p_status tr td.enviado { background:#33cc33;}
+table.p_status tr td.recebido { background:#929122;}
+table.p_status tr td.finalizado { background:#498849;}
+table.p_status tr td.cancelado { background:#444;}
+table.p_status tr td a {
+  color:black;
+  text-decoration:none;
+  padding:2px;
+}
+table.p_status tr td a:hover {
+  background:black;
+  color:#fff;
+}
+</style>

@@ -22,9 +22,35 @@ class Admin::PedidosController < Admin::AdminController
   end
   
   # Altera o status do pedido
-  verify :params => :id,
+  verify :params => [:id, :do],
          :only => :alterar_status
   def alterar_status
+    pedido = Pedido.find(params[:id])
+    if pedido
+      case params["do"]
+        when "iniciar"
+          pedido.iniciar!
+        when "pagamento_confirmado"
+          pedido.pagamento_confirmado!
+        when "envelopar"
+          pedido.envelopar!
+        when "imprimir_nota_fiscal"
+          pedido.imprimir_nota_fiscal!
+        when "enviar_correio"
+          pedido.enviar_correio!
+        when "incluir_cod_postagem"
+          pedido.incluir_cod_postagem!
+        when "receber"
+          pedido.cliente_recebeu!
+        when "finalizar"
+          pedido.encerrar!
+        when "cancelar"
+          pedido.cancelar!
+      end
+    else
+      flash[:error] = "Pedido inexistente"
+    end
+    redirect_to :action => :index
   end
   
   # DELETE /produtos/1
@@ -105,7 +131,7 @@ class Admin::PedidosController < Admin::AdminController
       ha_proximo = (Pedido.count(:conditions => ["status = ?", my_status]) > 1)
       if ha_proximo
         @proximo = Pedido.find(:first, :conditions => ["status = ? AND id <> ?", 
-                                                        my_status, pedido.id])
+                                                        my_status, @pedido.id])
       end
     end
   end

@@ -53,3 +53,16 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
   config.i18n.default_locale = "pt-BR"
 end
+
+# http://improveit.com.br/software_livre/brazilian_rails
+require 'brazilian-rails'
+
+ActionMailer::Base.smtp_settings = {
+  :address => "localhost",
+  :port => "25",
+  :domain => "galinhapintadinha.com.br",
+  :authentication => "login",
+  :user_name => "",
+  :password => "",
+}
+ActionMailer::Base.delivery_method = :sendmail

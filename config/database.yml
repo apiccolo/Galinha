@@ -21,4 +21,4 @@ production:
   username: galinha
   password: pintinho-molhado
   host: localhost
-#  encoding: latin1
+  encoding: latin1

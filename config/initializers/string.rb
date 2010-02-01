@@ -1,1 +1,1 @@
-require "lib/string"
+#require "lib/string"

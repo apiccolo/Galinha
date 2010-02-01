@@ -1,12 +1,18 @@
-Car<%= @pessoa.termina_o_a %> <%= @pessoa.primeiro_nome %>,
+Car<%= @pessoa.termina_o_a %> <%= @pessoa.primeiro_nome.camelize %>,
 
-Recebemos seu pedido (n. <%= @pedido.id.to_s %>) em <%= @pedido.updated_at.strftime("%d de %B de %Y às %H:%M") %> no site da Galinha Pintadinha. Aguardamos a confirmação do pagamento para prosseguirmos.
+Recebemos seu pedido (n. <%= @pedido.id.to_s %>) em <%= @pedido.updated_at.strftime("%d de %B de %Y às %H:%M") %> no site da Galinha Pintadinha.
+Estes foram os produtos solicitados:
 
+<%= render :partial => "descreve_carrinho",
+           :locals => { 
+             :pedido => @pedido,
+             :carrinho => @pedido.produtos_quantidades } %>
+
+Aguardamos a confirmação do pagamento para prosseguirmos.
 Sempre que desejar, acompanhe o status de seu pedido em:
 <%= @link2pedido %>
 
-Atenção: caso tenha ocorrido algum problema no processo de pagamento do UOL PagSeguro (ex.: a tela de pagamento não abriu; falha na conexão etc.), reinicie o processo de pagamento no link de seu pedido (link acima).
-
+Caso tenha ocorrido algum problema no processo de pagamento do UOL PagSeguro (ex.: a tela de pagamento não abriu; falha na conexão etc.), reinicie o processo de pagamento - basta acompanhar seu pedido (link acima) e seguir as instruções da página.
 Atenciosamente,
 
 

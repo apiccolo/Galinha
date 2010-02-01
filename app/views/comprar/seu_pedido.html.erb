@@ -1,58 +1,37 @@
-<div class="grid_10 prefix_1 suffix_1 alpha omega">
-<h2>Meu pedido no site da Galinha Pintadinha!</h2>
-<p>Veja abaixo as principais informações referentes ao seu pedido.</p>
+<div class="grid_12 alpha omega" style="padding-left:30px">
+  <h3 id="call2compra" class="margin0">Dados do pedido n. <%= @pedido.id -%></h3>
+  
+  <div class="grid_12 alpha omega">
+  <p>Veja abaixo o resumo da informações referentes ao seu pedido.</p>
+  
+  <p class="grid_11 alpha" id="status">
+    Status do pedido: <span class="<%= @pedido.status %>"><%= @pedido.status_agora %></span>
+      <%= link_to "*", :anchor => "legenda", 
+                       :pid => params[:pid], 
+                       :pbase => params[:pbase], 
+                       :chkpid => params[:chkpid], 
+                       :md5 => params[:md5] %>
+  </p>
+  <!-- RESUMO DO CARRINHO -->
+  <%= render :partial => "resumo_carrinho", 
+             :locals => { 
+               :carrinho => @pedido.produtos_quantidades,
+               :pedido => @pedido,
+               :msg => 'pos'
+              } -%>
+  </div>
 
-<%= flash_message -%>
-<%= error_messages_for 'pedido' %>
-
-<% form_tag '/comprar/seu_pedido', :id => 'form_seu_pedido' do %>
-<%= hidden_field_tag "pid", params[:pid] %>
-<%= hidden_field_tag "pbase", params[:pbase] %>
-<%= hidden_field_tag "chkpid", params[:chkpid] %>
-<%= hidden_field_tag "md5", params[:md5] %>
-<% end %>
-
-<fieldset id="seu_pedido">
-  <legend>Pedido n. <%= @pedido.id.to_s -%></legend>
-  <ol>
-    <% for p in @pedido.produtos_quantidades -%>
-    <li style="float:left;display:inline;width:170px;">
-      <%= image_tag(p.produto.imagem_pequena) %>
-    </li>
-    <li>Produto: <b><%= p.produto.nome %></b></li>
-    <li>Quantidade: <b><%= "#{p.qtd} "+pluralize(p.qtd, "unidade") -%></b> <%= " (para presente!)" if p.presente %></li>
-    <% end -%>
-    <li>Total: 
-      <b><%= number_to_currency(@pedido.total, 
-                                :precision => 2, 
-                                :unit => 'R$ ', 
-                                :separator => ",", 
-                                :format => "%u %n") %></b>
-    </li>
-    <li>Status: <b><%= @pedido.status.humanize -%></b></li>
-    <li>Última atualização: <b><%= @pedido.updated_at.strftime('%A, %d de %B de %Y às %H:%M') -%></b></li>
-  </ol>
-</fieldset>
-
-<div class="grid_5 alpha">
-<fieldset id="pedido_entrega">
-  <legend>Dados de entrega</legend>
-  <ol>
-    <li>Para: <b><%= para_label(@pedido) -%></b></li>
-    <li>Endereço: <b><%= @pedido.entrega_endereco -%></b></li>
-    <li>Número: <b><%= @pedido.entrega_numero -%></b></li>
-    <li>Complemento: <b><%= @pedido.entrega_complemento -%></b></li>
-    <li>Bairro: <b><%= @pedido.entrega_bairro -%></b></li>
-    <li>CEP: <b><%= @pedido.entrega_cep -%></b></li>
-    <li>Cidade: <b><%= @pedido.entrega_cidade -%></b></li>
-    <li>Estado: <b><%= @pedido.entrega_estado -%></b></li>
-  </ol>
-</fieldset>
-</div>
+  <div class="grid_12 alpha omega">
+  <!-- RESUMO DO PEDIDO: COMPRADOR E ENTREGA -->
+  <%= render :partial => "resumo_pedido", 
+             :locals => { 
+               :pedido => @pedido
+              } -%>
+  </div>
 
 <% if @pedido.aguardando_pagamento? -%>
-<div class="grid_4 omega" style="padding:10px;background-color:#ffd;">
-  <p><b>Ainda aguardamos o pagamento de seu pedido...</b></p>
+<div class="grid_12 alpha omega">
+  <p class="margin0"><b>Ainda aguardamos o pagamento de seu pedido...</b></p>
   <p>Caso tenha ocorrido algum problema com o pagamento no UOL PagSeguro,
      clique no botão abaixo e conclua agora sua compra</p>
   <%= render :partial => "form_pagseguro",
@@ -60,24 +39,50 @@
                :pedido => @pedido,
                :change_page => false
              } %>
-  <!--p class="formHint" style="font-size:10px;">Mas <b>atenção</b>: clique no link acima do UOL PagSeguro apenas em caso de erro ao tentar efetuar o pagamento. Por favor, não refaça o processo de pagamento caso você já tenha gerado um boleto ou deseje mudar a forma de pagamento. Em caso de dúvida, <%= link_to "fale conosco", "/fale_conosco" -%>.</p-->
 </div>
 <% end -%>
 
-<div class="grid_8">
-<p>Caso haja algum erro, reclamação, dúvida, crítica etc. ou deseje cancelar seu pedido, entre em contato com <%= mail_to("contato@galinhapintadinha.com.br", "nosso atendimento") -%> ou use nossa página de <%= link_to "Fale Conosco", "/fale_conosco" -%>. <br />
-  Lembre-se, por favor, de mencionar o número de seu pedido.</p>
-</div>
-
+<div class="grid_11 alpha omega">
+  <p class="centro"><a name="legenda"></a>*<b>Legenda (Status dos pedido)</b></p>
+  <div class="grid_5 alpha">
+    <p><b>Aguardando pagamento</b>: o pagamento de seu pedido ainda não foi confirmado pelo UOLPagSeguro.</p>
+    <p><b>Processando pedido</b>: seu pagamento já foi confirmado, portanto, estamos processando seu pedido. Isso significa embalar o(s) produtos, imprimir etiqueta e nota fiscal e, por último, despachá-lo para os Correios.</p>
+    <p><b>Pedido postado</b>: seu pedido já foi entregue aos Correios para levá-lo ao endereço informado. O código de rastreamento do produto é informado ao cliente tão logo o recebamos dos Correios.</p>
+  </div>
+  <div class="grid_5 omega">
+    <p><b>Recebido pelo cliente</b>: seu pedido foi devidamente recebido e o cliente notificou o site da Galinha Pintadinha, deixando seu depoimento, crítica, sugestão etc.</p>
+    <p><b>Cancelado</b>: pedido cancelado, por motivos diversos.</p>
+    <p><b>Encerrado</b>: mais de 90 dias se passaram desde o término do pedido (cancelado ou entregue).</p>
+  </div>
 </div>
 
 <style type="text/css" media="screen">
 fieldset#seu_pedido ol li,
-fieldset#pedido_entrega ol li {
+fieldset#pedido_entrega ol li,
+fieldset#pedido_comprador ol li {
   list-style:none;
 }
+p#status {
+  font-size:18px;
+  text-align:center;
+  background:#ccc;
+}
+p#status span {
+  font-weight:bold;
+}
+p#status span.pedido { color: gray;}
+p#status span.aguardando_pagamento { color: #FFE69F;}
+p#status span.processando_envio { color: ;}
+p#status span.processando_envio_envelopado { color: ;}
+p#status span.processando_envio_notafiscal { color: ;}
+p#status span.produto_enviado { color: ;}
+p#status span.produto_enviado_cod_postagem { color: ;}
+p#status span.cancelado { color:gray;}
 </style>
 
-<script type="text/javascript">
-//new Validation('form_seu_pedido', {useTitles:true}); // OR new Validation(document.forms[0]);
-</script>
+<% form_tag '/comprar/seu_pedido', :id => 'form_seu_pedido' do %>
+<%= hidden_field_tag "pid", params[:pid] %>
+<%= hidden_field_tag "pbase", params[:pbase] %>
+<%= hidden_field_tag "chkpid", params[:chkpid] %>
+<%= hidden_field_tag "md5", params[:md5] %>
+<% end %>

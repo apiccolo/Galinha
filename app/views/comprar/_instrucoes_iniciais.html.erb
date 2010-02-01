@@ -1,30 +1,12 @@
 <div class="grid_6 alpha">
   <p class="negrito">É rápido, fácil e seguro! Siga os passos abaixo:</p>
   <ol id="passos" class="clearfix">
-    <li <% if (i==1) %>class="marcada"<% end -%>>Preencha corretamente os dados da compra;</li>
-    <li <% if (i==2) %>class="marcada"<% end -%>>Revise e confirme todas essas informações;</li>
-    <li <% if (i==3) %>class="marcada"<% end -%>>Faça o pagamento no UOL PagueSeguro.</li>
+    <li class="one<% if (i==1) %> marcada<% end -%>">Escolha os produtos e preencha os dados do pedido;</li>
+    <li class="two<% if (i==2) %> marcada<% end -%>">Revise e confirme todas essas informações;</li>
+    <li class="three<% if (i==3) %> marcada<% end -%>">Faça o pagamento no <b>UOL PagSeguro</b>.</li>
   </ol>
 </div>
 <div class="grid_5 omega">
-<p>Compra segura através do UOL PAGSEGURO</p>
-<% if ambiente_producao? -%>
-<img src="https://pagseguro.uol.com.br/Security/Imagens/btnPreferenciaCartoesBR.gif" alt="pagseguro" width="418" height="74" />
-<% else -%>
-<p style="width:418;height:74;background-color:#aaa;padding:20px">
-  Logomarca UOLPagSeguro: turned off [DEV]
-</p>
-<% end -%>
+<p style="margin-bottom:8px">Compra segura através do <b>UOL PagSeguro</b>:</p>
+<%= image_tag("icones/pagseguro_opcoes_pgmto.gif") %>
 </div>
-<style type="text/css" media="screen">
-ol#passos {
-  margin-bottom:5px;
-}
-ol#passos li {
-  color:#999;
-}
-ol#passos li.marcada {
-  font-weight:bold;
-  color:#69C56A;
-}
-</style>

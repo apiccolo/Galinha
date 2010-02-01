@@ -1,3 +1,37 @@
+/* TESTEIRA */
+h3#call2compra {
+  color:#E64101;
+  font-size:2em;
+  font-weight:bold;
+}
+
+/* INSTRUCOES */
+ol#passos {
+  margin-bottom:5px;
+}
+ol#passos li {
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  margin:-5px 0 0px 0;
+  padding:5px 0 15px 40px;
+  color:#999;
+  font-size:13px;
+}
+ol#passos li.marcada {
+  font-weight:bold;
+  color:#21759B; /*#E64101;*/
+}
+ol#passos li.one {
+  background:transparent url(/images/icones/step1.png) no-repeat scroll left top;
+}
+ol#passos li.two {
+  background:transparent url(/images/icones/step2.png) no-repeat scroll left top;
+}
+ol#passos li.three {
+  background:transparent url(/images/icones/step3.png) no-repeat scroll left top;
+}
+
 /* CARRINHO DE COMPRAS */
 .topo_carrinho {
   background-color:#576F9E;

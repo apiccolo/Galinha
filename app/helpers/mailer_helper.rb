@@ -20,4 +20,13 @@ module MailerHelper
     rodape =  "#-------------------------------------------------------------#\n"
     return rodape
   end
+  
+  # igual o metodo do application, sem o :format
+  def number2currency(number)
+    number_to_currency(number, :precision => 2, 
+                               :unit => "R$", 
+                               :separator => ",",
+                               :delimiter => ".")
+  end
+  
 end

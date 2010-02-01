@@ -1,0 +1,39 @@
+<div id="alterar_status_<%= pedido.id %>" style="display:none;" class="d_status">
+<table class="p_status">
+  <tr>
+    <td class="aguardando<%= " atual" if (pedido.status=="aguardando_pagamento") %>">
+      <%= link_to "Aguardando<br />Pagamento", :action => "alterar_status", :id => pedido.id, :do => "iniciar" %>
+    </td>
+    <td class="processando<%= " atual" if (pedido.status=="processando_envio") %>">
+      <%= link_to "Processando<br />Envio", :action => "alterar_status", :id => pedido.id, :do => "pagamento_confirmado" %>
+    </td>
+    <td class="processando<%= " atual" if (pedido.status=="processando_envio_envelopado") %>">
+      <%= link_to "Envelopado", :action => "alterar_status", :id => pedido.id, :do => "envelopar" %>
+    </td>
+    <td class="processando<%= " atual" if (pedido.status=="processando_envio_notafiscal") %>">
+      <%= link_to "NotaFiscal<br />Impressa", :action => "alterar_status", :id => pedido.id, :do => "imprimir_nota_fiscal" %>
+    </td>
+    <td class="enviado<%= " atual" if (pedido.status=="produto_enviado") %>">
+      <%= link_to "Enviado", :action => "alterar_status", :id => pedido.id, :do => "enviar_correio" %>
+    </td>
+    <td class="enviado<%= " atual" if (pedido.status=="produto_enviado_cod_postagem") %>">
+      <%= link_to "Cod. Postagem", :action => "alterar_status", :id => pedido.id, :do => "incluir_cod_postagem" %>
+    </td>
+    <td class="recebido<%= " atual" if (pedido.status=="recebido_pelo_cliente") %>">
+      <%= link_to "Recebido", :action => "alterar_status", :id => pedido.id, :do => "receber" %>
+    </td>
+    <td class="finalizado<%= " atual" if (pedido.status=="encerrado") %>">
+      <%= link_to "Finalizado", :action => "alterar_status", :id => pedido.id, :do => "finalizar" %>
+    </td>
+    <td class="cancelado<%= " atual" if (pedido.status=="pedido_cancelado") %>">
+      <%= link_to "Cancelado", :action => "alterar_status", :id => pedido.id, :do => "cancelar" %>
+    </td>
+    <% if pedido.pode_reenviar? -%>
+    <td class="reenviar">
+      <%= link_to "Reenviar<br />#{image_tag('icones/arrow_refresh.png')}", :action => "alterar_status", :id => pedido.id, :do => "reenviar" %>
+    </td>
+    <% end %>
+  </tr>
+</table>
+<!-- <%= check_box_tag "notificar_status_#{pedido.id}", 1, true %> Notificar mudança de status ao cliente (por email). -->
+</div>

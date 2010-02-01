@@ -47,7 +47,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :pedidos, :collection => { :print => :get,
                                                :lista_ceps => :get,
                                                :controle_postagem => :get },
-                              :member => { :print => :get }
+                              :member => { :print => :get,
+                                           :alterar_status => :get }
     
     admin.resources :descontos
     admin.resources :configuracoes, :collection => { :editar_arquivo => :post,

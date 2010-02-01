@@ -752,6 +752,10 @@ select#usuario_cidade_id {
 /* --------- /stylesheets/errors.css --------- */ 
 /* Mensagem sobre erro de validação ========================================*/
 
+div.fieldWithErrors {
+  display:inline;
+}
+
 .fieldWithErrors input,
 .fieldWithErrors textarea,
 .fieldWithErrors select {
@@ -1326,15 +1330,6 @@ p.aviso {
   padding:3px 3px 3px 30px;
   margin: 20px 0px;
 }
-
-/*** COMPRAR ****/
-h3#call2compra {
-  color:#E64101;
-  font-size:2em;
-  font-weight:bold;
-  
-}
-
 
 /* Rodapé
 -----------------------------------------------------------------------------

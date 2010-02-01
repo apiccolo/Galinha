@@ -1,0 +1,8 @@
+QTD|<%= "%37s" % "PRODUTO           " %>|<%= "%12s" % "PREÇO UNIT." %>|<%= "%15s" % "TOTAL" %>
+----------------------------------------------------------------------
+<% carrinho.each do |c| -%>
+<%= "%-3s" % c.qtd -%>|<%= "%-37s" % c.produto.nome %>|<%= "%-12s" % number2currency(c.preco_unitario) -%>|<%= "%15s" % number2currency(c.qtd * c.preco_unitario) %>
+<% end -%>
+Frete:<%= "%63s" % number2currency(pedido.frete) %>
+TOTAL:<%= "%63s" % number2currency(pedido.total) %>
+______________________________________________________________________

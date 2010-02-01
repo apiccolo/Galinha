@@ -31,6 +31,7 @@ class ComprarController < ApplicationController
       recolhe_outros_produtos
       render "index"
     elsif @pedido.save! # Se validou tudo certinho...
+      @pedido.iniciar!
       session[:pedido] = nil
       redirect_to :action => "go2pgmto", :id => @pedido.id, :md5 => encrypt(@pedido.id)
     else
@@ -48,17 +49,56 @@ class ComprarController < ApplicationController
       if (encrypt(@pedido.id) != params[:md5])
         flash[:error] = "Inválido"
         redirect_to :action => :index
-      elsif !@pedido.pedido?
-        flash[:warning] = "Pedido #{@pedido.status.humanize}"
-        #redirect_to :action => :index
-      else
-        @pedido.iniciar!
       end
     else
       flash[:error] = "Pedido não encontrado"
       redirect_to :action => :index
     end
   end
+  
+  #------------------------------------------------------------   
+  #     Mostra ao cliente dados do pedido
+  #
+  def seu_pedido
+    @pedido = Pedido.find(params[:pid])
+    begin
+      if not @pedido.check(params[:pid], params[:pbase], params[:chkpid], params[:md5])
+        flash[:error] = "Dados do pedido incorretos"
+        redirect_to :action => "index"
+      end
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Pedido inexistente"
+      redirect_to :action => "index"
+    end
+  end
+  
+  #------------------------------------------------------------
+  #        Recebe POST do UOLPagSeguro
+  #
+  def confirmacao_uol
+    #Mailer.deliver_admin_post_recebido_UOLPagSeguro(params)
+    @confirmou = false
+    if params['Referencia'] and not params['Referencia'].empty?
+      begin
+        @pedido = Pedido.find(params['Referencia'].to_i)
+        @pedido.update_attribute('forma_pgmto', params["TipoPagamento"])
+
+        my_params = ajusta_paramsUOL(params)
+        @pedido.retornos_pgmtos.create(my_params)
+
+        if @pedido.aguardando_pagamento? and 
+           ((params['StatusTransacao']=='Aprovado') or (params['StatusTransacao']=='Completo'))
+          @pedido.pagamento_confirmado!
+          @confirmou = true
+          Mailer.deliver_admin_pgmto_confirmado(@pedido) #NOTIFICAR!
+        end        
+      rescue ActiveRecord::RecordNotFound
+        # evita erros na tela...
+        render :text => 'ERRO: Pedido Nao Encontrado'
+      end
+    end
+  end
+
 
   #==================================================================#
   #                             PRODUTOS                             #
@@ -78,6 +118,15 @@ class ComprarController < ApplicationController
   def produto
     @produto = Produto.find(params[:id])
     render :layout => false, :template => "comprar/produto"
+  end
+  
+  #------------------------------------------------------------
+  #   Mostra a imagem grande de um dado thumbnail
+  #   ATENÇÃO: nao usa o layout, retorna apenas a tag IMG
+  #  
+  def imagem
+    thumb = params[:thumb]
+    render :text => "<img src=\""+ thumb.gsub('_thumb', '') +"\" alt=\"produto grande\">"
   end
   
   #==================================================================#
@@ -156,6 +205,7 @@ class ComprarController < ApplicationController
          :only => :alterar_qtd
   def alterar_qtd
     alterar_qtd_produto(params[:produto_id].to_i, params[:qtd].to_i)
+    recalcula_frete
     if request.xhr?
       refresh_carrinho_e_outros
     else
@@ -201,7 +251,9 @@ class ComprarController < ApplicationController
   def atualizar_frete_por_estado
     if not params[:estado].blank?
       frete = calculo_do_frete_por_estado(params[:estado])
-      atualiza_frete(params[:estado], frete, "FRETE GALINHA - #{params[:estado]}")
+      atualiza_pedido(:frete => frete,
+                      :frete_tipo => "FRETE GALINHA - #{params[:estado]}",
+                      :entrega_estado => params[:estado])
       refresh_carrinho_e_outros #(:except => ['leve_tambem', 'sugestoes'])
     else
       render :nothing => true
@@ -212,6 +264,17 @@ class ComprarController < ApplicationController
   #   PROTECTED METHODS
   #
   protected
+  
+  def recalcula_frete
+    if not @pedido.entrega_estado.blank?
+      if (@settings['frete_tipo'] == 'estadual')
+        frete = calculo_do_frete_por_estado(@pedido.entrega_estado)
+        atualiza_pedido(:frete => frete)
+      elsif (@settings['frete_tipo'] == 'correios')
+        # TODO...
+      end
+    end
+  end
   
   #-----------------------------------------
   #   Atualiza o div do carrinho, das 
@@ -378,10 +441,15 @@ class ComprarController < ApplicationController
     @pedido.produtos_quantidades.clear
   end
   
-  def atualiza_frete(estado, frete, frete_tipo)
-    @pedido.update_attributes(:frete => frete,
-                              :frete_tipo => frete_tipo,
-                              :entrega_estado => estado)    
+  def atualiza_pedido(p = {})
+    if (p and not p.empty?)
+      if (p[:pessoa] and p[:pedido])
+        @pedido.update_attributes(p[:pedido])
+        @pessoa.update_attributes(p[:pessoa])
+      else
+        @pedido.update_attributes(p)
+      end
+    end
   end
   
   protected

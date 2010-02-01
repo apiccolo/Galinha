@@ -1,5 +1,9 @@
 /* Mensagem sobre erro de validação ========================================*/
 
+div.fieldWithErrors {
+  display:inline;
+}
+
 .fieldWithErrors input,
 .fieldWithErrors textarea,
 .fieldWithErrors select {

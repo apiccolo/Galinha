@@ -16,7 +16,7 @@ class Produto < ActiveRecord::Base
   #==========================================================================#
   #                               NAMED SCOPES                               #
   #==========================================================================#
-  named_scope :disponivel, :conditions => [ "produtos.disponivel = ?", true ]
+  named_scope :disponivel, :conditions => [ "produtos.disponivel = ? AND produtos.qtd_estoque > ?", true, 0 ]
 
   
   #==========================================================================#

@@ -27,8 +27,13 @@ class ApplicationController < ActionController::Base
      @settings = Settings.all
    end
    
+   helper_method :ambiente_producao?
+   def ambiente_producao?
+     (RAILS_ENV=='production')
+   end
+   
    def check_access
-     if (RAILS_ENV == "production")
+     if ambiente_producao?
        authenticate_or_request_with_http_basic do |user_name, password|
          user_name == "galinha" && password == "pintinho-molhado"
        end

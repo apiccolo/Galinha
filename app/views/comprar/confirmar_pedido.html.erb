@@ -9,10 +9,16 @@
 <% form_for :pedido, :url => "/comprar/gravar" do |f| %>
 
 <!-- RESUMO DO CARRINHO -->
-<%= render :partial => "resumo_carrinho" %>
+<%= render :partial => "resumo_carrinho", 
+           :locals => { 
+             :carrinho => @carrinho,
+             :pedido => @pedido,
+             :msg => 'pre'
+            } -%>
 
 <!-- FORM RESUMO DO PEDIDO -->
-<%= render :partial => "resumo_pedido" %>
+<%= render :partial => "resumo_pedido",
+           :locals => { :pedido => @pedido } %>
 
 <div class="grid_11 alpha omega topo_carrinho" style="padding:2px">
   <div class="grid_5 alpha">

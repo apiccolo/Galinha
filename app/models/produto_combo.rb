@@ -52,6 +52,7 @@ class ProdutoCombo < Produto
     options = options.merge!(my_options)
     condicoes = []
     condicoes << "1=1"
+    condicoes << "produtos.qtd_estoque > 0"
     condicoes << "total = #{options[:n_itens_pacote]}" if options[:n_itens_pacote]
     
     sql_string = <<MYSTRING.gsub(/\s+/, " ").strip

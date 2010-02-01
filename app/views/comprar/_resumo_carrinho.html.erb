@@ -2,7 +2,7 @@
   <div class="grid_7 alpha omega topo_carrinho">
     <h5>Produtos escolhidos</h5>
   </div>
-<% if @carrinho and (@carrinho.size > 0) -%>
+<% if carrinho and (carrinho.size > 0) -%>
 <table class="crud">
   <tr>
     <th>Qtd.</th>
@@ -10,8 +10,8 @@
     <% if (@settings["opcao_para_presente"].to_i==1) -%><th>Para presente?</th><% end -%>
     <th style="text-align:center">Valor</th>
   </tr>
-<% @carrinho.each_with_index do |c, i| %>
-<% prod = Produto.find(c.produto_id) %>
+<% carrinho.each_with_index do |c, i| %>
+<% prod = c.produto %>
   <tr>
     <td class="curta">
       <%= c.qtd %>
@@ -21,6 +21,7 @@
       <%= thumbnail_produto(prod) %>
       <span class="pequeno"><%= prod.nome %></span>
       </p>
+      <p class="margin0"><%= link_to_function "[Saiba...+]" , "Modalbox.show('/comprar/produto/#{prod.id}', {title: '#{prod.nome}', width: 600}); return false;" %></p>
     </td>
     <% if settings_checked?(@settings["opcao_para_presente"]) -%>
     <td>
@@ -33,62 +34,27 @@
   <tr id="frete">
     <td colspan="2">&nbsp;Frete</td>
     <% if (@settings["opcao_para_presente"].to_i==1) -%><td></td><% end -%>
-    <td class="valor"><%= number_to_currency(@pedido.frete) %></td>
+    <td class="valor"><%= number_to_currency(pedido.frete) %></td>
   </tr>
   <tr id="total">
-    <td colspan="2">&nbsp;<%= pluralize(@carrinho.size, "item") %></td>
+    <td colspan="2">&nbsp;<%= pluralize(carrinho.size, "item") %></td>
     <% if settings_checked?(@settings["opcao_para_presente"]) -%><td></td><% end -%>
-    <td class="valor grandao"><%= number_to_currency(@pedido.total) %></td>
+    <td class="valor grandao"><%= number_to_currency(pedido.total) %></td>
   </tr>
 </table>
 <% end -%>
 </div>
 
 <div class="grid_4 omega">
-  <h5>Aqui está seu pedido!</h5>
-  <p>Certifique-se de que está tudo certo.</p>
-  <p>Atente para os produtos escolhidos, bem como para suas respectivas quantidades, frete e total do pedido.</p>
-  <p>Revise com cuidado os dados do comprador e, sobretudo, os dados para entrega</p>
-  <p>Se precisar alterar algo, clique no botão <b>alterar</b> logo abaixo. Se estiver tudo ok, prossiga para o pagamento.</p>
+  <% if (msg=='pre') -%>
+  <h5 class="margin0">Aqui está seu pedido!</h5>
+  <p>Certifique-se de que está tudo certinho.</p>
+  <p>Primeiramente, atente para os produtos escolhidos, bem como para suas respectivas quantidades, frete e total do pedido. Em seguida, revise com cuidado os dados do comprador e, sobretudo, os dados de entrega</p>
+  <p>Se precisar modificar algo, clique no botão <b>alterar</b> logo abaixo. Se estiver tudo <i>ok</i>, prossiga para o pagamento.</p>
+  <% elsif (msg=='pos') -%>
+  <h5 class="margin0">Aqui está seu pedido!</h5>
+  <p>Certifique-se de que está tudo certinho.</p>
+  <p>Caso haja algum erro, reclamação, dúvida, crítica etc. ou deseje cancelar seu pedido, entre em contato com <%= mail_to("contato@galinhapintadinha.com.br", "nosso atendimento") -%> ou use nossa página de <%= link_to "Fale Conosco", "/fale_conosco" -%>.</p>  
+  <p>Lembre-se, por favor, de mencionar o número de seu pedido (<b>Pedido n. = <%= pedido.id %></b>).</p>
+  <% end %>
 </div>
-<style type="text/css" media="screen">
-.topo_carrinho {
-  background-color:#576F9E;
-}
-.topo_carrinho h5 {
-  color:white;
-  font-weight:bold;
-  text-align:center;
-  margin:0;
-}
-.valor {
-  font-weight:bold;
-}
-.verdinho {
-  background-color:#BFDDBF;
-  text-align:center;
-}
-.grandao {
-  font-size:18px;
-  color:white;
-}
-.pequeno {
-  font-size:11px;
-}
-.direita {
-  text-align:right;
-}
-.centro {
-  text-align:center;
-}
-.curta {
-  width:50px;
-}
-.larga {
-  width:240px;
-}
-tr#total {
-  background-color:#69C56A;
-  line-height:0.25em;
-}
-</style>

@@ -1,5 +1,6 @@
 module ComprarHelper
   
+  # TODO = Remove-me!!! vide carrinho e resumo_carrinho
   def calcular_preco(carrinho_item, produto)
     preco_item  = produto.preco
     preco_item += produto.plus_presente if carrinho_item.presente
@@ -16,6 +17,14 @@ module ComprarHelper
     }
     options = options.merge!(my_options)
     image_tag("produtos/#{produto.imagem_pequena}_thumb.png", options)
+  end
+  
+  def imagem_produto(produto, my_options = {})
+    options = {
+      :class => ""
+    }
+    options = options.merge!(my_options)
+    image_tag("produtos/#{produto.imagem_pequena}.png", options)
   end
   
   def produto_faltante_para_completar_combo(produto_combo, carrinho)

@@ -113,7 +113,7 @@ module AdminHelper
     tmp += "<br />"
     tmp += "#{pedido.entrega_bairro}<br />" if pedido.entrega_bairro
     tmp += "#{pedido.cep} - #{pedido.entrega_cidade} - #{pedido.entrega_estado}"
-    tmp += link_to('imprimir envelope', 
+    tmp += "<br />" + link_to('imprimir envelope', 
                   { :action => 'print', 
                     :id => pedido.id }, 
                     :class => 'etiqueta', 

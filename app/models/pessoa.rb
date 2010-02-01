@@ -8,9 +8,11 @@ class Pessoa < ActiveRecord::Base
   # got this in: http://opensoul.org/2007/2/7/validations-on-empty-not-nil-attributes
   before_validation :clear_empty_attrs
 
-  validates_presence_of :nome 
-  validates_presence_of :email
-  validates_presence_of :sexo
+  validates_presence_of :nome, :email, :sexo 
+  validates_presence_of :fone_ddd, :fone_str
+  validates_numericality_of :fone_ddd, :fone_str
+  validates_length_of :fone_ddd, :is => 2
+  validates_length_of :fone_str, :minimum => 6
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates_inclusion_of :sexo, :in => %w( m f )
   validates_numericality_of :cpf, :only_integer => true, :allow_nil => true # = skip validation

@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <th><img src="/images/icones/disponivel.gif" alt="disponivel"></th>
+      <th>Estoque</th>
       <th>Nome/Descrição simples</th>
       <th>Preço</th>
       <th colspan="1">
@@ -22,6 +23,9 @@
       <% else -%>
         <img src="/images/icones/disponivel_not.gif" alt="disponivel">
       <% end -%></td>
+    <td class="estreita grandao">
+      <span class="<%= "vermelho" if (produto.qtd_estoque <= 0) %>"><%= produto.qtd_estoque %></span>
+    </td>
     <td>
       <%= produto.nome %><br />
       <span class="pequeno cinza"><%= produto.descricao_simples %></span>

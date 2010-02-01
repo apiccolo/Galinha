@@ -30,7 +30,7 @@
                                               :com_preco_unitario => true, 
                                               :com_valor_total => true) %>
         <tr class="frete">
-          <td colspan="4">Frete</td>
+          <td colspan="4">Frete (<%= pedido.frete_tipo %>)</td>
           <td><span class="valor_frete"><%= number2currency(pedido.frete) -%></span></td>
         </tr>
         <tr class="desconto">

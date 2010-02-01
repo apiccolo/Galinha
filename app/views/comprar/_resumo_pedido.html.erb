@@ -7,39 +7,39 @@
       <tr>
         <td class="nome_do_campo">Seu nome</td>
         <td>
-          <%= @pedido.pessoa.nome %>
+          <%= pedido.pessoa.nome %>
           <%#= hidden_field :pessoa, :nome %>
         </td>
       </tr>
       <tr>
         <td class="nome_do_campo">Seu email</td>
         <td>
-          <%= @pedido.pessoa.email %>
+          <%= pedido.pessoa.email %>
           <%#= hidden_field :pessoa, :email %>
         </td>
       </tr>
       <tr>
         <td class="nome_do_campo">Sexo</td>
         <td>
-          <%= @pedido.pessoa.qual_sexo %>
+          <%= pedido.pessoa.qual_sexo %>
           <%#= hidden_field :pessoa, :sexo %>
         </td>
       </tr>
-      <% if @pedido.pessoa.fone_ddd and @pedido.pessoa.fone_str -%>
+      <% if pedido.pessoa.fone_ddd and pedido.pessoa.fone_str -%>
       <tr>
         <td class="nome_do_campo">Telefone</td>
         <td>
-          (<%= @pedido.pessoa.fone_ddd %>) <%= @pedido.pessoa.fone_str %>
+          (<%= pedido.pessoa.fone_ddd %>) <%= pedido.pessoa.fone_str %>
           <%#= hidden_field :pessoa, :fone_ddd %>
           <%#= hidden_field :pessoa, :fone_str %>          
         </td>
       </tr>
       <% end -%>
-      <% if @pedido.pessoa.cpf -%>
+      <% if pedido.pessoa.cpf -%>
       <tr>
         <td class="nome_do_campo">CPF*</td>
         <td>
-          <%= @pedido.pessoa.cpf %>
+          <%= pedido.pessoa.cpf %>
           <%#= hidden_field :pessoa, :cpf %>
         </td>
       </tr>
@@ -60,38 +60,38 @@
       <tr>
         <td class="nome_do_campo">Para</td>
         <td>
-          <%= @pedido.para -%>
+          <%= pedido.para -%>
           <%#= hidden_field :pedido, :entrega_nome_pacote %>
         </td>
       </tr>
       <tr>
         <td class="nome_do_campo">Endereço</td>
         <td>
-          <%= @pedido.entrega_endereco -%>
+          <%= pedido.entrega_endereco -%>
           <%#= hidden_field :pedido, :entrega_endereco %>
         </td>
       </tr>
       <tr>
         <td class="nome_do_campo">Número</td>
         <td>
-          <%= @pedido.entrega_numero -%>
+          <%= pedido.entrega_numero -%>
           <%#= hidden_field :pedido, :entrega_numero %>
         </td>
       </tr>
-      <% unless @pedido.entrega_complemento.blank? -%>
+      <% unless pedido.entrega_complemento.blank? -%>
       <tr>
         <td class="nome_do_campo">Complemento</td>
         <td>
-          <%= @pedido.entrega_complemento -%>
+          <%= pedido.entrega_complemento -%>
           <%#= hidden_field :pedido, :entrega_complemento %>
         </td>
       </tr>
       <% end -%>
-      <% unless @pedido.entrega_bairro.blank? -%>
+      <% unless pedido.entrega_bairro.blank? -%>
       <tr>
         <td class="nome_do_campo">Bairro</td>
         <td>
-          <%= @pedido.entrega_bairro -%>
+          <%= pedido.entrega_bairro -%>
           <%#= hidden_field :pedido, :entrega_bairro %>
         </td>
       </tr>
@@ -99,14 +99,14 @@
       <tr>
         <td class="nome_do_campo">CEP</td>
         <td>
-          <%= @pedido.entrega_cep -%>
+          <%= pedido.entrega_cep -%>
           <%#= hidden_field :pedido, :entrega_cep %>
         </td>
       </tr>
       <tr>
         <td class="nome_do_campo">Estado</td>
         <td>
-          <%= @pedido.entrega_estado -%>
+          <%= pedido.entrega_estado -%>
           <%#= hidden_field :pedido, :entrega_estado %>
           <%#= hidden_field :pedido, :frete %>
         </td>
@@ -114,7 +114,7 @@
       <tr>
         <td class="nome_do_campo">Cidade</td>
         <td>
-          <%= @pedido.entrega_cidade -%>
+          <%= pedido.entrega_cidade -%>
           <%#= hidden_field :pedido, :entrega_cidade %>
         </td>
       </tr>
