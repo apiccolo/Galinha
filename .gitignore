@@ -1,5 +1,6 @@
 log/*
 tmp/*
+public/tmp/*
 doc/*
 db/development.sqlite3
 

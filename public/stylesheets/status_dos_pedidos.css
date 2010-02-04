@@ -1,0 +1,30 @@
+/**** Sistema de cores para os estados dos pedidos ****/
+.cor_pedido { color:#00AAEE; }
+.fundo_pedido { background:#00AAEE; }
+
+.cor_aguardando_pagamento { color:#FFCC00; }
+.fundo_aguardando_pagamento { background:#FFCC00; }
+
+.cor_processando_envio { color:#FF0000; }
+.fundo_processando_envio { background:#FF0000; }
+
+.cor_processando_envio_envelopado { color:#FF3333; }
+.fundo_processando_envio_envelopado { background:#FF3333; }
+
+.cor_processando_envio_notafiscal { color:#FF6666; }
+.fundo_processando_envio_notafiscal { background:#FF6666; }
+
+.cor_produto_enviado { color:#51CC35; }
+.fundo_produto_enviado { background:#51CC35; }
+
+.cor_produto_enviado_cod_postagem { color:#51CC35; }
+.fundo_produto_enviado_cod_postagem { background:#51CC35; }
+
+.cor_recebido_pelo_cliente { color:#228822; }
+.fundo_recebido_pelo_cliente { background:#228822; }
+
+.cor_encerrado { color:#498849; }
+.fundo_encerrado { background:#498849; }
+
+.cor_pedido_cancelado { color:#999999; }
+.fundo_pedido_cancelado { background:#444444; }

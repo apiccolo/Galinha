@@ -8,14 +8,14 @@ table.crud {
 
 table.crud th {
   text-align: left;
-  background-color: #F5F5F5;
-  padding: 2px 4px 2px 0;
+  background-color: #EAEAEA;
+  padding: 2px 4px 2px 2px;
+  color:#777;
+  font-size:11px;
 }
 
 table.crud td {
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
+  padding:10px 10px 0 2px;
   border-top: 1px solid #EAEAEA;
 }
 
@@ -58,3 +58,6 @@ a.remover {
   display: inline;
   margin-right: 10px;
 }
+
+.estreita { width:20px; }
+.media { width:80px;}

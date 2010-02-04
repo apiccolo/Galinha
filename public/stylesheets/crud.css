@@ -10,6 +10,7 @@ table.crud th {
   text-align: left;
   background-color: #F5F5F5;
   padding: 2px 4px 2px 0;
+  color:#777;
 }
 
 table.crud td {

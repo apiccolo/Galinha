@@ -724,14 +724,14 @@ table.crud {
 
 table.crud th {
   text-align: left;
-  background-color: #F5F5F5;
-  padding: 2px 4px 2px 0;
+  background-color: #EAEAEA;
+  padding: 2px 4px 2px 2px;
+  color:#777;
+  font-size:11px;
 }
 
 table.crud td {
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
+  padding:10px 10px 0 2px;
   border-top: 1px solid #EAEAEA;
 }
 
@@ -773,7 +773,11 @@ a.remover {
   float: left;
   display: inline;
   margin-right: 10px;
-}/* --------- /stylesheets/admin/forms.css --------- */ 
+}
+
+.estreita { width:20px; }
+.media { width:80px;}
+/* --------- /stylesheets/admin/forms.css --------- */ 
 /* Formulário
 ------------------------------------------------------------------------------
 */
@@ -983,6 +987,37 @@ ul.dropdown li ul li a:visited {
 ul.dropdown li ul li a:hover {
   background-color: #6E643E;
   color: white;
+}/* --------- /stylesheets/admin/tabs.css --------- */ 
+h1#especial {
+  margin:0 0 10px 0;
+  float:left;
+}
+ul.subsection_tabs {
+  border-right:1px solid #CCCCCC;
+  clear:both;
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  margin:0 0 5px;
+  padding:0;
+  height:300px;
+}
+ul.subsection_tabs li.tab {
+  margin:0 0 10px 0;
+  text-align:right;
+}
+ul.subsection_tabs li.tab a.active {
+  background-color:#DDDDDD;
+  -moz-border-radius-topleft:8px;
+  -moz-border-radius-bottomleft:8px;
+}
+ul.subsection_tabs li.tab a {
+  background-color:#FFFFFF;
+  color:#666666;
+  display:block;
+  padding:5px 15px 5px 0;
+  font-weight:bold;
+  text-decoration:none;
 }/* --------- /stylesheets/admin/default.css --------- */ 
 /* Tags
 ------------------------------------------------------------------------------
@@ -1153,7 +1188,6 @@ h3 {
 /* Adendo ao Table CRUD 
 ------------------------------------------------------------------------------
 */
-.estreita { width:20px; }
 .grandao { font-size: 26px; }
 .grandao .real { font-size: 14px; }
 .pequeno { font-size: 11px; }
@@ -1247,4 +1281,34 @@ a.botao span {
 a.botao span img {
   margin:0 3px 3px 0;
   vertical-align:middle;
-}
+}/* --------- /stylesheets/status_dos_pedidos.css --------- */ 
+/**** Sistema de cores para os estados dos pedidos ****/
+.cor_pedido { color:#00AAEE; }
+.fundo_pedido { background:#00AAEE; }
+
+.cor_aguardando_pagamento { color:#FFCC00; }
+.fundo_aguardando_pagamento { background:#FFCC00; }
+
+.cor_processando_envio { color:#FF0000; }
+.fundo_processando_envio { background:#FF0000; }
+
+.cor_processando_envio_envelopado { color:#FF3333; }
+.fundo_processando_envio_envelopado { background:#FF3333; }
+
+.cor_processando_envio_notafiscal { color:#FF6666; }
+.fundo_processando_envio_notafiscal { background:#FF6666; }
+
+.cor_produto_enviado { color:#51CC35; }
+.fundo_produto_enviado { background:#51CC35; }
+
+.cor_produto_enviado_cod_postagem { color:#51CC35; }
+.fundo_produto_enviado_cod_postagem { background:#51CC35; }
+
+.cor_recebido_pelo_cliente { color:#228822; }
+.fundo_recebido_pelo_cliente { background:#228822; }
+
+.cor_encerrado { color:#498849; }
+.fundo_encerrado { background:#498849; }
+
+.cor_pedido_cancelado { color:#999999; }
+.fundo_pedido_cancelado { background:#444444; }

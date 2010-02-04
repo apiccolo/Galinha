@@ -1,53 +1,57 @@
 <h1>Pedidos</h1>
-<p>
-  <% form_tag "", :method => :get do %>
-  ID <%= text_field_tag "id", params[:id], :size => 4 %>
-  Nome/Email comprador <%= text_field_tag "nome_email", params[:nome_email], :size => 20 %>
-  CEP <%= text_field_tag "entrega_cep", params[:entrega_cep], :size => 8 %>
-  <%= submit_tag "Buscar" %>
-  <% end %>
-</p>
+<div class="grid_9 alpha">
 <table id="lista_de_pedidos" class="crud">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Comprador</th>
+      <th>Pedido em</th>
+      <th>Id</th>
       <th>Status</th>
-      <th>Produtos</th>
-      <th>Entrega</th>
-      <th>Valor</th>
+      <th>Total</th>
       <th colspan="1">
         Ações
       </th>
     </tr>
   </thead>
 <% for pedido in @pedidos -%>
-<% @pedido = pedido %>
   <tr id="pedido_<%= pedido.id %>">
-    <td class="estreita"><%= pedido.id %></td>
-    <td>
-      <%= descreve_comprador(pedido) %>
-    </td>
-    <td class="estreita <%= pedido.status %>">
-      <%= descreve_status(pedido) %>
+    <td class="media">
+      <%= pedido.created_at.strftime("%d/%m %H:%M") %>
       <%= render :partial => "alterar_status", :locals => { :pedido => pedido } %>
-      <%= link_to_function "Alterar...", "displayAlterarStatus(#{pedido.id})", :class => "pequeno" %>
     </td>
-    <td>
-      <%= descreve_produtos_pedido(pedido) %>
+    <td class="estreita grandao"><%= pedido.id %></td>
+    <td class="status <%= pedido.status %>">
+      <%= descreve_status(pedido) %>
+      <%= "<br /><span class=\"pequeno\">NF: <b>#{pedido.nota_fiscal}</b></span>" if not pedido.nota_fiscal.blank? -%>
     </td>
-    <td>
-      <%= descreve_entrega(pedido) %>
-    </td>
-    <td class="grandao green"><%= number2currency(pedido.total) %></td>
+    <td class="green negrito"><%= number2currency(pedido.total) %></td>
     <td class="acoes">
-      <%= link_to_remote image_tag("icones/zoom.png") + " Detalhes", 
-                         :url => { :action => "detalhes", 
-                                   :id => pedido }, 
-                         :update => "pedido_mais_#{pedido.id}",
-                         :before => "$('pedido_#{pedido.id}').addClassName('carregando')",
-                         :after => "$('pedido_#{pedido.id}').removeClassName('carregando');" + visual_effect(:highlight, "pedido_#{pedido.id}", :duration => 1.5) %><br />
-      <%= link_to image_tag("icones/cancel.png") + " Remover", admin_pedido_path(pedido), :confirm => "Tem certeza?", :method => :delete %>
+      <p class="margin0">
+        <%= link_to_remote image_tag("icones/zoom.png") + " Detalhes", 
+                           :url => { :action => "detalhes", 
+                                     :id => pedido }, 
+                           :update => "pedido_mais_#{pedido.id}",
+                           :before => "$('pedido_#{pedido.id}').addClassName('carregando')",
+                           :after => "$('pedido_#{pedido.id}').removeClassName('carregando');" + visual_effect(:highlight, "pedido_#{pedido.id}", :duration => 1.5) %>
+        <%= link_to image_tag("icones/cancel.png") + " Remover", admin_pedido_path(pedido), :confirm => "Tem certeza?", :method => :delete, :style => "margin-left:40px" %>
+      </p>
+      <p>
+        <%= link_to_function image_tag("icones/arrow_branch.png") + " Mudar Status", "displayAlterarStatus(#{pedido.id})", :class => "pequeno" %>
+        <% if not pedido.nota_fiscal.blank? %>
+          <% if @settings['pedidos_selecionados'] and @settings['pedidos_selecionados'].include?(pedido.id) %>
+            <%= link_to_remote image_tag("icones/heart_delete.png") + " Desmarcar NF", 
+                               { :url => { :action => "nf_marcar", 
+                                         :id => pedido.id } },
+                               :style => "margin-left:20px",
+                               :id => "heart_#{pedido.id}" %>
+          <% else -%>
+            <%= link_to_remote image_tag("icones/heart_add.png") + " Marcar NF", 
+                               { :url => { :action => "nf_marcar", 
+                                         :id => pedido.id } },
+                               :style => "margin-left:20px",
+                               :id => "heart_#{pedido.id}" %>
+          <% end -%>
+        <% end -%>
+      </p>
     </td>
   </tr>
   <tr>
@@ -56,8 +60,14 @@
   </tr>
 <% end -%>
 </table>
+</div>
+<div class="grid_3 omega">
+  <%= render :partial => "filtros" %>
+</div>
 
-<%= will_paginate(@pedidos) %>
+<div class="grid_12 alpha omega">
+  <%= will_paginate(@pedidos) %>
+</div>
 
 <script type="text/javascript" charset="utf-8">
 function displayAlterarStatus(pedidoId) {

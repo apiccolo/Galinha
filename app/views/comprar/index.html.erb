@@ -7,7 +7,7 @@
   </div>
 
   <div class="grid_8 alpha">
-  <% form_for :pedido, :url => "/comprar/confirmar_pedido" do |f| %>
+  <% form_for :pedido, :url => "/comprar/confirmar_pedido", :html => { :id => "form_compra" } do |f| %>
     <!-- CARRINHO -->
     <%= render :partial => "mostra_carrinho" %>
 
@@ -32,3 +32,8 @@
   </div>
 </div>
 <%#= render :partial => "debug" %>
+<script type="text/javascript">
+//<![CDATA[
+var valid = new Validation('form_compra', { useTitles : true });
+//]]>
+</script>

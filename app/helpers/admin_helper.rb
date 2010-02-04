@@ -1,49 +1,66 @@
 module AdminHelper
     
   def descreve_comprador(pedido, options = {})
-    str = ""
+    str = "<p class=\"margin0\">"
     if pedido
       if pedido.pessoa
         str += "#{pedido.pessoa.nome}<br />"
         str += "#{mail_to(pedido.pessoa.email)}<br />"
         str += formata_cpf(pedido.pessoa.cpf)
-        if pedido.processando_envio? or pedido.processando_envio_envelopado?
-          str += "<br />"
-          str += link_to('imprimir nota fiscal', 
-                        { :action => 'print', 
-                          :id => pedido.id,
-                          :nota_fiscal => 1 }, 
-                          :class => 'etiqueta', 
-                          :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
-        elsif pedido.processando_envio_notafiscal? or pedido.produto_enviado? or pedido.produto_enviado_cod_postagem? or pedido.recebido_pelo_cliente? or pedido.encerrado?
-          str += "<br />"
-          str += "NF: <b>#{pedido.nota_fiscal}</b>"
-        end
+        str += "<br />#{pedido.pessoa.como_conheceu}" if not pedido.pessoa.como_conheceu.blank?
+        str += "</p>"
+        str += e_nota_fiscal(pedido)
       else
-        str = "pedido sem pessoa!"
+        str = "</p>pedido sem pessoa!</p>"
       end
     else
-      str = "pedido vazio!"
+      str = "<p>pedido vazio!</p>"
     end
     return str
   end
   
-  def descreve_status(pedido, options = {})
-    case pedido.status
-      when 'aguardando_pagamento'
-        style_str = "color:#0ae"
-      when /(processando_envio)\w*/
-        style_str = "color:#f33;font-weight:bold;"
-      when /(produto_enviado)\w*/
-        style_str = "color:#51CC35;font-weight:bold;"
-      when 'recebido_pelo_cliente', 'encerrado'
-        style_str = "color:#282;"
-      else
-        style_str = "color:#999"
+  def e_nota_fiscal(pedido)
+    if pedido.processando_envio? or 
+       pedido.processando_envio_envelopado?
+      str = "<p class=\"botao_em_detalhe\">"
+      str += link_to(content_tag(:span, image_tag("icones/printer.png") + ' Imprimir Nota Fiscal'), 
+                    { :action => 'print', 
+                      :id => pedido.id,
+                      :nota_fiscal => 1 }, 
+                      :class => 'botao', 
+                      :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
+      str += "</p>"
+    elsif pedido.processando_envio_notafiscal? or 
+          pedido.produto_enviado? or 
+          pedido.produto_enviado_cod_postagem? or 
+          pedido.recebido_pelo_cliente? or 
+          pedido.encerrado?
+      str  = "<p class=\"margin0\">"
+      str += "NF: <b>#{in_place_editor_field(:pedido, 'nota_fiscal', {}, :click_to_edit_text => 'Editar número da NF')}</b>"
+      str += "</p>"
+    else
+      str = ""
     end
-    str = content_tag(:span, pedido.status.humanize, :style => style_str)
-    str = content_tag(:b, str) if str.include?('Processando')
-    
+    return str
+  end
+  
+  def e_envelope(pedido)
+    tmp = ""
+    if pedido.processando_envio? or 
+       pedido.processando_envio_envelopado?
+      tmp = "<p class=\"botao_em_detalhe\">"
+      tmp += link_to(content_tag(:span, image_tag("icones/printer.png") + ' Imprimir Envelope'),
+                      { :action => 'print', 
+                        :id => pedido.id }, 
+                    :class => 'botao', 
+                    :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
+      tmp += "</p>"
+    end
+    return tmp
+  end
+  
+  def descreve_status(pedido, options = {})
+    str = content_tag(:span, pedido.status.humanize, :class => "cor_#{pedido.status} negrito")
    #if (pedido.retornos_pgmtos.size > 0)
    #  str += "<br />Retornos Auto: "  
    #  links = []
@@ -99,7 +116,7 @@ module AdminHelper
       str += "  <td class=\"presente\">"
       str += image_tag('icones/para_presente.gif') if pq.presente
       str += "  </td>"
-      str += "  <td class=\"preco_unitario\">#{number2currency(pq.preco_unitario)}/unid.</td>" if options[:com_preco_unitario]
+      str += "  <td class=\"preco_unitario\">#{number2currency(pq.preco_unitario)}</td>" if options[:com_preco_unitario]
       str += "  <td class=\"valor_total\">#{number2currency(pq.qtd * pq.preco_unitario)}</td>" if options[:com_valor_total]
       str += "</tr>"
     end
@@ -130,23 +147,22 @@ module AdminHelper
   end
   
   def descreve_entrega(pedido, options = {})
-    tmp  = ""
+    tmp  = "<p class=\"margin0\">"
     tmp += "<span class=\"para_nome\">"
     tmp += pedido.para
     tmp += "</span><br />"
-    tmp += in_place_editor_field(:pedido, 'entrega_endereco')
+    tmp += in_place_editor_field(:pedido, 'entrega_endereco', {}, :click_to_edit_text => 'Editar endereço')
     #tmp += "#{pedido.entrega_endereco}"
-    tmp += ", #{in_place_editor_field(:pedido, 'entrega_numero')}" if pedido.entrega_numero
+    tmp += ", #{in_place_editor_field(:pedido, 'entrega_numero', {}, :click_to_edit_text => 'Editar número do endereço')}" if pedido.entrega_numero
     #tmp += ", #{pedido.entrega_numero}" if pedido.entrega_numero
-    tmp += " #{pedido.entrega_complemento}" if pedido.entrega_complemento
+    tmp += in_place_editor_field(:pedido, 'entrega_complemento', {}, :click_to_edit_text => 'Editar complemento') if pedido.entrega_complemento
+    #tmp += " #{pedido.entrega_complemento}" if pedido.entrega_complemento
     tmp += "<br />"
-    tmp += "#{pedido.entrega_bairro}<br />" if pedido.entrega_bairro
-    tmp += "#{pedido.cep} - #{pedido.entrega_cidade} - #{pedido.entrega_estado}"
-    tmp += "<br />" + link_to('imprimir envelope', 
-                  { :action => 'print', 
-                    :id => pedido.id }, 
-                    :class => 'etiqueta', 
-                    :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"]) if pedido.processando_envio? or pedido.processando_envio_envelopado?
+    tmp += in_place_editor_field(:pedido, 'entrega_bairro', {}, :click_to_edit_text => 'Editar bairro') +"<br />" if pedido.entrega_bairro
+    #tmp += "#{pedido.entrega_bairro}<br />" if pedido.entrega_bairro
+    tmp += "#{in_place_editor_field(:pedido, 'entrega_cep')} - #{in_place_editor_field(:pedido, 'entrega_cidade', {}, :click_to_edit_text => 'Editar cidade')} - #{pedido.entrega_estado}"
+    tmp += "</p>" 
+    tmp += e_envelope(pedido)
     return tmp
   end
   

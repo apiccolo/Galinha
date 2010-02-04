@@ -1,49 +1,21 @@
-<div>
-  <h2>Opções</h2>
-  
-  <ul id="my_options">
-  <li class="bigsquare">
-      <%= link_to "<span class=\"number\">1</span>
-                   <span class=\"instrucao\">#{image_tag('icons/printer.png')} Imprimir<br />
-                      <b>#{@envelopes} envelopes</b></span>", {
-                  :controller => "pedidos", 
-                  :action => "print" },
-                  :popup => true %>
-  </li>
-  <li class="bigsquare">
-       <%= link_to "<span class=\"number\">2</span>
-                    <span class=\"instrucao\">#{image_tag('icons/printer.png')} Imprimir <br />
-                      <b>#{@notasfisc} notas fiscais</b></span>", {
-                   :controller => "pedidos", 
-                   :action => "print",
-                   :nota_fiscal => 1 },
-                   :popup => true %>
-  </li>
-  <li class="bigsquare">
-      <%= link_to "<span class=\"number\">3</span>
-                   <span class=\"instrucao\">Enviar ao correio<br />
-                    <b>#{@para_corr} pedidos</b></span> #{image_tag('icons/table_refresh.png', :style => 'position:relative;top:4px')}", {
-                  :controller => "pedidos", 
-                  :action => "lista_ceps" },
-                  :popup => true %>
-  </li>
-  <li class="bigsquare">
-      <%= link_to "<span class=\"number\">4</span>
-                   <span class=\"instrucao\">Informar <b>#{@cpostagem}</b>#{image_tag('icons/application_form_add.png', :style => 'position:relative;top:2px;left:4px')}<br />
-                      cod. de postagem</span>", {
-                  :controller => "pedidos", 
-                  :action => "controle_postagem" },
-                  :popup => true %>
-  </li>
-  <li class="bigrow">
-      <%= link_to "#{image_tag('icons/cog.png', :style => 'position:relative;top:2px')} <b>Conferência de status</b> com histórico do <b>UOL PagSeguro</b>", { 
-                  :action => "entrar_arquivo" },
-                  :popup => true %>
-  </li>
-  <li class="bigrow">
-      <%= link_to "#{image_tag('icons/page_gear.png', :style => 'position:relative;top:2px')} Relatório de vendas e <b>notas fiscais</b> ao contador", { 
-                  :action => "relatorios" },
-                  :popup => true %>
-  </li>
+<div class="grid_12 alpha omega"><h1 id="especial">Automação</h1></div>
+
+<div class="grid_3 alpha">
+  <ul id="tabs_automacao" class="subsection_tabs">
+    <li class="tab"><a href="#one">Diária</a></li>
+    <li class="tab"><a href="#two">Semanal</a></li>
+    <li class="tab"><a href="#three">Mensal</a></li>
+    <li class="tab"><a href="#four">Anual</a></li>
   </ul>
 </div>
+
+<div class="grid_9 omega">
+  <div id="one"><%= render :partial => "auto_daily" %></div>
+  <div id="two"><%= render :partial => "auto_weekly" %></div>
+  <div id="three"><%= render :partial => "auto_monthly" %></div>
+  <div id="four"><%= render :partial => "auto_yearly" %></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+new Control.Tabs('tabs_automacao');  
+</script>

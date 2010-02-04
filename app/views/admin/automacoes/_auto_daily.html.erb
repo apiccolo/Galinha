@@ -1,0 +1,37 @@
+<div>
+  <ul id="my_options">
+  <li class="bigsquare">
+      <%= link_to "<span class=\"number\">1</span>
+                   <span class=\"instrucao\">#{image_tag('icones/printer.png')} Imprimir<br />
+                      <b>#{@envelopes} envelopes</b></span>", {
+                  :controller => "pedidos", 
+                  :action => "print" },
+                  :popup => true %>
+  </li>
+  <li class="bigsquare">
+       <%= link_to "<span class=\"number\">2</span>
+                    <span class=\"instrucao\">#{image_tag('icones/printer.png')} Imprimir <br />
+                      <b>#{@notasfisc} notas fiscais</b></span>", {
+                   :controller => "pedidos", 
+                   :action => "print",
+                   :nota_fiscal => 1 },
+                   :popup => true %>
+  </li>
+  <li class="bigsquare">
+      <%= link_to "<span class=\"number\">3</span>
+                   <span class=\"instrucao\">Enviar ao correio<br />
+                    <b>#{@para_corr} pedidos</b></span> #{image_tag('icones/table_refresh.png', :style => 'position:relative;top:4px')}", {
+                  :controller => "pedidos", 
+                  :action => "lista_ceps" },
+                  :popup => true %>
+  </li>
+  <li class="bigsquare">
+      <%= link_to "<span class=\"number\">4</span>
+                   <span class=\"instrucao\">Informar <b>#{@cpostagem}</b>#{image_tag('icones/application_form_add.png', :style => 'position:relative;top:2px;left:4px')}<br />
+                      cod. de postagem</span>", {
+                  :controller => "pedidos", 
+                  :action => "controle_postagem" },
+                  :popup => true %>
+  </li>
+  </ul>
+</div>

@@ -22,7 +22,7 @@ module Admin::Folhamatic::EmpresaHelper
   # Tipo: Num
   # Tam.: 4
   def e001_numero_da_empresa
-    return "0105"
+    return "0240" # n. antigo = 0104
   end
   
   # VERSÃO LAYOUT - Informe o nº da versão do layout que está sendo utilizado para gerar o

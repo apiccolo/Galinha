@@ -34,3 +34,9 @@ table.pedido_em_tabela tr td {
   border:1px solid gray;
   padding:1px;
 }
+
+/***** DETALHES do pedido *******/
+p.botao_em_detalhe {
+  margin-top:20px;
+  padding-bottom:14px;
+}

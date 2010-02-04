@@ -17,7 +17,7 @@
     </li>
     <li>
       <label for="telefone">Telefone</label>
-      (<%= text_field :pessoa, :fone_ddd, :size => 2, :maxlength => 2, :class => "validate-digits", :title => "Use apenas números no DDD", :style => "margin-right:0;" -%>) <%= text_field :pessoa, :fone_str, :size => 9, :maxlength => 8 %>
+      (<%= text_field :pessoa, :fone_ddd, :size => 2, :maxlength => 2, :class => "required validate-digits", :title => "Preencha o DDD", :style => "margin-right:0;" -%>) <%= text_field :pessoa, :fone_str, :size => 9, :maxlength => 8, :class => "required validate-digits", :title => "Preencha seu telefone" %>
       <span class="hint">Use apenas números</span>
     </li>
     <li>
@@ -58,7 +58,7 @@
     </li>
     <li>
       <label for="endereco">Endereço</label>
-      <%= text_field :pedido, :entrega_endereco, :class => "required", :title => "Preencha o endereço da entrega" %>
+      <%= text_field :pedido, :entrega_endereco, :class => "required", :title => "Preencha o endereço" %>
     </li>
     <li>
       <label for="numero">Número</label>
@@ -74,7 +74,7 @@
     </li>
     <li>
       <label for="cep">CEP</label>
-      <%= text_field :pedido, :entrega_cep, :size => 12, :maxlength => 8, :class => "required validate-digits", :title => "Digite o CEP do endereço de entrega - use apenas números" %>
+      <%= text_field :pedido, :entrega_cep, :size => 12, :maxlength => 8, :class => "required validate-digits", :title => "Digite o CEP do endereço de entrega" %>
       <span class="hint">Use apenas números</span>
     </li>
     <li>

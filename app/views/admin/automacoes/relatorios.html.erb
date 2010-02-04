@@ -1,54 +1,44 @@
-<style type="text/css" media="screen">
-ol#rel li {
-  list-style:none;
-  margin:0 0 30px 10px;
-}
-</style>
-<div>
-<% form_remote_tag :url => "/admin/automacao/processar_relatorio" do %>
-<fieldset>
-  <legend> Relatórios: Vendas com Nota Fiscal </legend>
-  <ol id="rel">
-    <li>
-  <label for="intervalo">Seleção</label><br />
-  <%= radio_button_tag "selecao", "intervalo", false %> Intervalo
-  <div style="padding-left:20px">
-  Início <%= datetime_select("relatorio", "inicio", 
-                             :order => [:day, :month, :year], 
-                             :default => 30.days.ago.at_midnight) %><br />
-  Fim&nbsp;&nbsp;&nbsp; <%= datetime_select("relatorio", "final", 
-                            :order => [:day, :month, :year], 
-                            :default => 0.days.from_now.at_beginning_of_day) %>
-  </div>
-  <%= radio_button_tag "selecao", "numero_notas", true %> Número das notas
-  <div style="padding-left:20px">
-  Início <%= text_field("numero_nf", "inicio", :size => 8) %>  <br />
-  Fim&nbsp;&nbsp;&nbsp; <%= text_field("numero_nf", "final", :size => 8) %>
-  </div>
-  <%= radio_button_tag "selecao", "my_where", false %> Condições personalizadas
-  <div style="padding-left:20px">
-  <%= text_area_tag("condicoes", "", :cols => 60, :rows => 3) %>
-  </div>
+<h1>Notas fiscais para contabilidade</h1>
 
-    </li>
-    <li>
-      <label for="tipo">Saída</label><br />
-  <%= radio_button_tag "opcao", "tela", true %> Notas fiscais na tela<br />
-  <%= radio_button_tag "opcao", "arquivo", false %> Notas fiscais para contador
-    </li>
-    <li>  
-  <label for="submit">&nbsp;</label>
-  <%= submit_to_remote "Processar", "Processar",
-                       :url => { :action => 'processar_relatorio' },
-                       :before => "$('spinner').show();"
-                       %>
-    </li>
-  </ol>
-</fieldset>
+<% form_for :automacoes, :url => "/admin/automacoes/arquivo_folhamatic" do |f| %>
+
+<div class="grid_9 alpha">
+  <fieldset>
+    <legend>Escolha dos pedidos</legend>
+    <ol >
+      <li>
+        <%= radio_button_tag "selecao", "automatica", true %> Automática (clique em <b>Marcar NF</b> na lista de pedidos)
+        <div class="clearfix">
+          <%= pedidos_selecionados_em_ul(@settings['pedidos_selecionados']) %>
+          <p><%= link_to "Desmarcar todos os pedidos", { :action => "desmarcar_todos" }, :confirm => "Deseja mesmo desmarcar todas as NF?" %></p>
+        </div>
+
+        <%= radio_button_tag "selecao", "my_where", false %> Manual <span class="pequeno cinza">(pedidos Ids, separados por vírgulas)</span>
+        <div><%= text_area_tag("condicoes", "", :cols => 60, :rows => 3, :style => "width:610px") %></div>
+      </li>
+    </ol>
+  </fieldset>
+</div>
+
+<div class="grid_3 omega">
+  <fieldset>
+    <legend>Escolha da saída</legend>
+    <ol>
+      <li>
+        <%= radio_button_tag "opcao", "tela", true %> Notas fiscais na tela<br />
+        <%= radio_button_tag "opcao", "arquivo", false %> Notas fiscais para contador
+      </li>
+      <li>
+        <%= submit_tag "Gerar" %>
+      </li>
+    </ol>
+  </fieldset>
+  
+  <div id="wrapper">
+    <%= image_tag("spinner.gif", :id => "spinner", :style => "display:none") %>
+    <div id="resultado"></div>
+  </div>
+  
+</div>
+
 <% end %>
-</div>
-
-<div id="wrapper">
-  <%= image_tag("spinner.gif", :id => "spinner", :style => "display:none") %>
-  <div id="resultado"></div>
-</div>

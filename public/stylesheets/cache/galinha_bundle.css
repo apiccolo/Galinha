@@ -664,59 +664,50 @@ p {
   font-style:none;
 }/* --------- /stylesheets/forms.css --------- */ 
 /* Formulários =============================================================*/
-
 form fieldset {
   border: 1px solid white;
   /* padding: 10px 10px 0 10px; */
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-
 form fieldset.sem_bordas {
   border: 0;
   padding: 0 11px;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
 }
-
 form fieldset legend {
   font-size: 14px;
   font-family: "Helvetica", "Verdana", "Arial", sans-serif;
   padding: 0 5px;
   font-weight: bold;
 }
-
 form fieldset ol {
   margin: 0;
 }
-
 form fieldset ol li {
   list-style: none;
   margin: 0 0 10px 0;
   font-size: 12px;
   line-height: 26px;
 }
-
 form fieldset ol li label {
   display: block;
   margin: 1px 0 3px 1px;
   font-size: 12px;
   line-height: 20px;
 }
-
 form label.obrigatorio,
 form span.obrigatorio,
 form p.obrigatorio {
   font-weight: bold;
 }
-
 form .dica {
   color: #999999;
   margin: 2px 0 0 1px;
   font-size: 11px;
   line-height: 16px;
 }
-
 input.text_field,
 input.password_field,
 textarea,
@@ -731,25 +722,63 @@ select {
   padding: 5px;
   font-size: 12px;
 }
-
 input.check_box {
   margin: 0;
   vertical-align: middle;
 }
-
 select {
   padding: 5px 5px 5px 2px;
 }
-
 textarea {
   font-family: inherit;
   font-size: 12px;
 }
-
 select#usuario_cidade_id {
   width: 385px;
 }
-/* --------- /stylesheets/errors.css --------- */ 
+
+/* Validações =============================================================*/
+
+input.disabled {
+	border: 1px solid #F2F2F2;
+	background-color: #F2F2F2;
+}
+input.validation-failed, textarea.validation-failed {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.validation-passed, textarea.validation-passed {
+	border: 1px solid #00CC00;
+	color : #000;
+}
+.validation-advice {
+	margin: 5px 0 0 5px;
+	display: inline;
+/*	padding: 5px;
+	background-color: #FF3300; */
+	color:#FF3333;
+	font-size:11px;
+	font-weight:bold;
+}
+#advice-required-pessoa_fone_ddd {
+  display:inline;
+  margin-left:5px;
+}
+.custom-advice {
+	margin: 5px 0;
+	padding: 5px;
+	background-color: #C8AA00;
+	color : #FFF;
+	font-weight: bold;
+}
+/* fieldset {
+	padding: 1em;
+	margin-bottom: 0.5em;
+} */
+.form-row {
+	clear: both;
+	padding: 0.5em;
+}/* --------- /stylesheets/errors.css --------- */ 
 /* Mensagem sobre erro de validação ========================================*/
 
 div.fieldWithErrors {

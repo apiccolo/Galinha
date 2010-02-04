@@ -1,0 +1,24 @@
+<% form_for :pedidos, :url => { :action => "index" }, :html => { :method => :get } do |f| %>
+<fieldset>
+<legend>Filtros</legend>
+<ol>
+  <li><%= label_tag "Status" %>
+      <%= select_tag "status", options_for_select([["Todos (#{@todos})", "todos"]] + @demais.collect {|p| [ "#{p.status.humanize} (#{p.contador})", p.status] }, params[:status] ) %>
+  </li>
+  <li><%= label_tag "Buscar" %>
+      <%= select_tag "search_field", options_for_select( {'' => '',
+                                                          'CEP' => 'entrega_cep',
+                                                          'Id' => 'pedidos.id',
+                                                          'Email' => 'pessoas.email'}, params[:search_field]) %>
+      <%= text_field_tag "search_value", params[:search_value], :size => 14 %>
+  </li>
+  <li>
+    <%= label_tag "Pedidos por página" %>
+    <%= select_tag "per_page", options_for_select([10, 25, 50, 100], @per_page) %>
+  </li>
+  <li>
+    <%= submit_tag "Filtrar" %>
+  </li>
+</ol>
+</fieldset>
+<% end %>

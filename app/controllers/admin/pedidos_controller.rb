@@ -1,21 +1,24 @@
 class Admin::PedidosController < Admin::AdminController
-  PER_PAGE = 10
+  PER_PAGE = 50
 
   in_place_edit_for :pedido, :entrega_endereco
-  in_place_edit_for :pedido, :entrega_endereco_numero
-  in_place_edit_for :pedido, :entrega_endereco_complemento
+  in_place_edit_for :pedido, :entrega_numero
+  in_place_edit_for :pedido, :entrega_complemento
   in_place_edit_for :pedido, :entrega_bairro
   in_place_edit_for :pedido, :entrega_cep
   in_place_edit_for :pedido, :entrega_cidade
+  in_place_edit_for :pedido, :nota_fiscal
 
   # Bem vindo à lista de pedidos.
   def index
-    busca = {}
+    define_filtros(params)
+    @todos   = Pedido.count(:all)
+    @demais  = Pedido.contador_por_status
     @pedidos = Pedido.paginate(:all, 
-                               :conditions => busca, 
-                               :order => "id DESC", 
+                               :conditions => @filtros, 
+                               :order => "pedidos.id DESC", 
                                :page => params[:page], 
-                               :per_page => PER_PAGE,
+                               :per_page => @per_page,
                                :include => [:pessoa, :produtos_quantidades])
   end
   
@@ -91,6 +94,24 @@ class Admin::PedidosController < Admin::AdminController
     end
   end
   
+  verify :params => [ :id ],
+         :only => [ :envelopado ]
+  # Marca o pedido como envelopado
+  def envelopado
+    pedido = Pedido.find(params[:id])
+    if pedido and pedido.processando_envio?
+      pedido.envelopar!
+      render :update do |page|
+        page << "alert('Pedido #{pedido.id} marcado como envelopado!')"
+      end
+      #render :partial => "window_close"
+    else
+      render :update do |page|
+        page << "alert('ERRO ao marcar pedido como envelopado!')"
+      end
+    end
+  end
+  
   # Lista CEPs dos pedidos com status ='processando_envio'
   # para controle de postagem (que virá do correio).
   def lista_ceps
@@ -106,6 +127,26 @@ class Admin::PedidosController < Admin::AdminController
            }
   end
   
+  # Dado um pedido (via ID) e 
+  # pedido[nota_fiscal], grava-lo.
+  verify :params => [:id, :pedido],
+         :only => :gravar_nota_fiscal
+  def gravar_nota_fiscal
+    pedido = Pedido.find(params[:id])
+    if pedido and pedido.processando_envio_envelopado?
+      pedido.update_attributes(:nota_fiscal => params[:pedido][:nota_fiscal])
+      pedido.imprimir_nota_fiscal!
+      render :update do |page|
+        page.alert("Nota fiscal do pedido #{pedido.id} impressa!\nPedido salvo com sucesso!")
+        page.visual_effect("fade", "input_dados")
+      end      
+    else
+      render :update do |page|
+        page.alert("ERRO: pedido inexistente ou nota fiscal já informada!")
+      end
+    end
+  end
+  
   # Informar codigos de postagem
   # aos respectivos compradores
   def controle_postagem
@@ -119,6 +160,27 @@ class Admin::PedidosController < Admin::AdminController
              :pedidos => pedidos,
              :cod_postagem_text_field => true
             }
+  end
+  
+  # Inclui o pedido no array Setting['pedidos_selecionados']
+  def nf_marcar
+    pedido_id = params[:id].to_i
+    if not @settings['pedidos_selecionados']
+      Settings.defaults['pedidos_selecionados'] = [ 'empty' ]
+      @settings['pedidos_selecionados'] = Settings['pedidos_selecionados']
+    end
+    if @settings['pedidos_selecionados'].include?(pedido_id)
+      # Acho que precisa sempre da atribuicao para salvar...
+      Settings['pedidos_selecionados'] = Settings['pedidos_selecionados'].delete_if { |x| (x == pedido_id) }
+      message = "<span>NF desmarcada!</span>"
+    else
+      # Acho que precisa sempre da atribuicao para salvar...
+      Settings['pedidos_selecionados'] = Settings['pedidos_selecionados'] + [ pedido_id ]
+      message = "<span>NF marcada!</span>"
+    end
+    render :update do |page|
+      page.replace "heart_#{pedido_id}", :text => message
+    end
   end
   
   private
@@ -143,4 +205,11 @@ class Admin::PedidosController < Admin::AdminController
     end
   end
   
+  def define_filtros(p)
+    @filtros = {}
+    @filtros.merge!(:status => p["status"]) if p["status"] and not p["status"].empty? and (p["status"] != 'todos')
+    @filtros.merge!(p["search_field"] => p["search_value"]) if p["search_field"] and p["search_value"] and not p["search_value"].blank?
+    
+    @per_page = (p[:per_page] and not p[:per_page].blank?) ? p[:per_page].to_i : PER_PAGE
+  end  
 end

@@ -47,69 +47,38 @@ class Admin::AutomacoesController < Admin::AdminController
     end
   end
   
-  # Mostra as opcoes de
-  # relatorios disponiveis.
+  def desmarcar_todos
+    Settings['pedidos_selecionados'] = [ 'empty' ]
+    redirect_to :action => "relatorios"
+  end
+  
+  # Mostra as opcoes de relatorios disponiveis.
   def relatorios
   end
   
-  # Processa o relatorio
-  def processar_relatorio
-    inicio = DateTime.civil(params[:relatorio]["inicio(1i)"].to_i, params[:relatorio]["inicio(2i)"].to_i, params[:relatorio]["inicio(3i)"].to_i, params[:relatorio]["inicio(4i)"].to_i, params[:relatorio]["inicio(5i)"].to_i, 0, 0)
-    final  = DateTime.civil(params[:relatorio]["final(1i)"].to_i, params[:relatorio]["final(2i)"].to_i, params[:relatorio]["final(3i)"].to_i, params[:relatorio]["final(4i)"].to_i, params[:relatorio]["final(5i)"].to_i, 0, 0)
-    if params[:selecao]=="intervalo"
-      #model = Pedido.posteriores_a(inicio).anteriores_a(final)
-      conditions = ["pedidos.data_pedido IS NOT NULL AND
-                     (status = 'produto_enviado_cod_postagem' OR status = 'recebido_pelo_cliente' OR status = 'encerrado') AND
-                     pedidos.data_pedido >= ? AND
-                     pedidos.data_pedido <= ? ", inicio, final ]
-    elsif params[:selecao]=="numero_notas"
-      #model = Pedido.nf_inicial(params[:numero_nf][:inicio]).nf_final(params[:numero_nf][:final])
-      inicio = params[:numero_nf][:inicio]
-      final  = params[:numero_nf][:final]
-      conditions = ["pedidos.data_pedido IS NOT NULL AND
-                     (status = 'produto_enviado_cod_postagem' OR status = 'recebido_pelo_cliente' OR status = 'encerrado') AND
-                     pedidos.nota_fiscal * 1 >= ? AND
-                     pedidos.nota_fiscal * 1 <= ? ", inicio, final ]
-    elsif params[:selecao]=="my_where"
-      conditions = ["#{params[:condicoes]}"]
-    end
-    
-    @pedidos = Pedido.find(:all, 
-                           :conditions => conditions,
+  def arquivo_folhamatic
+    #render :text => params.inspect
+    conditions = []
+    conditions = ["pedidos.id IN (?)", params['pedidos_ids']] if (params['selecao']=="automatica")
+    conditions = ["#{params[:condicoes]}"] if (params['selecao']=="my_where")
+    @pedidos = Pedido.find(:all, :conditions => conditions,
                            :order => "nota_fiscal ASC",
                            :include => :pessoa )
     if (params[:opcao]=="tela")
-      render :update do |page|
-        page[:spinner].hide
-        page.replace_html "resultado", 
-               :partial => "relatorio_tela",
-               :locals => { 
-                 :pedidos => @pedidos,
-                 :inicio => inicio,
-                 :final => final
-                }        
-      end
+      render :template => "admin/automacoes/_relatorio_tela",
+             :locals => { :pedidos => @pedidos }
     elsif (params[:opcao]=="arquivo")
       timestamp = Time.now.strftime("%Y%m%d-%H%M%S")
-      arquivo1 = "#{RAILS_ROOT}/public/tmp/relatorio-folhamatic-#{timestamp}.txt" #fml"
+      arquivo1 = "#{RAILS_ROOT}/public/tmp/relatorio-folhamatic-#{timestamp}.txt"
       linhas1  = gera_relatorio("admin/automacoes/relatorio_folhamatic", arquivo1)
 
-      arquivo2 = "#{RAILS_ROOT}/public/tmp/compradores-sp-#{timestamp}.txt" #fml"
-      linhas2  = gera_relatorio("admin/automacoes/relatorio_compradores_sp", arquivo2)
-
-      render :update do |page|
-        page[:spinner].hide
-        page.replace_html "resultado", 
-                :partial => "relatorio_tela_link2arquivo",
-                :locals => { 
-                  :timestamp => timestamp,
-                  :arquivo => [arquivo1, arquivo2],
-                  :totais => [linhas1, linhas2]
-                }
-      end
+      render :relatorios
+      send_file arquivo1, :type => 'application/octet-stream'
     end
   end
   
+  private
+    
   # Dado um partial e o local do arquivo de saida
   # gera o relatorio descrito no partial;
   # Retorna o num linhas do arquivo final.

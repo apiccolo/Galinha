@@ -1,7 +1,8 @@
+/* LEGADO: quadrados grandes das atividades */
 /* UL: passo a passo */
 ul#my_options {
   margin:5px 0 0 0;
-  width:750px;
+  width:650px;
 }
 ul#my_options li {
   list-style:none;
@@ -20,7 +21,7 @@ ul#my_options li a span.instrucao {
   line-height:1.1em;
 }
 ul#my_options li.bigsquare {
-  width:325px;
+  width:315px;
   height:126px;
   margin:10px 10px 0 0;
   background-color:#FFE073;
@@ -31,7 +32,7 @@ ul#my_options li.bigsquare a {
   text-decoration:none;
 }
 ul#my_options li.bigrow {
-  width:658px;
+  width:530px;
   height:58px;
   margin:10px 10px 0 0;
   background-color:#5A5685;
@@ -41,4 +42,26 @@ ul#my_options li.bigrow a {
   display:block;
   padding:18px 0 23px 18px;
   text-decoration:none;
+}
+
+/**** ARQUIVO para contabilidade *****/
+ul#blocado {
+  margin:20px 0 0;
+  padding:5px;
+  border:1px dotted gray;
+  width:600px;
+}
+li.pedido {
+  float:left;
+  display:inline;
+  width:185px;
+  background:#fee;
+  margin:3px 2px;
+  padding:2px 5px;
+}
+li.pedido a {
+  text-decoration:none;
+}
+li.pedido a img { 
+  margin-right:5px;
 }

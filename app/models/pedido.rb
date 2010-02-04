@@ -137,6 +137,12 @@ class Pedido < ActiveRecord::Base
     self.entrega_cep[0..4]+"-"+self.entrega_cep[5..8] if self.entrega_cep
   end
   
+  # Tira o hifen, quando houver
+  def entrega_cep=(valor)
+    valor.gsub!(/[-]/,'') if valor.include?('-')
+    write_attribute(:entrega_cep, valor)
+  end
+  
   # Transforma o Id em Letras(=Base50)
   # Vide: lib/salt.rb
   def base50
@@ -348,6 +354,10 @@ class Pedido < ActiveRecord::Base
     else
       return true
     end
+  end
+  
+  def self.contador_por_status
+    return Pedido.find_by_sql("SELECT COUNT(*) AS contador, status FROM pedidos p GROUP BY p.status ORDER BY contador DESC")
   end
 
   #============================================================================#

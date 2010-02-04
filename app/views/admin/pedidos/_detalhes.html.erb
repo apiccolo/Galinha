@@ -1,24 +1,27 @@
-<div id="detalhes_pedido_<%= pedido.id %>" class="grid_12 alpha omega">
+<div id="detalhes_pedido_<%= pedido.id %>" class="grid_9 alpha omega">
   <div class="detalhes_pedido clearfix">
-  <h2>Pedido #<%= pedido.id %></h2>
-  <div class="grid_12 alpha omega">
-    <div class="grid_6 alpha">
+  <h2>Pedido <%= pedido.id %>: <span class="cor_<%= pedido.status %>"><%= pedido.status.humanize %></span></h2>
+  <div class="grid_9 alpha omega">
+    <div class="grid_4 alpha">
       <h3>Comprador</h3>
       <div class="infos_wrapper">
         <%= descreve_comprador(pedido) %>
-        <br />
-        <%= pedido.pessoa.como_conheceu %>
       </div>
     </div>
-    <div class="grid_6 omega">
+    <div class="grid_5 omega">
       <h3>Entrega</h3>
       <div class="infos_wrapper">
         <%= descreve_entrega(pedido) %>
-        <%= render :partial => "edit_endereco_entrega", :locals => { :pedido => pedido } %>
       </div>
     </div>
   </div>
-  <div class="grid_6 alpha">
+  <div class="grid_4 alpha">
+    <h3>Status e Pagamento</h3>
+    <div class="infos_wrapper">
+      <%= descreve_retornos_pedido_em_tabela(pedido) %>
+    </div>
+  </div>
+  <div class="grid_5 omega">
     <h3>Produtos e Valores</h3>
     <div class="infos_wrapper">
       <table class="pedido_em_tabela">
@@ -47,13 +50,7 @@
       </table>
     </div>
   </div>
-  <div class="grid_6 omega">
-    <h3>Status e Pagamento</h3>
-    <div class="infos_wrapper">
-      <%= descreve_retornos_pedido_em_tabela(pedido) %>
-    </div>
-  </div>
-  <div class="grid_12 alpha omega">
+  <div class="grid_9 alpha omega">
     <p class="direita" style="margin:0 10px 2px 0"><%= link_to_function "Fechar [x]", visual_effect(:blind_up, "detalhes_pedido_#{pedido.id}") %></p>
   </div>
   </div>

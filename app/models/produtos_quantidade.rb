@@ -22,8 +22,8 @@ class ProdutosQuantidade < ActiveRecord::Base
   # para a impressão da nota fiscal.
   # Coloca um "P" ao final se for presente... 
   def codproduto
-    str = self.produto.codproduto
-    str = "002" if self.presente
+    str  = self.produto.codproduto
+    str += "P" if self.presente
     return str
   end
     

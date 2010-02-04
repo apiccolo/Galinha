@@ -108,7 +108,13 @@ module Admin::Folhamatic::NotasFiscaisHelper
   # Tipo: Data
   # Tam.: 8
   def e200_data_de_emissao(pedido)
-    data = pedido.data_nf ? pedido.data_nf.strftime("%Y%m%d") : pedido.data_envio.strftime("%Y%m%d")
+    if pedido.data_nf
+      data = pedido.data_nf.strftime("%Y%m%d")
+    elsif pedido.data_envio
+      data = pedido.data_envio.strftime("%Y%m%d")
+    else
+      data = (pedido.created_at + 7.days).strftime("%Y%m%d")
+    end
     return data
   end
 
@@ -118,7 +124,13 @@ module Admin::Folhamatic::NotasFiscaisHelper
   # Tipo: Data
   # Tam.: 8
   def e200_data_de_saida(pedido)
-    data = pedido.data_nf ? pedido.data_nf.strftime("%Y%m%d") : pedido.data_envio.strftime("%Y%m%d")
+    if pedido.data_nf
+      data = pedido.data_nf.strftime("%Y%m%d")
+    elsif pedido.data_envio
+      data = pedido.data_envio.strftime("%Y%m%d")
+    else
+      data = (pedido.created_at + 7.days).strftime("%Y%m%d")
+    end
     return data
   end
 
@@ -177,7 +189,13 @@ module Admin::Folhamatic::NotasFiscaisHelper
   # Tipo: Num
   # Tam.: 6
   def e200_hora_emissao_nf(pedido)
-    hora = pedido.data_nf ? pedido.data_nf.strftime("%H") : pedido.data_envio.strftime("%H")
+    if pedido.data_nf
+      hora = pedido.data_nf.strftime("%H")
+    elsif pedido.data_envio
+      hora = pedido.data_envio.strftime("%H")
+    else
+      hora = (pedido.created_at + 7.days).strftime("%H")
+    end
     return hora + "0000"
   end
 
@@ -185,7 +203,13 @@ module Admin::Folhamatic::NotasFiscaisHelper
   # Tipo: Num
   # Tam.: 6
   def e200_hora_saida_nf(pedido)
-    hora = pedido.data_nf ? pedido.data_nf.strftime("%H%M%S") : pedido.data_envio.strftime("%H%M%S")
+    if pedido.data_nf
+      hora = pedido.data_nf.strftime("%H%M%S")
+    elsif pedido.data_envio
+      hora = pedido.data_envio.strftime("%H%M%S")
+    else
+      hora = (pedido.created_at + 7.days).strftime("%H%M%S")
+    end
     return hora
   end
 

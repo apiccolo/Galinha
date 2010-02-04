@@ -23,19 +23,7 @@ ul#pedidos li p span.title {
   display:block;
 }
 </style>
-<p><b><%= pedidos.size.to_s %> 
-      <%= pluralize(pedidos.size, "pedido concluído", "pedidos concluídos") %></b> (com NF) entre
-<% if inicio.kind_of?(DateTime) -%> 
-<%= inicio.strftime("%d de %B de %Y às %H:%M") %> e 
-<%= final.strftime("%d de %B de %Y às %H:%M") %> no sistema.
-<% else -%>
-as notas de número <b><%= inicio -%></b> e <b><%= final -%></b>.
-<% end -%>
-</p>
-<% 
-total_de_dvds = 0 
-total_das_notas = 0
--%>
+<p><b><%= pluralize(pedidos.size, "pedido") %></b> com NF.</p>
 <ul id="pedidos">
   <% for p in pedidos -%>
   <li id="pedido_<%= p.id.to_s %>">
@@ -54,24 +42,25 @@ total_das_notas = 0
        Município: <%= p.entrega_cidade %><br />
        U.F.: <b><%= p.entrega_estado %></b><br />
        R.G.: não informado</p>
-    <p class="produto"><span class="title">Dados do Produto</span>
-       Cod. Produto: <%= p.produtos_quantidades[0].codproduto %><br />
+    <p class="produto"><span class="title">Dados dos Produtos</span>
+<% if p.produtos_quantidades and not p.produtos_quantidades.empty? -%>
+      <% p.produtos_quantidades.each do |r| %>
+       Cod. Produto: <%#= r.codproduto %><br />
        Descr. Prod.: DVD Galinha Pintadinha <b>Pedido n. <%= p.id.to_s %></b><br />
        Sit. Trib: 00<br />
-       Quant.: <b><%= p.produtos_quantidades[0].qtd %></b><br />
-       Valor Unitário: <%= p.produtos_quantidades[0].nf_valorunit %><br />
-       Valor Total: <b><%= p.produtos_quantidades[0].nf_valortotal %></b><br />
+       Quant.: <b><%= r.qtd %></b><br />
+       Valor Unitário: <%#= r.nf_valorunit %><br />
+       Valor Total: <b><%#= r.nf_valortotal %></b><br />
+       <% end %>
+<% end %>
        <span class="verysmall">
        Alíquota ICMS: 0<br />
        Obs.: Não incidência de ICMS conforme RICMS-SP art. 7 inciso XIII.</span>
       </p>
-      <% total_de_dvds += p.produtos_quantidades[0].qtd.to_i -%>
-      <% total_das_notas += p.produtos_quantidades[0].nf_valortotal -%>
   </li>
   <% end -%>
 </ul>
-<p>Total de DVDs: <b><%= total_de_dvds.to_s -%></b> discos<br />
-   Total das notas fiscais: R$ <b><%= sprintf("%.2f", total_das_notas) -%></b>
+<p>Total das notas fiscais: R$ <b><%#= sprintf("%.2f", total_das_notas) -%></b>
 </p>
 <% else -%>
 <p>Não há pedidos concluídos (com NF) entre <%= inicio.strftime("%d de %B de %Y às %H:%M") %> e 

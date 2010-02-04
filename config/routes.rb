@@ -41,14 +41,15 @@ ActionController::Routing::Routes.draw do |map|
                                :member => { :edit_combo => :get,
                                             :update_combo => :put,
                                             :relacionar => :get,
-                                            #:gravar_relacionar => :post,
                                             :remover_relacionar => :get,
                                             :print => :get }
     admin.resources :pedidos, :collection => { :print => :get,
                                                :lista_ceps => :get,
                                                :controle_postagem => :get },
                               :member => { :print => :get,
-                                           :alterar_status => :get }
+                                           :alterar_status => :get,
+                                           :envelopado => :post,
+                                           :nf_marcar => :post }
     
     admin.resources :descontos
     admin.resources :configuracoes, :collection => { :editar_arquivo => :post,
@@ -60,7 +61,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :relatorios
     admin.resources :automacoes, :collection => { :entrar_arquivo => :get,
                                                   :processar_dados => :post,
-                                                  :relatorios => :get },
+                                                  :relatorios => :get,
+                                                  :desmarcar_todos => :get },
                                  :member => { :confirmar_pagamento => :post }
   end
 
