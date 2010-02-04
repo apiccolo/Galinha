@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
   
   before_filter :check_access, :get_settings
   
-  include ExceptionNotifiable
+  # http://github.com/rails/exception_notification
+  #include ExceptionNotifiable
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password

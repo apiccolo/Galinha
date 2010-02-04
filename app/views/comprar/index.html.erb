@@ -17,18 +17,18 @@
     <!-- FRETE, DESCONTO, TOTAL -->
     <%= render :partial => "frete_desconto_total" %>
 
-      <div class="grid_1 alpha omega direita" style="padding:2px">
-      <%= image_submit_tag('icones/seta_direita.png') %>
+      <div class="grid_1 alpha omega direita">
+      <%= image_submit_tag('icones/botao_continuar.png') %>
       </div>
   <% end %>
   </div>
 
-  <div class="grid_3 omega" style="border-left:1px dotted gray">
-  <!-- APROVEITE PARA LEVAR -->
-  <%= render :partial => "mostra_leve_tambem" %>
+  <div class="grid_3 omega" style="padding-top:10px;border-left:1px dotted #aaa">
+    <!-- APROVEITE PARA LEVAR -->
+    <%= render :partial => "mostra_leve_tambem" %>
 
-  <!-- LISTA DE SUGESTOES -->
-  <%= render :partial => "mostra_sugestoes" %>
+    <!-- LISTA DE SUGESTOES -->
+    <%= render :partial => "mostra_sugestoes" %>
   </div>
 </div>
-<%= render :partial => "debug" %>
+<%#= render :partial => "debug" %>

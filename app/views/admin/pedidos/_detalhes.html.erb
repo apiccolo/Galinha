@@ -1,18 +1,21 @@
 <div id="detalhes_pedido_<%= pedido.id %>" class="grid_12 alpha omega">
   <div class="detalhes_pedido clearfix">
   <h2>Pedido #<%= pedido.id %></h2>
-  <div class="grid_6 alpha">
-    <h3>Comprador</h3>
-    <div class="infos_wrapper">
-      <%= descreve_comprador(pedido) %>
-      <br />
-      <%= pedido.pessoa.como_conheceu %>
+  <div class="grid_12 alpha omega">
+    <div class="grid_6 alpha">
+      <h3>Comprador</h3>
+      <div class="infos_wrapper">
+        <%= descreve_comprador(pedido) %>
+        <br />
+        <%= pedido.pessoa.como_conheceu %>
+      </div>
     </div>
-  </div>
-  <div class="grid_6 omega">
-    <h3>Entrega</h3>
-    <div class="infos_wrapper">
-      <%= descreve_entrega(pedido) %>
+    <div class="grid_6 omega">
+      <h3>Entrega</h3>
+      <div class="infos_wrapper">
+        <%= descreve_entrega(pedido) %>
+        <%= render :partial => "edit_endereco_entrega", :locals => { :pedido => pedido } %>
+      </div>
     </div>
   </div>
   <div class="grid_6 alpha">
@@ -47,7 +50,7 @@
   <div class="grid_6 omega">
     <h3>Status e Pagamento</h3>
     <div class="infos_wrapper">
-      UOL pag seguro
+      <%= descreve_retornos_pedido_em_tabela(pedido) %>
     </div>
   </div>
   <div class="grid_12 alpha omega">

@@ -7,7 +7,7 @@
     #:before => "$('admin_pedidos_endereco_entrega-#{pedido.id}-loading-indicator').hide()",
     #:after  => "Form.enable('admin_pedidos_endereco_entrega-#{pedido.id}-form')",
     :id => "admin_pedidos_endereco_entrega-#{pedido.id}-form" do %>
-<h4>Editar endereço de entrega do pedido #<%= pedido.id.to_s %></h4>
+<h6>Endereço de entrega do pedido #<%= pedido.id.to_s %></h6>
 <%= hidden_field_tag :id, pedido.id.to_s %>
 <ol id="endereco">
   <li>

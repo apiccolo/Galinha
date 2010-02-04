@@ -229,4 +229,34 @@ module Admin::Folhamatic::ClientesHelper
   def e010_inscrito_no_municipio
     return "N"
   end
+  
+  #=================================#
+  #  METODOS q integram FOLHAMATIC  #
+  #=================================#
+  def codigo_cliente(pedido)
+    pedido.pessoa.id.to_s + "SG"
+  end
+  
+  def registrar_cliente?(pedido)
+    return (not (pedido.pessoa.cpf.blank?))
+  end
+  
+  def contato_cliente(pedido)
+    # máximo de 35 chars
+    if pedido.pessoa.fone_ddd and pedido.pessoa.fone_str
+      r = "#{truncate(pedido.pessoa.nome,20)} (#{pedido.pessoa.fone_ddd})#{pedido.pessoa.fone_str}"
+    else
+      r = pedido.pessoa.nome
+    end
+    return remover_acentos(truncate(r, 35))
+  end
+  
+  def remover_acentos(texto)
+    return texto if texto.blank?
+    texto = texto.gsub(/[á|à|ã|â|ä]/, 'a').gsub(/(é|è|ê|ë)/, 'e').gsub(/(í|ì|î|ï)/, 'i').gsub(/(ó|ò|õ|ô|ö)/, 'o').gsub(/(ú|ù|û|ü)/, 'u')
+    texto = texto.gsub(/(Á|À|Ã|Â|Ä)/, 'A').gsub(/(É|È|Ê|Ë)/, 'E').gsub(/(Í|Ì|Î|Ï)/, 'I').gsub(/(Ó|Ò|Õ|Ô|Ö)/, 'O').gsub(/(Ú|Ù|Û|Ü)/, 'U')
+    texto = texto.gsub(/ñ/, 'n').gsub(/Ñ/, 'N')
+    texto = texto.gsub(/ç/, 'c').gsub(/Ç/, 'C')
+    texto
+  end
 end

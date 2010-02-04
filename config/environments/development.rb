@@ -15,3 +15,13 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
+
+ActionMailer::Base.smtp_settings = {
+  :address => "localhost",
+  :port => "25",
+  :domain => "localhost:3000",
+  :authentication => "login",
+  :user_name => "",
+  :password => "",
+}
+ActionMailer::Base.delivery_method = :sendmail

@@ -1,6 +1,4 @@
-<div class="grid_11 alpha omega">
-  
-  <div class="grid_5 alpha">
+<div class="grid_4 alpha">
   <fieldset id="comprador">
     <legend>Comprador</legend>
     <table class="ficha">
@@ -25,7 +23,6 @@
           <%#= hidden_field :pessoa, :sexo %>
         </td>
       </tr>
-      <% if pedido.pessoa.fone_ddd and pedido.pessoa.fone_str -%>
       <tr>
         <td class="nome_do_campo">Telefone</td>
         <td>
@@ -34,26 +31,40 @@
           <%#= hidden_field :pessoa, :fone_str %>          
         </td>
       </tr>
-      <% end -%>
-      <% if pedido.pessoa.cpf -%>
       <tr>
         <td class="nome_do_campo">CPF*</td>
         <td>
-          <%= pedido.pessoa.cpf %>
-          <%#= hidden_field :pessoa, :cpf %>
+          <% if pedido.pessoa.cpf -%>
+            <%= pedido.pessoa.cpf %>
+            <%#= hidden_field :pessoa, :cpf %>
+          <% else -%>
+            Não informado
+          <% end -%>
         </td>
       </tr>
-      <% end -%>
+      <tr>
+        <td class="nome_do_campo">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="nome_do_campo">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
       <tr>
         <td class="nome_do_campo">&nbsp;</td>
         <td>
+          <%= link_to_function "Alterar...", "history.back()" %>
         </td>
       </tr>
     </table>
   </fieldset>
-  </div>
+</div>
 
-  <div class="grid_6 omega">
+<div class="grid_5">
   <fieldset id="entrega">
     <legend>Entrega</legend>
     <table class="ficha">
@@ -78,24 +89,28 @@
           <%#= hidden_field :pedido, :entrega_numero %>
         </td>
       </tr>
-      <% unless pedido.entrega_complemento.blank? -%>
       <tr>
         <td class="nome_do_campo">Complemento</td>
         <td>
-          <%= pedido.entrega_complemento -%>
-          <%#= hidden_field :pedido, :entrega_complemento %>
+          <% unless pedido.entrega_complemento.blank? -%>
+            <%= pedido.entrega_complemento -%>
+            <%#= hidden_field :pedido, :entrega_complemento %>
+          <% else -%>
+            ---
+          <% end -%>
         </td>
       </tr>
-      <% end -%>
-      <% unless pedido.entrega_bairro.blank? -%>
       <tr>
         <td class="nome_do_campo">Bairro</td>
         <td>
-          <%= pedido.entrega_bairro -%>
-          <%#= hidden_field :pedido, :entrega_bairro %>
+          <% unless pedido.entrega_bairro.blank? -%>
+            <%= pedido.entrega_bairro -%>
+            <%#= hidden_field :pedido, :entrega_bairro %>
+          <% else -%>
+            ---
+          <% end -%>
         </td>
       </tr>
-      <% end -%>
       <tr>
         <td class="nome_do_campo">CEP</td>
         <td>
@@ -118,15 +133,18 @@
           <%#= hidden_field :pedido, :entrega_cidade %>
         </td>
       </tr>
+      <tr>
+        <td class="nome_do_campo">&nbsp;</td>
+        <td>
+          <%= link_to_function "Alterar...", "history.back()" %>
+        </td>
+      </tr>
     </table>
   </fieldset>
-  </div>
-  
 </div>
 
 <style type="text/css" media="screen">
 #entrega, #comprador {
-  margin:10px 0 0;
 }
 #entrega legend,
 #comprador legend {
@@ -141,14 +159,15 @@
 #comprador table.ficha {
   width:100%;
   border:1px dotted gray;
-  padding:10px 10px 0;
   font-weight:bold;
+  margin-left:1px;
 }
 #entrega table.ficha tr td.nome_do_campo,
 #comprador table.ficha tr td.nome_do_campo {
+  color:#999;
   text-align:right;
-  padding:5px 20px;
-  width:120px;
+  padding:5px 10px;
+  width:90px;
   margin:10px 0;
   font-weight:normal;
 }

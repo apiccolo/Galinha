@@ -2,7 +2,8 @@
 <% if (settings_checked?(@settings['loja_mostrar_sugestoes']) and 
       @sugestoes and 
       not @sugestoes.blank?) -%>
-  <h6>Sugestões da Galinha</h6>
+  <h6 class="margin0">Sugestões da Galinha</h6>
+  <p class="pequeno">Inclua em seu carrinho um dos produtos abaixo:</p>
   <ul id="lista_de_sugestoes" class="clearfix">
   <% @sugestoes.each_with_index do |produto, j| %>
     <% if (j < @settings['loja_mostrar_sugestoes_maximo'].to_i) -%>

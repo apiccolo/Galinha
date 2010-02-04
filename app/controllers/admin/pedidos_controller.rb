@@ -1,6 +1,13 @@
 class Admin::PedidosController < Admin::AdminController
   PER_PAGE = 10
 
+  in_place_edit_for :pedido, :entrega_endereco
+  in_place_edit_for :pedido, :entrega_endereco_numero
+  in_place_edit_for :pedido, :entrega_endereco_complemento
+  in_place_edit_for :pedido, :entrega_bairro
+  in_place_edit_for :pedido, :entrega_cep
+  in_place_edit_for :pedido, :entrega_cidade
+
   # Bem vindo à lista de pedidos.
   def index
     busca = {}

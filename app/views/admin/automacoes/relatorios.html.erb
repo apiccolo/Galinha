@@ -25,6 +25,11 @@ ol#rel li {
   Início <%= text_field("numero_nf", "inicio", :size => 8) %>  <br />
   Fim&nbsp;&nbsp;&nbsp; <%= text_field("numero_nf", "final", :size => 8) %>
   </div>
+  <%= radio_button_tag "selecao", "my_where", false %> Condições personalizadas
+  <div style="padding-left:20px">
+  <%= text_area_tag("condicoes", "", :cols => 60, :rows => 3) %>
+  </div>
+
     </li>
     <li>
       <label for="tipo">Saída</label><br />

@@ -26,3 +26,13 @@ config.action_view.cache_template_loading            = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+ActionMailer::Base.smtp_settings = {
+  :address => "localhost",
+  :port => "25",
+  :domain => "www.galinhapintadinha.com.br",
+  :authentication => "login",
+  :user_name => "",
+  :password => "",
+}
+ActionMailer::Base.delivery_method = :sendmail

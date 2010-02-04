@@ -2,24 +2,28 @@ module AdminHelper
     
   def descreve_comprador(pedido, options = {})
     str = ""
-    if pedido.pessoa
-      str += "#{pedido.pessoa.nome}<br />"
-      str += "#{mail_to(pedido.pessoa.email)}<br />"
-      str += formata_cpf(pedido.pessoa.cpf)
-      if pedido.processando_envio? or pedido.processando_envio_envelopado?
-        str += "<br />"
-        str += link_to('imprimir nota fiscal', 
-                      { :action => 'print', 
-                        :id => pedido.id,
-                        :nota_fiscal => 1 }, 
-                        :class => 'etiqueta', 
-                        :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
-      elsif pedido.processando_envio_notafiscal? or pedido.produto_enviado? or pedido.produto_enviado_cod_postagem? or pedido.recebido_pelo_cliente? or pedido.encerrado?
-        str += "<br />"
-        str += "NF: <b>#{pedido.nota_fiscal}</b>"
+    if pedido
+      if pedido.pessoa
+        str += "#{pedido.pessoa.nome}<br />"
+        str += "#{mail_to(pedido.pessoa.email)}<br />"
+        str += formata_cpf(pedido.pessoa.cpf)
+        if pedido.processando_envio? or pedido.processando_envio_envelopado?
+          str += "<br />"
+          str += link_to('imprimir nota fiscal', 
+                        { :action => 'print', 
+                          :id => pedido.id,
+                          :nota_fiscal => 1 }, 
+                          :class => 'etiqueta', 
+                          :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
+        elsif pedido.processando_envio_notafiscal? or pedido.produto_enviado? or pedido.produto_enviado_cod_postagem? or pedido.recebido_pelo_cliente? or pedido.encerrado?
+          str += "<br />"
+          str += "NF: <b>#{pedido.nota_fiscal}</b>"
+        end
+      else
+        str = "pedido sem pessoa!"
       end
     else
-      str = "pedido sem pessoa!"
+      str = "pedido vazio!"
     end
     return str
   end
@@ -40,22 +44,22 @@ module AdminHelper
     str = content_tag(:span, pedido.status.humanize, :style => style_str)
     str = content_tag(:b, str) if str.include?('Processando')
     
-    if (pedido.retornos_pgmtos.size > 0)
-      str += "<br />Retornos Auto: "  
-      links = []
-      pedido.retornos_pgmtos.each_with_index do |retorno, i|
-        links << link_to_remote( i+1, { :url => { 
-                                          :action => "retorno_pgmto", 
-                                          :rid => retorno.id 
-                                        },
-                                        :update => "retorno_#{retorno.id}",
-                                        :position => :after,
-                                        :complete => visual_effect(:pulsate, "retorno_infos_#{retorno.id}", :pulses => 4, :duration => 1.5)
-                                       },
-                                       :id => "retorno_#{retorno.id}")
-      end
-      str += links.join(", ")
-    end
+   #if (pedido.retornos_pgmtos.size > 0)
+   #  str += "<br />Retornos Auto: "  
+   #  links = []
+   #  pedido.retornos_pgmtos.each_with_index do |retorno, i|
+   #    links << link_to_remote( i+1, { :url => { 
+   #                                      :action => "retorno_pgmto", 
+   #                                      :rid => retorno.id 
+   #                                    },
+   #                                    :update => "retorno_#{retorno.id}",
+   #                                    :position => :after,
+   #                                    :complete => visual_effect(:pulsate, "retorno_infos_#{retorno.id}", :pulses => 4, :duration => 1.5)
+   #                                   },
+   #                                   :id => "retorno_#{retorno.id}")
+   #  end
+   #  str += links.join(", ")
+   #end
     return str
   end
   
@@ -102,13 +106,38 @@ module AdminHelper
     return str
   end
   
+  def descreve_retornos_pedido_em_tabela(pedido)
+    tmp = ""
+    if pedido.retornos_pgmtos and not pedido.retornos_pgmtos.empty?
+      tmp = "<table class=\"pedido_em_tabela\">"
+      pedido.retornos_pgmtos.each do |rp|
+        tmp += descreve_linha_do_retorno(rp)
+      end
+      tmp += "</table>"
+    else
+      tmp = "Não foram recebidos retornos automáticos do pedido <b>#{pedido.id}</b>."
+    end
+    return tmp
+  end
+  
+  def descreve_linha_do_retorno(retorno)
+    row = ""
+    row += content_tag(:td, retorno.created_at.strftime("%d/%m/%Y %H:%M"))
+    row += content_tag(:td, retorno.status.remover_acentos)
+    row += content_tag(:td, retorno.tipopagamento.remover_acentos)
+    row += content_tag(:td, retorno.id)
+    return content_tag(:tr, row)
+  end
+  
   def descreve_entrega(pedido, options = {})
     tmp  = ""
     tmp += "<span class=\"para_nome\">"
     tmp += pedido.para
     tmp += "</span><br />"
-    tmp += "#{pedido.entrega_endereco}"
-    tmp += ", #{pedido.entrega_numero}" if pedido.entrega_numero
+    tmp += in_place_editor_field(:pedido, 'entrega_endereco')
+    #tmp += "#{pedido.entrega_endereco}"
+    tmp += ", #{in_place_editor_field(:pedido, 'entrega_numero')}" if pedido.entrega_numero
+    #tmp += ", #{pedido.entrega_numero}" if pedido.entrega_numero
     tmp += " #{pedido.entrega_complemento}" if pedido.entrega_complemento
     tmp += "<br />"
     tmp += "#{pedido.entrega_bairro}<br />" if pedido.entrega_bairro

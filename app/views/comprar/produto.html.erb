@@ -1,38 +1,17 @@
-<div class="grid_7 alpha omega">
-  <h2><%= @produto.nome %></h2>
-  <div id="mostrador_de_imagens">
-    <% thumbs = Dir["#{RAILS_ROOT}/public/images/produtos/#{@produto.imagem_pequena}*_thumb.png"] %>
-    <ul>
-    <% thumbs.each do |fthumb| -%>
-      <li><%= link_to_remote image_tag(fthumb.gsub("#{RAILS_ROOT}/public", ''), :class => "small_thumb"),
-                             :url => { 
-                               :action => "imagem", 
-                               :thumb => fthumb.gsub("#{RAILS_ROOT}/public", '') 
-                              },
-                             :update => "imagem_grande",
-                             :before => "$('spinner').show()",
-                             :complete => "$('spinner').hide()" %></li>
-    <% end -%>
-    </ul>
-    <%= image_tag("spinners/spinner.gif", :id => "spinner", :style => "display:none") -%>
-    <div id="imagem_grande"><%= imagem_produto(@produto) %></div>
+<div class="clearfix">
+  <h2 style="margin:0 0 5px 0"><%= @produto.nome %></h2>
+  <div id="descricao_do_produto">
+    <%= @produto.descricao %>
   </div>
-  <p><%= @produto.descricao %></p>
+  <div id="wrapper" class="clearfix">
+    <div id="fio">
+      <div id="mostrador_de_imagens">
+        <%= image_tag("spinners/spinner.gif", :id => "spinner", :style => "display:none") -%>
+        <div id="imagem_grande"><%= imagem_produto(@produto) %></div>
+        <div style="position:absolute">
+          <ul><%= thumbs_imagens_na_pasta(@produto) %></ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<style type="text/css" media="screen">
-div#mostrador_de_imagens {
-  background:#eee;
-}
-div#mostrador_de_imagens ul {
-  list-style:none;
-  float:left;
-  margin:0 20px 0 0;
-}
-div#mostrador_de_imagens ul li { margin: 0; }
-div#mostrador_de_imagens .small_thumb {
-  border:1px solid #aaa;
-}
-div#mostrador_de_imagens #spinner {
-  margin:30px auto;
-}
-</style>

@@ -1,5 +1,5 @@
 <div id="frete_desconto_total" class="grid_7 alpha">
-  <table class="crud">
+  <table class="crud margin0">
   <%= hidden_field :pedido, :frete %>
   <% if (@settings["frete_tipo"]=="embutido") -%><!-- FRETE INCLUSO -->
     <tr id="frete">
@@ -15,23 +15,42 @@
                           :with => "estado" -%>
       </span>
       </td>
-      <td class="valor"><span id="frete_por_estado"><%= number_to_currency(@pedido.frete) %></span></td>
+      <td class="valor"><span id="frete_por_estado"><%= number2currency(@pedido.frete) %></span></td>
     </tr>  
   <% elsif (@settings["frete_tipo"]=="correios") -%><!-- FRETE CALCULADO PELO CORREIO -->
     <tr id="frete">
       <td >&nbsp;Frete <span>digite seu cep <input type="text"></span></td>
-      <td class="valor"><%= number_to_currency(0) %></td>  
+      <td class="valor"><%= number2currency(0) %></td>  
     </tr>
   <% end -%>
   <% if (@settings["desconto_ligado"].to_i == 1) -%><!-- DESCONTO -->
-    <tr id="desconto">
-      <td>&nbsp;Desconto</td>
-      <td class="valor"><%= number_to_currency(0) %></td>
+    <tr id="desconto" class="verdinho esquerda">
+      <td class="formfield">
+        &nbsp;Cupom de desconto 
+        <%= text_field_tag :cupom_desconto, nil %>
+        <%= link_to_function(image_tag("icones/arrow_refresh.png", :style => "margin-left:5px;position:relative;top:3px"), "enviaDesconto()") %>
+        <%#= observe_field("cupom_desconto", 
+                          :url => { 
+                            :action => "validar_cupom_desconto" 
+                          },
+                          :with => "cupom_desconto") %>
+<script type="text/javascript" charset="utf-8">
+function enviaDesconto() {
+/*  if ($('cupom_desconto').value.length==8) {
+    new Form.Element.EventObserver('cupom_desconto', function(element, value) {new Ajax.Request('/comprar/validar_cupom_desconto', {asynchronous:true, evalScripts:true, parameters:'cupom_desconto=' + encodeURIComponent(value) + '&authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>')})});
+  }*/ 
+}
+</script>
+      </td>
+      <td class="valor"><%= number2currency(0) %></td>
     </tr>
   <% end -%>
-    <tr id="total"><!-- TOTAL -->
-      <td>&nbsp;Total</td>
-      <td class="valor grandao"><%= number_to_currency(@pedido.total) %></td> 
-    </tr>
   </table>
+  <div id="total">
+    <ul>
+      <li id="label_total">&nbsp;Total</li>
+      <li id="pontinhos">&nbsp;</li>
+      <li class="valor grandao verde"><%= number2currency(@pedido.total) %></li>
+    </p>
+  </div>
 </div>

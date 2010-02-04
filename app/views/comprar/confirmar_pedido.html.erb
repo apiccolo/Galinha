@@ -16,19 +16,16 @@
              :msg => 'pre'
             } -%>
 
+<div class="grid_11 alpha omega">
 <!-- FORM RESUMO DO PEDIDO -->
 <%= render :partial => "resumo_pedido",
            :locals => { :pedido => @pedido } %>
 
-<div class="grid_11 alpha omega topo_carrinho" style="padding:2px">
-  <div class="grid_5 alpha">
-    <%= button_to_function '&laquo; ALTERAR', "history.back()" %>
-  </div>
-  <div class="grid_6 omega direita">
-    <%= submit_tag 'CONTINUAR &raquo;' %>
+  <div class="grid_1 omega direita">
+    <%= image_submit_tag('icones/botao_continuar.png', :style => "position:relative;top:220px") %>
   </div>
 </div>
 
 <% end %>
 </div>
-<%= render :partial => "debug" %>
+<%#= render :partial => "debug" %>

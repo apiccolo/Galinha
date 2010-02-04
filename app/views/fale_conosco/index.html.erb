@@ -1,0 +1,94 @@
+<div class="grid_12 alpha omega" style="padding-left:30px">
+  <div class="grid_5 alpha">
+    <h3 class="vermelho">Tire suas dúvidas aqui...</h3>
+    <h5>Perguntas Frequentes</h5>
+    <p class="margin0 negrito"><a href="#um">Qual o prazo para a entrega do DVD?</a></p>
+    <p class="margin0 negrito"><a href="#dois">Quais as formas de pagamento disponíveis?</a></p>
+    <p class="margin0 negrito"><a href="#tres">É seguro comprar pelo site?</a></p>
+    <p class="margin0 negrito"><a href="#quatro">Porque o UOL PagSeguro é seguro?</a></p>
+    <p class="margin0 negrito"><a href="#cinco">É possível parcelar?</a></p>
+    <p class="margin0 negrito"><a href="#seis">E a garantia do produtos?</a></p>
+    <p class="margin0 negrito"><a href="#sete">Devolução: posso devolver se não gostar?</a></p>
+    <p class="        negrito"><a href="#oito">E a privacidade...?</a></p>
+    
+    <h5>Respostas</h5>
+    <a name="um"></a>
+    <p class="margin0 negrito">Qual o prazo para a entrega do DVD?</p>
+    <p>O DVD leva em média 5 dias úteis para ser entregue, a contar da confirmação do pagamento. Este tempo pode variar para mais ou para menos dependendo do destino.</p>
+    
+    <a name="dois"></a>
+    <p class="margin0 negrito">Quais as formas de pagamento disponíveis?</p>
+    <ul>
+      <li>Cartões de Crédito: Visa, MasterCard, Diners, Hipercard, American Express e Aura.</li>
+      <li>Transferência Eletrônica: Bradesco, Itaú, Unibanco, Banco do Brasil, Banco Real, entre outros.</li>
+      <li>Boleto Bancário</li>
+    </ul>
+    
+    <a name="tres"></a>
+    <p class="margin0 negrito">É seguro comprar pelo site?</p>
+    <p>A compra pelo site é segura. Todo o pagamento é feito através do UOL Pagseguro que possui os mais avançados sistemas de segurança e oferece as melhores formas de pagamento.</p>
+    
+    <a name="quatro"></a>
+    <p class="margin0 negrito">Porque o UOL PagSeguro é seguro?</p>
+    <p>O UOL PagSeguro utiliza alta tecnologia para manter sua informação segura. Quando você envia um pagamento através do sistema PagSeguro, o vendedor não terá acesso a seus dados financeiros, tais como: o número do seu cartão de crédito, ou seus dados bancários. Além disso, o Pagseguro tem o "Pagamento Seguro", processo de custódia do pagamento que aumenta a segurança nas transações entre compradores e vendedores. E o mais importante, ele conta com a marca UOL: sinônimo de credibilidade na internet.</p>
+    
+    <a name="cinco"></a>
+    <p class="margin0 negrito">É possível parcelar?</p>
+    <p>Quem compra pode parcelar as compras em até 10 vezes no cartão Visa, 12 vezes nos cartões MasterCard, Diners, Hipercard e Aura e em até 15 vezes no cartão American Express. A taxa de parcelamento é de 1,99% ao mês, e é acrescentada ao valor total da compra. Para utilizar a opção de parcelamento, basta que o comprador selecione a quantidade de parcelas no momento da compra. Os valores são calculados automaticamente.</p>
+    
+    <a name="seis"></a>
+    <p class="margin0 negrito">E a garantia do produtos?</p>
+    <p>O DVD tem garantia de 1 ano a contar do recebimento desde que o produto não apresente danos físicos causados pelo usuário, tais como riscos e rachaduras na mídia. Em caso de defeito confirmado, o cliente pode solicitar a reposição do produto ou a devolução do dinheiro.</p>
+
+    <a name="sete"></a>
+    <p class="margin0 negrito">Devolução: posso devolver se não gostar?</p>
+    <p>A devolução por arrependimento poderá ser feita em até 7 dias após o recebimento do produto sem nenhum ônus para o cliente. O produto deverá ser devolvido em sua embalagem original, com o lacre do fabricante e acompanhado da nota fiscal.</p>
+  
+    <a name="oito"></a>
+    <p class="margin0 negrito">E a privacidade...?</p>
+    <p>Nós nos comprometemos com a privacidade e segurança de nossos clientes, assegurando que nenhum dado cadastral será divulgado para terceiros.</p>
+  </div>
+  
+  <div class="grid_6 omega">
+    <h3 class="vermelho">... ou mande seu pópópó para a Galinha Pintadinha!</h3>
+    <% form_for :fale_conosco, :url => { :action => "index" } do |f| %>
+      <input type="hidden" value="Galinha Pintadinha responde o contato" id="subject" name="mailer[subject]" />
+      <fieldset id="form_falecom">
+        <legend>Fale Conosco</legend>
+        <ol>
+          <li>
+            <label for="nome">Seu Nome:</label>
+            <input type="text" value="" size="40" id="nome" name="mailer[nome]" /><br />
+          </li>
+          <li>
+            <label for="email">Seu E-mail:</label>
+            <input type="text" value="" size="40" id="from_field" name="mailer[from_field]" /><br />
+          </li>
+          <li>
+            <label for="mensagem">Sua Mensagem:</label>
+            <textarea id="mensagem" rows="5" cols="40" name="mailer[mensagem]"></textarea><br />
+            <p class="margin0 pequeno">Obs.: Ao se referir a um pedido, lembre-se de informar o número do pedido.</p>
+          </li>
+          <li class="direita" style="padding:0 20px 0">
+            <input type="submit" value="Enviar" />
+          </li>
+        </ol>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
+
+<style>
+fieldset#form_falecom {
+  background-color:#ddd;
+  padding:10px 0 0 20px;
+}
+fieldset#form_falecom legend {
+  background-color:#ddd;
+  padding:2px 10px;
+}
+fieldset#form_falecom input[type=text],
+fieldset#form_falecom textarea {
+  width:400px;
+}
+</style>

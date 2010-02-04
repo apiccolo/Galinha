@@ -13,7 +13,7 @@
 <input type="hidden" name="item_id_<%= (i+1).to_s -%>" value="<%= p.produto_id.to_s -%>" />
 <input type="hidden" name="item_descr_<%= (i+1).to_s -%>" value="<%= p.produto.descricao_simples -%>" />
 <input type="hidden" name="item_quant_<%= (i+1).to_s -%>" value="<%= p.qtd.to_s -%>" />
-<input type="hidden" name="item_valor_<%= (i+1).to_s -%>" value="<%= (p.produto.preco * 100).to_i.to_s -%>" />
+<input type="hidden" name="item_valor_<%= (i+1).to_s -%>" value="<%= preco_pagseguro(p.produto.preco) -%>" />
 <% embalagens += (p.produto.plus_presente.to_f * p.qtd.to_i) if (p.presente) -%>
 <% end -%>
 
@@ -21,14 +21,14 @@
 <input type="hidden" name="item_id_<%= (pedido.produtos_quantidades.size+1) %>" value="1001-<%= pedido.entrega_estado %>" />
 <input type="hidden" name="item_descr_<%= (pedido.produtos_quantidades.size+1) %>" value="Frete para <%= pedido.entrega_estado %>" />
 <input type="hidden" name="item_quant_<%= (pedido.produtos_quantidades.size+1) %>" value="1" />
-<input type="hidden" name="item_valor_<%= (pedido.produtos_quantidades.size+1) %>" value="<%= (pedido.frete * 100).to_i.to_s -%>" />
+<input type="hidden" name="item_valor_<%= (pedido.produtos_quantidades.size+1) %>" value="<%= preco_pagseguro(pedido.frete) -%>" />
 <% end -%>
 
 <% if (embalagens != 0) -%>
 <input type="hidden" name="item_id_<%= (pedido.produtos_quantidades.size+2) %>" value="1002-EMB" />
 <input type="hidden" name="item_descr_<%= (pedido.produtos_quantidades.size+2) %>" value="Embalagem para presente" />
 <input type="hidden" name="item_quant_<%= (pedido.produtos_quantidades.size+2) %>" value="1" />
-<input type="hidden" name="item_valor_<%= (pedido.produtos_quantidades.size+2) %>" value="<%= (embalagens * 100).to_i.to_s -%>" />
+<input type="hidden" name="item_valor_<%= (pedido.produtos_quantidades.size+2) %>" value="<%= preco_pagseguro(embalagens) -%>" />
 <% end -%>
 
 <input type="hidden" name="cliente_nome" value="<%= pedido.para %>" />

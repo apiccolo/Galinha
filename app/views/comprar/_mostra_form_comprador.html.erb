@@ -16,7 +16,7 @@
       <%= radio_button("pessoa", "sexo", "f", :class => "validate-one-required", :title => "Escolha um...") -%> Feminino
     </li>
     <li>
-      <label for="telefone">Telefone*</label>
+      <label for="telefone">Telefone</label>
       (<%= text_field :pessoa, :fone_ddd, :size => 2, :maxlength => 2, :class => "validate-digits", :title => "Use apenas números no DDD", :style => "margin-right:0;" -%>) <%= text_field :pessoa, :fone_str, :size => 9, :maxlength => 8 %>
       <span class="hint">Use apenas números</span>
     </li>
@@ -30,7 +30,7 @@
       <span class="hint">Use apenas números. <abbr style="text-decoration:underline" title="Ao ser informado, o CPF do comprador constará no programa Nota Fiscal Paulista. Mais em http://www.nfp.fazenda.sp.gov.br/">Sobre o NF Paulista...</abbr></span>
     </li>
     <li>
-      <label for="como-conheceu">Como ficou sabendo do DVD*</label>
+      <label for="como-conheceu">Como ficou sabendo da Galinha Pintadinha*</label>
       <%= select_tag "pessoa[como_conheceu]", 
                      options_for_select([["", nil],
                                          ["Youtube","youtube"],

@@ -65,14 +65,30 @@ tr#frete {
   line-height:0.1em;
 }
 tr#desconto {
-  background-color:#3D3;
   line-height:0.1em;
 }
-tr#total {
+tr#desconto td.formfield {
+  padding:3px 0;
+}
+/* TOTAL */
+#total li {
+  float:left;
+  list-style:none;
+  margin:0;
+}
+#total #label_total {
+  font-size:16px;
   font-weight:bold;
-  color:white;
-  background-color:#576F9E;
-  line-height:0.25em;
+}
+#total #pontinhos {
+  width:260px;
+  border-bottom:1px dotted green;
+  margin:0 20px;
+}
+#total .valor {
+  font-size:32px;
+  position:relative;
+  top:-20px;
 }
 /* LISTA DE SUGESTOES */
 #sugestoes {
@@ -162,4 +178,39 @@ span.preco_final {
 span.desconto {
   font-weight:bold;
   color:green;
+}
+
+/***** PRODUTO: DENTRO DO MODALBOX! ******/
+div#descricao_do_produto {
+  float:left;
+  display:inline;
+  width:350px;
+}
+div#wrapper {
+  width:270px;
+  margin-left:360px;
+  padding:10px 5px 0 5px;
+}
+div#fio {
+  border:1px solid #ccc;
+}
+div#mostrador_de_imagens ul {
+  list-style:none;
+  margin:10px 0 0;
+}
+div#mostrador_de_imagens ul li { 
+  float:left;
+  margin: 0 10px 0 0; 
+}
+div#mostrador_de_imagens .small_thumb {
+  border:1px solid #aaa;
+}
+div#mostrador_de_imagens #imagem_grande img {
+  margin:0 auto;
+  display:block;
+}
+div#mostrador_de_imagens #spinner {
+  margin:150px auto;
+  display:block;
+  width:50px;
 }

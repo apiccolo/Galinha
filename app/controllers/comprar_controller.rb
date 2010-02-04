@@ -56,6 +56,10 @@ class ComprarController < ApplicationController
     end
   end
   
+  #==================================================================#
+  #                  CLIENTE REVÊ SEU PEDIDO                         #
+  #==================================================================#  
+  
   #------------------------------------------------------------   
   #     Mostra ao cliente dados do pedido
   #
@@ -72,6 +76,45 @@ class ComprarController < ApplicationController
     end
   end
   
+  #------------------------------------------------------------   
+  #     Cliente preenche pesquisa de satisfacao
+  #  
+  def feedback
+    @pedido = Pedido.find(params[:pid])
+    begin
+      if not @pedido.check(params[:pid], params[:pbase], params[:chkpid], params[:md5])
+        flash[:error] = "Dados do pedido incorretos"
+        redirect_to :action => "index"
+      elsif request.post?
+        @pedido.update_attributes(params[:pedido])
+        @pedido.notifica_ao_admin_feedback
+
+        flash[:info] = "Agradecemos o envio de sua opinião."
+        redirect_to root_url
+      end
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Pedido inexistente"
+      redirect_to :action => "index"
+    end
+  end
+  
+  #------------------------------------------------------------   
+  #     Cliente marca que recebeu produto
+  #  
+  def recebi
+    @pedido = Pedido.find(params[:pid])
+    begin
+      if @pedido.check(params[:pid], params[:pbase], params[:chkpid], params[:md5])
+        @pedido.cliente_recebeu!
+        render :text => "<b>Obrigado!</b>"
+      else
+        render :nothing => true
+      end
+    rescue ActiveRecord::RecordNotFound
+      render :nothing => true
+    end
+  end
+
   #------------------------------------------------------------
   #        Recebe POST do UOLPagSeguro
   #
@@ -98,7 +141,6 @@ class ComprarController < ApplicationController
       end
     end
   end
-
 
   #==================================================================#
   #                             PRODUTOS                             #
@@ -127,6 +169,22 @@ class ComprarController < ApplicationController
   def imagem
     thumb = params[:thumb]
     render :text => "<img src=\""+ thumb.gsub('_thumb', '') +"\" alt=\"produto grande\">"
+  end
+  
+  #==================================================================#
+  #                       CUPOM DE DESCONTO                          #
+  #==================================================================#
+  
+  #------------------------------------------------------------
+  #   Formulário de confirmacao do pedido
+  #
+  verify :params => :cupom_desconto,
+         :only => :validar_cupom_desconto
+  def validar_cupom_desconto
+    render :nothing => true
+    #render :update do |page|
+    #  page.replace_html 'desconto', :text => "<td>ok!</td>"
+    #end
   end
   
   #==================================================================#

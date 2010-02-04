@@ -1,0 +1,63 @@
+<div class="grid_12 alpha omega" style="padding-left:30px">
+  <h2 class="vermelho">Recebi os produtos da Galinha Pintadinha!</h2>
+  <p class="margin0">Obrigado por ter comprado nossos produtos. </p>
+  <p>Se puder e desejar, deixe abaixo sua opinião sobre nossos serviços e produtos.</p>
+
+<div class="grid_6 alpha">
+<% form_tag '/comprar/feedback', :id => 'form_feedback' do %>
+  <%= hidden_field_tag "pid", params[:pid] %>
+  <%= hidden_field_tag "pbase", params[:pbase] %>
+  <%= hidden_field_tag "chkpid", params[:chkpid] %>
+  <%= hidden_field_tag "md5", params[:md5] %>
+  <fieldset id="feedback">
+    <legend>Minha opinião</legend>
+    <ol>
+      <li id="recebi_li">
+      <%= check_box_tag :recebi %> Recebi corretamente meu(s) produto(s).
+      <%= observe_field :recebi,
+                        :url => {
+                          :controller => "comprar",
+                          :action => "recebi",
+                          :pid => params[:pid],
+                          :pbase => params[:pbase],
+                          :chkpid => params[:chkpid],
+                          :md5 => params[:md5]
+                        }, 
+                        :update => "recebi_li"
+                        -%>
+      </li>
+      <li><label for="obs">Sua mensagem</label>
+          <%= text_area :pedido, :obs, :rows => 5, :cols => 50 -%>
+      </li>
+      <li>
+        <%= submit_tag 'Pronto! Enviar minha mensagem!' %>
+      </li>
+    </ol>
+  </fieldset>
+<% end %>
+</div>
+
+<div class="prefix_1 grid_5 omega">
+  <img src="/images/logos/logo_bromelia_filminhos.jpg" style="border:1px solid" />
+  <p>&nbsp;</p>
+</div>
+
+</div>
+
+<style type="text/css" media="screen">
+fieldset#feedback {
+  background:#ccc;
+  padding:5px 0 0 20px;
+}
+fieldset#feedback legend {
+  background:#ccc;
+  padding:2px 10px;  
+}
+fieldset#feedback ol li {
+  list-style:none;
+}
+fieldset#feedback ol li textarea {
+  width:400px;
+  height:90px;
+}
+</style>

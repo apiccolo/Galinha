@@ -1,6 +1,6 @@
 <h1>Descontos</h1>
 
-<p><%= link_to image_tag("icones/add.png") + " Conceder desconto", new_admin_desconto_path, :style => "text-decoration:none" %>
+<p style="padding-bottom:30px"><%= link_to(content_tag(:span, image_tag("icones/add.png") + " Conceder desconto"), new_admin_desconto_path, :class => "botao") %>
   
 <table class="crud">
   <tr>

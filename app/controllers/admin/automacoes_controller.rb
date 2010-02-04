@@ -1,4 +1,11 @@
 class Admin::AutomacoesController < Admin::AdminController
+  helper "admin/folhamatic/empresa", 
+         "admin/folhamatic/produtos", 
+         "admin/folhamatic/notas_fiscais", 
+         "admin/folhamatic/impostos_das_notas",
+         "admin/folhamatic/chave_lancamento_produtos",
+         "admin/folhamatic/lancamento_produtos",
+         "admin/folhamatic/clientes"
 
   # Bem vindo à administração.
   def index
@@ -63,6 +70,8 @@ class Admin::AutomacoesController < Admin::AdminController
                      (status = 'produto_enviado_cod_postagem' OR status = 'recebido_pelo_cliente' OR status = 'encerrado') AND
                      pedidos.nota_fiscal * 1 >= ? AND
                      pedidos.nota_fiscal * 1 <= ? ", inicio, final ]
+    elsif params[:selecao]=="my_where"
+      conditions = ["#{params[:condicoes]}"]
     end
     
     @pedidos = Pedido.find(:all, 
@@ -83,10 +92,10 @@ class Admin::AutomacoesController < Admin::AdminController
     elsif (params[:opcao]=="arquivo")
       timestamp = Time.now.strftime("%Y%m%d-%H%M%S")
       arquivo1 = "#{RAILS_ROOT}/public/tmp/relatorio-folhamatic-#{timestamp}.txt" #fml"
-      linhas1  = gera_relatorio("admin/automacao/relatorio_folhamatic", arquivo1)
+      linhas1  = gera_relatorio("admin/automacoes/relatorio_folhamatic", arquivo1)
 
       arquivo2 = "#{RAILS_ROOT}/public/tmp/compradores-sp-#{timestamp}.txt" #fml"
-      linhas2  = gera_relatorio("admin/automacao/relatorio_compradores_sp", arquivo2)
+      linhas2  = gera_relatorio("admin/automacoes/relatorio_compradores_sp", arquivo2)
 
       render :update do |page|
         page[:spinner].hide

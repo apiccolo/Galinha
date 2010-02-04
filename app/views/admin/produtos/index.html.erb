@@ -1,7 +1,7 @@
 <h1>Produtos</h1>
-<p>
-  <%= link_to image_tag("icones/add.png") + " Novo produto Simples", new_admin_produto_path, :style => "text-decoration:none" %>
-  <%= link_to image_tag("icones/add.png") + " Novo Combo", { :action => "new_combo" }, :style => "text-decoration:none;margin-left:100px" %>
+<p style="padding-bottom:30px">
+  <%= link_to(content_tag(:span, image_tag("icones/add.png") + " Novo Produto Simples"), new_admin_produto_path, :class => "botao") %>
+  <%= link_to(content_tag(:span, image_tag("icones/add.png") + " Novo Combo"), { :action => "new_combo" }, :class => "botao") %>
 </p>
 <table id="lista_de_produtos" class="crud">
   <thead>

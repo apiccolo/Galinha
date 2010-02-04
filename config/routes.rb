@@ -69,8 +69,10 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
   map.connect '/videos/:action', :controller => 'videos'
-  
   map.connect '/pelucia', :controller => 'videos', :action => 'pelucia'
+  map.fale_conosco '/fale-conosco', :controller => 'fale_conosco'
+  map.quem_somos '/quem-somos', :controller => 'fale_conosco', :action => 'quem_somos'
+  map.iphone '/iphone', :controller => 'fale_conosco', :action => 'iphone'
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should

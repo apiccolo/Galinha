@@ -22,6 +22,7 @@
     </tr>
   </thead>
 <% for pedido in @pedidos -%>
+<% @pedido = pedido %>
   <tr id="pedido_<%= pedido.id %>">
     <td class="estreita"><%= pedido.id %></td>
     <td>

@@ -179,7 +179,9 @@ h3 {
   background-position: 10px auto;
 }
 div.detalhes_pedido {
-  background-color:#FFFFBB;
+  border-top:1px dashed gray;
+  border-bottom:1px dashed gray;
+  background-color:#EAEAEA;
 }
 div.detalhes_pedido h2, 
 div.detalhes_pedido h3 {
@@ -228,4 +230,35 @@ p.total {
 p.total span.valor_total {
   color:green;
   margin-left:250px;
+}
+
+a.botao {
+  -moz-background-clip:border;
+  -moz-background-inline-policy:continuous;
+  -moz-background-origin:padding;
+  background:transparent url(/images/decoracao/right_01.png) no-repeat scroll right top;
+  color:#111111 !important;
+  display:block;
+  float:left;
+  font-weight:bold;
+  margin-right:6px;
+  outline-color:-moz-use-text-color;
+  outline-style:none;
+  outline-width:medium;
+  padding-right:20px;
+  text-decoration:none;
+}
+a.botao span {
+  -moz-background-clip:border;
+  -moz-background-inline-policy:continuous;
+  -moz-background-origin:padding;
+  background:transparent url(/images/decoracao/left_01.png) no-repeat scroll 0 0;
+  display:block;
+  line-height:22px;
+  padding:7px 0 5px 14px;
+  text-shadow:1px 1px 0 #EFEFEF;
+}
+a.botao span img {
+  margin:0 3px 3px 0;
+  vertical-align:middle;
 }

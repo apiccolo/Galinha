@@ -251,10 +251,10 @@ class Pedido < ActiveRecord::Base
   # Retorna string descrevendo o status
   # atual do pedido, de modo simplificado.
   def status_agora
-    "Cancelado" if (self.pedido_cancelado?)
-    "Processando pedido" if (self.processando_envio? or self.processando_envio_envelopado? or self.processando_envio_notafiscal?)
-    "Pedido postado" if (self.produto_enviado? or self.produto_enviado_cod_postagem?)
-    self.status.humanize
+    return "Cancelado" if (self.pedido_cancelado?)
+    return "Processando pedido" if (self.status.include?("processando_envio"))
+    return "Pedido postado" if (self.status.include?("produto_enviado"))
+    return self.status.humanize
   end
   
   # Marca quando o pedido foi submetido.

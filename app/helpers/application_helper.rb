@@ -13,8 +13,10 @@ module ApplicationHelper
     if !flash.empty?
       mensagens = []
       [ :notice, :info, :warning, :error ].each{ |type| mensagens << content_tag(:p, flash[type], :class => type) if flash[type] }
-      link_para_fechar = [ link_to_function("Fechar [x]", "$('#flash_message').hide()") ]
-      content_tag(:div, mensagens + link_para_fechar, :id => "flash_message")
+      link_para_fechar = [ content_tag(:p, link_to_function("Fechar [x]", "$('flash_message_wrapper').hide()"), :id => "fechar", :class => "margin0") ]
+      
+      aux = content_tag(:div, mensagens + link_para_fechar, :id => "flash_message")
+      content_tag(:div, aux, :id => "flash_message_wrapper")
     end
   end
   
