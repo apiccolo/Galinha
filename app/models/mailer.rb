@@ -9,42 +9,42 @@ class Mailer < ActionMailer::Base
 
   def recebemos_seu_pedido(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "#{pedido.pessoa.primeiro_nome}, recebemos seu pedido! Póooo!"
+    @subject = "#{pedido.pessoa.primeiro_nome}, recebemos seu pedido (n.#{pedido.id})"
   end
 
   def confirmamos_seu_pagamento(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "Póooo! Seu pagamento foi confirmado, #{pedido.pessoa.primeiro_nome}!"
+    @subject = "Seu pagamento foi confirmado, #{pedido.pessoa.primeiro_nome}!"
   end
   
   def produto_envelopado(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "Póooo! #{pedido.pessoa.primeiro_nome}, seu pedido já foi envelopado!"
+    @subject = "#{pedido.pessoa.primeiro_nome.camelize}, seu pedido (n.#{pedido.id}) foi embalado..."
   end
   
   def enviamos_seu_produto(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "Póooo!!! Seu DVD já está nos Correios, #{pedido.pessoa.primeiro_nome}!"
+    @subject = "Seu pedido foi enviado aos Correios, #{pedido.pessoa.primeiro_nome}!"
   end
   
   def codigo_postagem(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "Póooo!!! #{pedido.pessoa.primeiro_nome}, o código de postagem de seu pedido é..."
+    @subject = "#{pedido.pessoa.primeiro_nome.camelize}, o código de postagem de seu pedido (n.#{pedido.id}) é..."
   end
   
   def obrigado_pelo_feedback(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "Póooo! Recebemos seu feedback, #{pedido.pessoa.primeiro_nome}, obrigado!"
+    @subject = "Recebemos seu feedback, #{pedido.pessoa.primeiro_nome}, muito obrigado!"
   end
 
   def pedido_cancelado(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "#{pedido.pessoa.primeiro_nome}: pedido n. #{pedido.id} cancelado! Póooo!"
+    @subject = "#{pedido.pessoa.primeiro_nome}: pedido (n.#{pedido.id}) cancelado!"
   end
   
   def retry_boleto(pedido)
     from_to_and_others(pedido, pedido.pessoa)
-    @subject = "Lembrete da Galinha Pintadinha! Póooo!"
+    @subject = "Lembrete da Galinha Pintadinha!"
   end
   
   # Emails para administracao
@@ -54,7 +54,7 @@ class Mailer < ActionMailer::Base
   def admin_post_recebido_UOLPagSeguro(p)
     @recipients = "Me <alexandrepiccolo@gmail.com>"
     @from = "Sistema da Galinha Pintadinha <noreply@galinhapintadinha.com.br>"
-    @subject = "Vars vindas do UOLPagSeguro"
+    @subject = "Vars recebidas do UOLPagSeguro"
     @charset = "utf-8"
     @body[:p] = p
   end
@@ -63,14 +63,14 @@ class Mailer < ActionMailer::Base
   def admin_feedback_cliente(pedido)
     from_to_and_others(pedido, pedido.pessoa)
     @recipients = "#{ADMIN_NOME} <#{ADMIN_EMAIL}>"
-    @subject = "#{pedido.pessoa.primeiro_nome} deixou comentário sobre pedido n. #{pedido.id}! Póooo!"
+    @subject = "#{pedido.pessoa.primeiro_nome} deixou comentário sobre o pedido n.#{pedido.id}"
   end
   
   # Notifica depto. financeiro sobre pgmto confirmado!
   def admin_pgmto_confirmado(pedido)
     from_to_and_others(pedido, pedido.pessoa)
     @recipients = "Financeiro GalinhaPintadinha <kellen.saviolli@gmail.com>" # #{ADMIN_EMAIL}
-    @subject = "Pedido #{pedido.id}, pagamento confirmado! Processar envio!"
+    @subject = "Pedido #{pedido.id}, pagamento confirmado - processar envio!"
     
     dominio = ActionMailer::Base.smtp_settings[:domain]
     @body[:link_check] = "http://#{dominio}/admin/pedidos?commit=Search&search=#{pedido.id}"

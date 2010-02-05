@@ -131,18 +131,14 @@
 }
 #vendas div#chamada_para_venda {
   position: relative;
-  margin-top: 25px;
+  top: 50px;
 }
 #vendas div#chamada_para_venda p#produto {
-  width: 240px;
   font-weight:normal;
-  position:absolute;
-  top: 20px;
-  left: 200px;
-  font-size:0.9em;
+  font-size:1em;
 }
 #vendas div#chamada_para_venda p#produto span#preco {
-  font-size: 1.8em;
+  font-size: 32px;
   font-weight: bold;
 }
 #vendas div#chamada_para_venda #dvd_com_botao_chamada {

@@ -5,8 +5,19 @@
 <%= radio_button_tag "settings[frete_tipo]", "estadual", (@settings["frete_tipo"]=="estadual") %> Por estado (<%= link_to "configurar valores...", :action => "frete_por_estado" %>) <br />
 <%= radio_button_tag "settings[frete_tipo]", "correios", (@settings["frete_tipo"]=="correios") %> Pelos Correios<br />
   </li>
-  <li>
-    <label for="multiplicador">Acréscimo (para frete <b>por estado</b>) quando (n > 1) produtos</label>
-    <%= text_field_tag "settings[frete_estadual_multiplicador]", @settings["frete_estadual_multiplicador"] -%>
-  </li>
 </ul>
+
+<fieldset class="grupo-simples">
+  <legend>Frete por estado</legend>
+  <ul class="sans-bullets bem-distribuidos">
+    <li>
+      <label for="multiplicador">Acrescer frete a partir do enésimo produto</label>
+      <%= text_field_tag "settings[frete_estadual_qtd_limite]", @settings["frete_estadual_qtd_limite"], :size => 3 -%>
+    </li>
+    <li>
+      <label for="multiplicador">Valor do acréscimo quando (n > 1) produtos</label>
+      <%= text_field_tag "settings[frete_estadual_multiplicador]", @settings["frete_estadual_multiplicador"] -%><br />
+      <span class="pequeno cinza"><b>n</b> = número de produtos; <b>valor_frete</b> = valor do frete</span>
+    </li>
+  </ul>
+</fieldset>

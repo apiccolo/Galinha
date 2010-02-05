@@ -3,12 +3,7 @@
   <ul id="lista_produtos">
   <% @produtos.each do |produto| -%>
     <li>
-      <%= infos_produto_box(produto, :link_to_carrinho => false,
-                                     :mostrar_preco => true,
-                                     :mostrar_desconto => true,
-                                     :mostrar_itens => true) -%>
-      <p><%= produto.descricao %></p>
-      <p><%= link_to_function "modalbox", "Modalbox.show('/comprar/produto/#{produto.id}', {title: '#{produto.nome}', width: 600}); return false;" %></p>
+      <%= descreve_produto(produto, :mostrar_thumbs => false) %>
       <p><%= link_to "Comprar!", 
                      { :action => "incluir", 
                        :produto_id => produto.id },

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  before_filter :check_access, :get_settings
+  before_filter :get_settings
   
   # http://github.com/rails/exception_notification
   #include ExceptionNotifiable

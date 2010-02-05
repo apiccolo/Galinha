@@ -1,5 +1,24 @@
 module SharedHelper
 
+  #
+  # Mostra descricao mais extensa do produto
+  # com/sem imagens (para modalbox, lista de produtos)
+  def descreve_produto(produto, my_options = {})
+    options = {
+      :mostrar_thumbs => true
+    }
+    options = options.merge!(my_options)
+    
+    render :partial => "shared/descricao_produto",
+           :locals => { 
+             :produto => produto,
+             :options => options
+           }
+  end
+
+  #
+  # Mostra informacoes principais do produto (simples e combo)
+  # numa linha resumida (para carrinho, display e outros)
   def infos_produto_box(produto, my_options = {})
     options = {
       :link_to_carrinho => true,

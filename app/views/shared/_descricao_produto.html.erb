@@ -1,0 +1,19 @@
+<div class="clearfix">
+  <h2 style="margin:0 0 5px 0"><%= produto.nome %></h2>
+  <div id="descricao_do_produto">
+    <%= produto.descricao %>
+  </div>
+  <div id="wrapper" class="clearfix">
+    <div id="fio">
+      <div id="mostrador_de_imagens">
+        <%= image_tag("spinners/spinner.gif", :id => "spinner", :style => "display:none") if options[:mostrar_thumbs] -%>
+        <div id="imagem_grande"><%= imagem_produto(produto) %></div>
+        <% if options[:mostrar_thumbs] -%>
+        <div style="position:absolute">
+          <ul><%= thumbs_imagens_na_pasta(produto) %></ul>
+        </div>
+        <% end -%>
+      </div>
+    </div>
+  </div>
+</div>

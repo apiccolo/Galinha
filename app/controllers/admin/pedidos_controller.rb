@@ -147,6 +147,16 @@ class Admin::PedidosController < Admin::AdminController
     end
   end
   
+  # Dado um array de IDs de pedidos,
+  # Marcar todos como enviados!
+  verify :params => [:ids],
+         :only => :marca_enviados_em_lote
+  def marca_enviados_em_lote
+    pedidos = Pedido.find(params[:ids])
+    pedidos.each{ |p| p.enviar_correio! if p.processando_envio_notafiscal? }
+    render :partial => "window_close"
+  end
+  
   # Informar codigos de postagem
   # aos respectivos compradores
   def controle_postagem

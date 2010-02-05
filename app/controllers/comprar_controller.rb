@@ -149,9 +149,9 @@ class ComprarController < ApplicationController
   #------------------------------------------------------------
   #   Mostra os produtos disponíveis
   #
-  def produtos
-    @produtos = Produto.disponivel.paginate(:page => params[:page], :per_page => 20)
-  end
+  #def produtos
+  #  @produtos = Produto.disponivel.paginate(:page => params[:page], :per_page => 20)
+  #end
   
   #------------------------------------------------------------
   #   Mostra ficha do produto 
@@ -486,7 +486,7 @@ class ComprarController < ApplicationController
     n = @pedido.n_itens
     if (n <= 0)
       return 0
-    elsif (n == 1)
+    elsif (n < @settings['frete_estadual_qtd_limite'].to_i)
       return valor_frete
     else
       acrescimo = @settings['frete_estadual_multiplicador']

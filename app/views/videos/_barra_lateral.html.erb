@@ -1,24 +1,21 @@
 <div class="grid_5 alpha" id="vendas"><h1 class="vermelho">Chegou o <span class="caps">DVD</span> da Galinha Pintadinha e sua Turma!</h1>
 <div id="chamada_para_venda">
-<p id="produto">
-  <span class="caps">DVD</span> 
-  Galinha Pintadinha
-  <br />
-  <span id="preco" class="azul_claro">R$ 24,90</span>
-  <br />
-  (+ R$8,00 de <span class="caps">FRETE</span>, exceto 
-  <br /> 
-  &nbsp;&nbsp;&nbsp;para AM, CE, MA, PI, PA,
-  <br />
-  &nbsp;&nbsp;&nbsp;RN e RO, frete R$13,00)
-</p>
-
-	<p style="margin:0"><%= link_to image_tag("produtos/botao_compra_dvd1.png", :id => "dvd_com_botao"), 
-	                                { :controller => "comprar", 
-	                                  :action => "incluir",
-	                                  :produto_id => 1 },
-	                                :method => :post %></p>
-	<p style="text-align:right;margin-right:15px;color:#007AC1">Produto disponível, <span class="negrito">pronta entrega</span></p>
+  <p id="produto" class="margin0 direita" style="margin:0 30px 0 0;float:right;">
+    DVD Galinha Pintadinha vol.1
+    <br />
+    <span id="preco" class="azul_claro"><%= number2currency(@produto.preco) %></span>
+    <br />
+    <span>(+ FRETE)</span>
+  </p>
+  <p class="direita" style="color:#007AC1;position:relative;top:-80px">
+    <%= link_to image_tag("produtos/botao_compra_dvd1.png", :id => "dvd_com_botao"), 
+                                    { :controller => "comprar", 
+                                      :action => "incluir",
+                                      :produto_id => 1 },
+                                    :method => :post,
+                                    :style => "display:inline" %>
+    <span style="margin-right:20px">Produto disponível, <span class="negrito">pronta entrega</span></span>
+  </p>
 </div>
 
 <ul id="vantagens" style="margin-top: 25px;">
@@ -35,7 +32,7 @@
 </div>
 
 <div class="grid_12 alpha" id="barra_selos">
-  <div class="grid_7 alpha">
+  <div class="grid_7 alpha omega">
     <img src="/images/decoracao/splash_youtube.png" style="margin-left: 25px;" alt="splash youtube" />
     <img src="/images/decoracao/logo_prefeitura_campinas.png" height="100" width="100" alt="logo prefeitura campinas" />
     <img src="/images/decoracao/logo_ficc.png" height="100" width="100" alt="logo ficc" />
@@ -44,6 +41,6 @@
 
   <div class="grid_5 alpha omega">
     <p>Pagamento online 100% seguro <span class="caps negrito">PAGSEGURO UOL</span></p>
-    <p><a href="https://pagseguro.uol.com.br" title="Este site aceita pagamentos com Visa, MasterCard, Diners, American Express, Hipercard, Aura, Bradesco, Itaú, Unibanco, Banco do Brasil, Banco Real, saldo em conta PagSeguro e boleto." target="_blank"><img src="https://pagseguro.uol.com.br/Imagens/Banners/btnPreferenciaCartoesBR_375x75.gif" alt="logo uol pagseguro" /></a></p>
+    <p><a href="https://pagseguro.uol.com.br" title="Este site aceita pagamentos com Visa, MasterCard, Diners, American Express, Hipercard, Aura, Bradesco, Itaú, Unibanco, Banco do Brasil, Banco Real, saldo em conta PagSeguro e boleto." target="_blank"><img src="/images/icones/pagseguro_opcoes_pgmto.gif" alt="logo uol pagseguro" /></a></p>
   </div>
 </div>

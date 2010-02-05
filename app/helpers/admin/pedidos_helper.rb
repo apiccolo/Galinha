@@ -212,6 +212,7 @@ module Admin::PedidosHelper
   end
   
   def formata_cpf(cpf)
+    return "---" if not cpf or cpf.blank? or (cpf.size < 10)
     return "#{cpf[0..2]}.#{cpf[3..5]}.#{cpf[6..8]}-#{cpf[9..10]}"
   end
   

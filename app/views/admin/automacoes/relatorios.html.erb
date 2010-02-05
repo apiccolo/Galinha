@@ -7,7 +7,7 @@
     <legend>Escolha dos pedidos</legend>
     <ol >
       <li>
-        <%= radio_button_tag "selecao", "automatica", true %> Automática (clique em <b>Marcar NF</b> na lista de pedidos)
+        <%= radio_button_tag "selecao", "automatica", true %> Automática (clique em <b>Marcar</b> na lista de pedidos)
         <div class="clearfix">
           <%= pedidos_selecionados_em_ul(@settings['pedidos_selecionados']) %>
           <p><%= link_to "Desmarcar todos os pedidos", { :action => "desmarcar_todos" }, :confirm => "Deseja mesmo desmarcar todas as NF?" %></p>

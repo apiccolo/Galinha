@@ -38,13 +38,13 @@
         <%= link_to_function image_tag("icones/arrow_branch.png") + " Mudar Status", "displayAlterarStatus(#{pedido.id})", :class => "pequeno" %>
         <% if not pedido.nota_fiscal.blank? %>
           <% if @settings['pedidos_selecionados'] and @settings['pedidos_selecionados'].include?(pedido.id) %>
-            <%= link_to_remote image_tag("icones/heart_delete.png") + " Desmarcar NF", 
+            <%= link_to_remote image_tag("icones/heart_delete.png") + " Desmarcar", 
                                { :url => { :action => "nf_marcar", 
                                          :id => pedido.id } },
                                :style => "margin-left:20px",
                                :id => "heart_#{pedido.id}" %>
           <% else -%>
-            <%= link_to_remote image_tag("icones/heart_add.png") + " Marcar NF", 
+            <%= link_to_remote image_tag("icones/heart_add.png") + " Marcar", 
                                { :url => { :action => "nf_marcar", 
                                          :id => pedido.id } },
                                :style => "margin-left:20px",

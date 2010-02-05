@@ -7,7 +7,7 @@ module AdminHelper
         str += "#{pedido.pessoa.nome}<br />"
         str += "#{mail_to(pedido.pessoa.email)}<br />"
         str += formata_cpf(pedido.pessoa.cpf)
-        str += "<br />#{pedido.pessoa.como_conheceu}" if not pedido.pessoa.como_conheceu.blank?
+        str += "<br />Conheceu a Galinha Pintadinha: <i>#{pedido.pessoa.como_conheceu}</i>" if not pedido.pessoa.como_conheceu.blank?
         str += "</p>"
         str += e_nota_fiscal(pedido)
       else
@@ -20,6 +20,7 @@ module AdminHelper
   end
   
   def e_nota_fiscal(pedido)
+    str = ""
     if pedido.processando_envio? or 
        pedido.processando_envio_envelopado?
       str = "<p class=\"botao_em_detalhe\">"
@@ -30,16 +31,14 @@ module AdminHelper
                       :class => 'botao', 
                       :popup => ["status=1,toolbar=0,location=0,menubar=1,resizable=1,width=800,height=650"])
       str += "</p>"
-    elsif pedido.processando_envio_notafiscal? or 
+    elsif (pedido.processando_envio_notafiscal? or 
           pedido.produto_enviado? or 
           pedido.produto_enviado_cod_postagem? or 
           pedido.recebido_pelo_cliente? or 
-          pedido.encerrado?
-      str  = "<p class=\"margin0\">"
-      str += "NF: <b>#{in_place_editor_field(:pedido, 'nota_fiscal', {}, :click_to_edit_text => 'Editar número da NF')}</b>"
-      str += "</p>"
-    else
-      str = ""
+          pedido.encerrado?) and pedido.nota_fiscal and not pedido.nota_fiscal.blank?
+        str  = "<p class=\"margin0\">"
+        str += "NF: <b>#{in_place_editor_field(:pedido, 'nota_fiscal', {}, :click_to_edit_text => 'Editar número da NF')}</b>"
+        str += "</p>"
     end
     return str
   end

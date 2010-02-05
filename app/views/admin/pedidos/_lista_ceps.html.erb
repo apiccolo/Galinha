@@ -81,12 +81,11 @@ p, #titulo {
         <%= hidden_field_tag "ids[]", pedido.id.to_s %>
       </td>
       <td>
-      <% if pedido.entrega_nome_pacote and not pedido.entrega_nome_pacote.empty? %>
-        <%= pedido.entrega_nome_pacote %><br />
-        <span class="comprador"><%= pedido.produtos_quantidades.first.qtd %> <%= pluralize(pedido.produtos_quantidades.first.qtd, "dvd", "dvds") %> comprado por <i><%= pedido.pessoa.nome %></i></span>
-      <% else -%>
-        <%= pedido.pessoa.nome %>
-      <% end -%>
+        <span style="color:#333"><%= pedido.pessoa.nome %></span><br />
+        <span class="comprador">Para: <%= pedido.para %><br /></span>
+        <% pedido.produtos_quantidades.each do |r| -%>
+        <span class="comprador"><b><%= r.qtd %></b> <%= r.produto.descricao_simples %><br /></span>
+        <% end -%>
       </td>
       <td><%= pedido.cep %></td>
       <td class="correio">

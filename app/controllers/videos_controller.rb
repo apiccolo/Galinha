@@ -1,6 +1,8 @@
 class VideosController < ApplicationController
   layout "default"
   
+  before_filter :dados_produto_1, :except => :pelucia
+  
   def index
     redirect_to :action => "trailer"
   end
@@ -27,5 +29,11 @@ class VideosController < ApplicationController
   
   def pelucia
     render :template => "videos/pelucia"
+  end
+  
+  private
+  
+  def dados_produto_1
+    @produto = Produto.find(1)
   end
 end
