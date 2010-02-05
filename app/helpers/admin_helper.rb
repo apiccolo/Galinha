@@ -162,7 +162,15 @@ module AdminHelper
     tmp += "#{in_place_editor_field(:pedido, 'entrega_cep')} - #{in_place_editor_field(:pedido, 'entrega_cidade', {}, :click_to_edit_text => 'Editar cidade')} - #{pedido.entrega_estado}"
     tmp += "</p>" 
     tmp += e_envelope(pedido)
+    tmp += e_cod_postagem(pedido)
     return tmp
+  end
+  
+  def e_cod_postagem(pedido)
+    return content_tag(:p, 
+                       "Cod.Postagem: <b>#{pedido.codigo_postagem}</b>", 
+                       :class => "margin0") if (pedido.codigo_postagem and not pedido.codigo_postagem.blank?)
+    return ""
   end
   
   def formata_cpf(cpf)

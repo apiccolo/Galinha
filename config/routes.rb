@@ -49,7 +49,8 @@ ActionController::Routing::Routes.draw do |map|
                               :member => { :print => :get,
                                            :alterar_status => :get,
                                            :envelopado => :post,
-                                           :nf_marcar => :post }
+                                           :nf_marcar => :post,
+                                           :gravar_cod_postagem => :post }
     
     admin.resources :descontos
     admin.resources :configuracoes, :collection => { :editar_arquivo => :post,

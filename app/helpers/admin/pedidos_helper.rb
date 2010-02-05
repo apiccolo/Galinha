@@ -225,68 +225,83 @@ module Admin::PedidosHelper
   #================================#
   def querystring_para_notafiscal(pedido)
     q  = ""
-    q += "codvendas="
+    q += "pedidoid="
+    q += CGI::escape("pedido #{pedido.id}")
+    q += "&codvendas="
     q += (pedido.entrega_estado=='SP') ? "5.102" : "6.102"
-    q += "&"
-    q += "dataemissao="
+    q += "&dataemissao="
     q += CGI::escape(Time.now.strftime("%d/%m/%Y"))
-    q += "&"
-    q += "stringdata="
+    q += "&stringdata="
     q += (pedido.data_nf) ? CGI::escape(pedido.data_nf.strftime("%d/%m/%Y")) : CGI::escape(Time.now.strftime("%d/%m/%Y"))
-    q += "&"
-    q += "nome="
+    q += "&nome="
     q += CGI::escape(pedido.pessoa.nome)
-    q += "&"
-    q += "cpf="
+    q += "&cpf="
     # se eh empresa
     if (pedido.pessoa.cnpj and not pedido.pessoa.cnpj.blank?)
       q += CGI::escape(pedido.pessoa.cnpj)
-      q += "&"
-      q += "inscricao="
+      q += "&inscricao="
       q += CGI::escape(pedido.pessoa.inscricao_estadual)
       q += "&"
     else
-      q += (pedido.pessoa.cpf and not pedido.pessoa.cpf.blank?) ? formata_cpf(pedido.pessoa.cpf) : CGI::escape("não informado")
+      q += (pedido.pessoa.cpf and not pedido.pessoa.cpf.blank?) ? formata_cpf(pedido.pessoa.cpf) : CGI::escape("nao informado")
     end    
-    q += "&"
-    q += "endereco="
+    q += "&endereco="
     q += CGI::escape(pedido.entrega_endereco.to_s+", "+pedido.entrega_numero.to_s+" "+pedido.entrega_complemento.to_s)
-    q += "&"
-    q += "bairro="
+    q += "&bairro="
     q += CGI::escape(pedido.entrega_bairro) if pedido.entrega_bairro
-    q += "&"
-    q += "cep="
+    q += "&cep="
     q += CGI::escape(pedido.cep)
-    q += "&"
-    q += "cidade="
+    q += "&cidade="
     q += CGI::escape(pedido.entrega_cidade)
-    q += "&"
-    q += "estado="
+    q += "&estado="
     q += CGI::escape(pedido.entrega_estado)
-    q += "&"
-    q += "codproduto="
-    q += CGI::escape(pedido.produtos_quantidades[0].codproduto)
-    q += "&"
-    q += "descricao="
-    q += CGI::escape(pedido.produtos_quantidades[0].nf_descricao)
-    q += CGI::escape("\nPedido n. #{pedido.id}")
-    q += "&"
-    q += "quantidade="
-    q += CGI::escape(pedido.produtos_quantidades[0].qtd.to_s)
-    q += "&"
-    q += "valorunit="
-    valorunit = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valorunit)
-    q += CGI::escape(valorunit)
-    q += "&"
-    if (pedido.desconto and (pedido.desconto>0))
-      q += "desconto="
-      q += CGI::escape(pedido.desconto.to_s)
-      q += "&"
+    
+    desconto = 0
+    if pedido.produtos_quantidades and not pedido.produtos_quantidades.empty?
+      i = 1
+      pedido.produtos_quantidades.each do |row|
+        if (row.produto.class == ProdutoCombo)
+          row.produto.produtos.each do |prod|
+            q += "&codproduto#{i}="
+            q += CGI::escape(prod.id.to_s)
+            q += "&descricao#{i}="
+            q += CGI::escape(prod.descricao_simples+" *combo")
+            q += "&quantidade#{i}="
+            q += CGI::escape(row.qtd.to_s)
+            q += "&valorunit#{i}="
+            valorunit = sprintf("%.2f", prod.preco_fiscal)
+            q += CGI::escape(valorunit)
+            q += "&valortotal#{i}="
+            valortotal = sprintf("%.2f", prod.preco_fiscal * row.qtd)
+            q += CGI::escape(valortotal)
+            i += 1            
+          end
+          # e o desconto???
+          desconto += (row.produto.desconto * row.qtd)
+        else
+          q += "&codproduto#{i}="
+          q += CGI::escape(row.produto_id.to_s)
+          q += "&descricao#{i}="
+          q += CGI::escape(row.produto.descricao_simples)
+          q += "&quantidade#{i}="
+          q += CGI::escape(row.qtd.to_s)
+          q += "&valorunit#{i}="
+          valorunit = sprintf("%.2f", row.produto.preco_fiscal)
+          q += CGI::escape(valorunit)
+          q += "&valortotal#{i}="
+          valortotal = sprintf("%.2f", row.produto.preco_fiscal * row.qtd)
+          q += CGI::escape(valortotal)
+          i += 1
+        end
+      end
     end
-    q += "valortotal="
-    valortotal = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valortotal)
-    q += CGI::escape(valortotal)
-    q += "&"
+    if (pedido.desconto and (pedido.desconto>0) or (desconto > 0))
+      desconto_total = (desconto + pedido.desconto)
+      q += "&desconto="
+      q += CGI::escape(sprintf("%.2f", desconto_total))
+    end
+    q += "&totalnota="
+    q += CGI::escape(sprintf("%.2f", (pedido.total - pedido.frete)))
     return q
   end
 end

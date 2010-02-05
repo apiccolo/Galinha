@@ -172,6 +172,34 @@ class Admin::PedidosController < Admin::AdminController
             }
   end
   
+  # Dado um pedido (via ID) e 
+  # pedido[cod_postagem], grava-lo e 
+  # informa-lo ao cliente.
+  verify :params => [:id, :pedido],
+         :only => :gravar_cod_postagem
+  def gravar_cod_postagem
+    pedido = Pedido.find(params[:id])
+    if pedido and pedido.produto_enviado?
+      pedido.update_attributes(:codigo_postagem => params[:pedido][:cod_postagem])
+      if params[:pedido][:suprimir_email]
+        pedido.status = 'produto_enviado_cod_postagem'
+        pedido.save
+        complemento = "- email não enviado."
+      else
+        pedido.incluir_cod_postagem!
+        complemento = "e informações enviadas ao cliente."
+      end
+      render :update do |page|
+        page.alert("Pedido #{pedido.id} ok #{complemento}")
+        page.visual_effect("fade", "table_row_#{pedido.id}")
+      end      
+    else
+      render :update do |page|
+        page.alert("ERRO: pedido inexistente ou codigo já informado!")
+      end
+    end
+  end
+  
   # Inclui o pedido no array Setting['pedidos_selecionados']
   def nf_marcar
     pedido_id = params[:id].to_i

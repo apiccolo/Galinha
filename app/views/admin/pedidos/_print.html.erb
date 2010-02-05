@@ -83,10 +83,7 @@
   </div>
 
   <div id="pedido">
-    <p>Pedido #<%= pedido.id.to_s %> 
-    <%= " (#{pedido.produtos_quantidades[0].qtd} dvds) " if (pedido.produtos_quantidades[0].qtd > 1) %>
-    <%= " <br />(p/ pres.)" if (pedido.produtos_quantidades[0].presente) %>
-    </p>
+    <p>Pedido #<%= pedido.id.to_s %></p>
   </div>
 
   <div id="comprador">
