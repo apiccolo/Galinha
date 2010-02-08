@@ -118,9 +118,12 @@ class ComprarController < ApplicationController
   #------------------------------------------------------------
   #        Recebe POST do UOLPagSeguro
   #
+  skip_before_filter :verify_authenticity_token,
+                     :only => :confirmacao_uol
   def confirmacao_uol
-    #Mailer.deliver_admin_post_recebido_UOLPagSeguro(params)
+    #ultimo token = 2681E14119A141D3947DFB3EDBB727AA
     @confirmou = false
+    msg = "Retorno automático do UOLPagSeguro"
     if params['Referencia'] and not params['Referencia'].empty?
       begin
         @pedido = Pedido.find(params['Referencia'].to_i)
@@ -128,19 +131,38 @@ class ComprarController < ApplicationController
 
         my_params = ajusta_paramsUOL(params)
         @pedido.retornos_pgmtos.create(my_params)
+        msg = "Pedido #{@pedido.id}: retorno recebido do UOLPagSeguro"
 
         if @pedido.aguardando_pagamento? and 
            ((params['StatusTransacao']=='Aprovado') or (params['StatusTransacao']=='Completo'))
           @pedido.pagamento_confirmado!
           @confirmou = true
           Mailer.deliver_admin_pgmto_confirmado(@pedido) #NOTIFICAR!
+          msg = "Pagamento do pedido #{@pedido.id} confirmado! Processando envio..."
         end        
       rescue ActiveRecord::RecordNotFound
-        # evita erros na tela...
-        render :text => 'ERRO: Pedido Nao Encontrado'
+        msg = 'ERRO: Pedido Nao Encontrado'
       end
     end
+    
+    #msg += "<!-- #{params.inspect} -->"
+    #Mailer.deliver_admin_post_recebido_UOLPagSeguro(params)
+    respond_to do |format|
+      format.html  { } #render :text => msg }
+      format.xml   { render :xml => params.to_xml }
+    end
   end
+  
+#  def tmp
+#    h = Net::HTTP.new(ARGV[0] || 'https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml', 80)
+#    url = ARGV[1] || '/'
+#    begin
+#      resp, data = h.get(url, nil) { |a| }
+#    rescue Net::ProtoRetriableError => detail
+#      head = detail.data
+#    end
+#    render :text => "#{data.inspect}"
+#  end
 
   #==================================================================#
   #                             PRODUTOS                             #
@@ -508,6 +530,30 @@ class ComprarController < ApplicationController
         @pedido.update_attributes(p)
       end
     end
+  end
+  
+  # Dados os params vindos do UOLPagSeguro,
+  # ajusta-los para guardar em RETORNO_PGMTOS.
+  def ajusta_paramsUOL(p)
+    my_p = {
+      'demais' => ''
+    }
+    p.each do |key, value|
+      my_key = key.to_s.downcase
+      if ((my_key == 'transacaoid') or
+          (my_key == 'tipopagamento') or
+          (my_key == 'tipofrete') or
+          (my_key == 'numitens'))
+        my_p[key.to_s.downcase] = value
+        my_p[key.to_s.downcase] = value.to_i if (my_key=='numitens')
+      elsif (my_key == 'statustransacao')
+        my_p['status'] = value
+      else
+        #concatena um texto com os demais params
+        my_p['demais'] += "[#{key}] = #{value}; " 
+      end
+    end
+    return my_p    
   end
   
   protected

@@ -3,6 +3,8 @@ class FaleConoscoController < ApplicationController
   
   def index
     if request.post?
+      Mailer.deliver_admin_fale_conosco(params) #NOTIFICAR!
+      flash[:notice] = "Mensagem enviada com sucesso!"
     end
   end
   

@@ -64,4 +64,44 @@ class Produto < ActiveRecord::Base
   def codproduto
     return "%03d" % self.id
   end
+  
+  # A ser implementado pelos filhos
+  #def baixa_no_estoque(qtd)
+  #end
+  
+  #======================================================#
+  #                   CLASS   METHODS                    #
+  #======================================================#
+  
+  # Retorna o total de produtos vendidos
+  # (dentro de um intervalo etc.)
+  def self.vendidos(my_options = {})
+    options = {
+      :order => "vendidos ASC"
+    }.merge!(my_options)
+
+    condicoes = []
+    condicoes << "1=1"
+    condicoes << "pedidos.status <> 'aguardando_pagamento'"
+    condicoes << "pedidos.status <> 'pedido_cancelado'"
+    condicoes << "pedidos.status <> 'pedido'"
+    condicoes << "pedidos.data_pgmto >= '#{options[:pagos_depois_de]}'" if options[:pagos_depois_de]
+    condicoes << "pedidos.data_pgmto <= '#{options[:pagos_antes_de]}'" if options[:pagos_antes_de]
+
+    sql_string = <<MYSTRING.gsub(/\s+/, " ").strip
+    SELECT produtos.*, Z.vendidos FROM produtos
+    INNER JOIN (
+      SELECT produto_id, SUM(qtd) AS vendidos 
+      FROM produtos_quantidades
+      WHERE pedido_id IN (
+        SELECT id FROM pedidos 
+        WHERE #{condicoes.join(' AND ')}
+      )
+      GROUP BY produto_id
+    ) Z
+    ON (produtos.id = Z.produto_id)
+    ORDER BY #{options[:order]}
+MYSTRING
+    return ProdutoCombo.find_by_sql(sql_string)
+  end
 end

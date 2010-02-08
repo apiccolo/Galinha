@@ -95,6 +95,22 @@ MYSTRING
     return meu_preco
   end
   
+  def qtd_estoque=(valor)
+    tmp = self.qtd_estoque
+    write_attribute(:qtd_estoque, tmp)
+  end
+  
+  def qtd_estoque
+    init = 0
+    self.produtos.each { |p| init = p.qtd_estoque if ((init == 0) or (p.qtd_estoque < init)) }
+    return init
+  end
+  
+  # Diminui a quantidade vendida do estoque
+  def baixa_no_estoque(qtd)
+    self.produtos.each { |p| p.baixa_no_estoque(qtd) }
+  end
+  
   # A disponibilidade do combo é a disponibilidade
   # dos itens (AND) sua propria disponibilidade.
   def disponivel

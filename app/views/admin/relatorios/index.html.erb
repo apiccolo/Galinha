@@ -4,3 +4,31 @@
   <li>Estatísticas de Vendas (últimos 7 dias)</li>
   <li>Últimas Vendas</li>
 </ul>
+<p>Primeiro teste: <b>pedidos por estado</b>:</p>
+<% estados = []
+   v = []
+   cores = [] %>
+<% 
+@pedidos_por_estado.each do |key, value|
+  estados << "#{key}: #{value} (#{number_to_percentage(value.to_f*100/@total.to_f, :precision => 1)})"
+  v << value
+  cores << cores_por_regiao(key)
+end %>
+<p><%= image_tag(Gchart.pie(:width => 400, :heigth => 350,
+                            :legend => estados.join("|"), 
+                            :data => v,
+                            :bar_colors => cores.join("|") )) %></p>
+<!-- NEXT... -->
+<%
+produtos = []
+vendas   = []
+@produtos_vendidos.each do |p|
+  produtos << "#{p.nome} (#{p.vendidos} unids.)"
+  vendas << p.vendidos.to_i
+end
+%>                            
+<p>Segundo teste: <b>Produtos vendidos nos últimos 30 dias</b>:</p>
+<p><%= image_tag(Gchart.bar(:width => 500, :heigth => 250,
+                            :legend => produtos.join("|"), 
+                            :data => vendas,
+                            :bar_colors => "3333FF|33FF33|FF3333" )) %></p>

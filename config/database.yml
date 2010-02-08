@@ -17,7 +17,7 @@ test:
 
 production:
   adapter: mysql
-  database: galinha_prod1
+  database: galinha_production
   username: galinha
   password: pintinho-molhado
   host: localhost

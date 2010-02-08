@@ -9,4 +9,11 @@ class ProdutoSimples < Produto
   #                   VALIDATIONS                     #
   #===================================================#
   validates_presence_of :preco, :preco_fiscal
+  
+  # Diminui a quantidade vendida do estoque
+  def baixa_no_estoque(qtd)
+    write_attribute(:qtd_estoque, (self.qtd_estoque - qtd))
+    self.save(false)
+  end
+
 end

@@ -77,6 +77,8 @@ ActionController::Routing::Routes.draw do |map|
   map.quem_somos '/quem-somos', :controller => 'fale_conosco', :action => 'quem_somos'
   map.iphone '/iphone', :controller => 'fale_conosco', :action => 'iphone'
 
+  map.pagseguro '/retorno_uolpagseguro', :controller => 'comprar', :action => 'confirmacao_uol'
+
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.

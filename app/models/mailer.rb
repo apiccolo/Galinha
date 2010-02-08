@@ -76,6 +76,17 @@ class Mailer < ActionMailer::Base
     @body[:link_check] = "http://#{dominio}/admin/pedidos?commit=Search&search=#{pedido.id}"
   end
   
+  # Envia contato (via form fale-conosco) para admin
+  def admin_fale_conosco(params)
+    @from = "Sistema da Galinha Pintadinha <noreply@galinhapintadinha.com.br>"
+    @recipients = "#{ADMIN_NOME} <#{ADMIN_EMAIL}>"
+    #@recipients = "Alexandre <alexandrepiccolo@gmail.com>"
+    @reply_to = "#{params['nome']} <#{params['email']}>"
+    @subject = "Contato de #{params['nome']} via FORM fale-conosco"
+    @charset = "utf-8"
+    @body[:params] = params
+  end
+  
   # just to see lots of options...
   def generic_mail(options)
     @recipients = options[:recipients]

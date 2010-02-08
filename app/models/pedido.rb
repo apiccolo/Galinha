@@ -271,7 +271,7 @@ class Pedido < ActiveRecord::Base
 
   # Marca quando o pedido foi pago.
   def pedido_pago
-    self.data_pgmto = self.updated_at #Time.now.utc
+    self.data_pgmto = Time.now.utc
     self.save(false)
     self.notifica_recebimento_pagamento
   end
@@ -288,14 +288,14 @@ class Pedido < ActiveRecord::Base
 
   # Marca a hora da impressao da NF.
   def pedido_notafiscal
-    #self.data_nf = Time.now.utc
-    #self.save(false)
+    self.data_nf = Time.now.utc
+    self.save(false)
   end
 
   # 1. Dá baixa no estoque dos produtos enviados.
   # 2. Notifica o cliente da postagem dos produtos.
   def envia_produto
-    self.baixa_no_estoque
+    self.baixa_estoque
     # Marca dia/hora do envio
     self.data_envio = Time.now.utc
     self.save(false)
@@ -310,11 +310,9 @@ class Pedido < ActiveRecord::Base
 
   # Decrementa do estoque a quantidade
   # disponível do produto.
-  def baixa_no_estoque
+  def baixa_estoque
     for p in produtos_quantidades
-      produto = p.produto
-      produto.qtd_estoque -= p.qtd
-      produto.save(false)
+      p.produto.baixa_no_estoque(p.qtd)
     end
   end
   

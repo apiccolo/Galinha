@@ -7,9 +7,10 @@ namespace :galinha do
       Pedido.all.each do |p|
         for r in p.produtos_quantidades
           if r.preco_unitario.blank?
+            preco = 32.9
             if (p.id < 6583)
               preco = 29.9
-            elsif (p.id < 30000) #ultimo ID antes de migrar
+            else #if (p.id >= 6583) and (p.id <= 28179) #ultimo ID antes de migrar
               estados_caros = %w(AM CE MA PI PA RN RO)
               if (estados_caros.include?(p.entrega_estado))
                 preco = 37.9
