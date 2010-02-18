@@ -26,6 +26,14 @@
       <label for="loja_aproveite_para_levar_maximo">Número máximo de produtos</label>
       <%= text_field_tag "settings[loja_aproveite_para_levar_maximo]", @settings["loja_aproveite_para_levar_maximo"], :size => 2 -%>  
     </li>
+    <li>
+      <label for="loja_aproveite_para_levar_titulo">Título &nbsp;</label>
+      <%= text_field_tag "settings[loja_aproveite_para_levar_titulo]", @settings["loja_aproveite_para_levar_titulo"], :size => 22 -%>  
+    </li>
+    <li>
+      <label for="loja_aproveite_para_levar_linha_fina">Linha fina</label>
+      <%= text_field_tag "settings[loja_aproveite_para_levar_linha_fina]", @settings["loja_aproveite_para_levar_linha_fina"], :size => 48 -%>  
+    </li>
   </ul>
 </fieldset>
 
@@ -44,6 +52,14 @@
     <li>
       <label for="loja_mostrar_sugestoes_maximo">Número máximo de produtos</label>
       <%= text_field_tag "settings[loja_mostrar_sugestoes_maximo]", @settings["loja_mostrar_sugestoes_maximo"], :size => 2 -%>
+    </li>
+    <li>
+      <label for="loja_mostrar_sugestoes_titulo">Título &nbsp;</label>
+      <%= text_field_tag "settings[loja_mostrar_sugestoes_titulo]", @settings["loja_mostrar_sugestoes_titulo"], :size => 22 -%>
+    </li>
+    <li>
+      <label for="loja_mostrar_sugestoes_linha_fina">Linha Fina</label>
+      <%= text_field_tag "settings[loja_mostrar_sugestoes_linha_fina]", @settings["loja_mostrar_sugestoes_linha_fina"], :size => 48 -%>
     </li>
     <li>
       <label for="loja_mostrar_sugestoes_empty_default">Quando &quot;carrinho vazio&quot;, mostrar produtos</label>

@@ -2,8 +2,8 @@
 <% if (settings_checked?(@settings['loja_aproveite_para_levar']) and 
       @leve_tambem and 
       not @leve_tambem.blank?) -%>
-  <h6 style="margin-bottom:0">Aproveite para levar...</h6>
-  <p class="pequeno">Ganhe <b>desconto</b> do combo escolhendo um dos produtos abaixo:</p>
+  <h6 style="margin-bottom:0"><%= @settings['loja_aproveite_para_levar_titulo'] %></h6>
+  <p class="pequeno"><%= @settings['loja_aproveite_para_levar_linha_fina'] %></p>
 
   <ul id="lista_de_leve_tambem" class="clearfix">
   <% @leve_tambem.each_with_index do |pc, i| -%>

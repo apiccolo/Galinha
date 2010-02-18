@@ -9,6 +9,10 @@ class Admin::AutomacoesController < Admin::AdminController
 
   # Bem vindo à administração.
   def index
+    @envelopes = Pedido.count(:conditions => ["status = 'processando_envio'"])
+    @notasfisc = Pedido.count(:conditions => ["status = 'processando_envio_envelopado'"])
+    @para_corr = Pedido.count(:conditions => ["status = 'processando_envio_notafiscal'"])
+    @cpostagem = Pedido.count(:conditions => ["status = 'produto_enviado'"])
   end
   
   # Mostra form com opcoes:

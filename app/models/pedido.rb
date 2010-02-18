@@ -180,7 +180,7 @@ class Pedido < ActiveRecord::Base
   # Estados disponíveis para os PEDIDOS
   state :pedido,                       :after => Proc.new {|model| model.inicia_pedido }
   state :aguardando_pagamento,         :after => Proc.new {|model| model.notifica_recebimento_pedido }
-  state :processando_envio,            :after => Proc.new {|model| model.notifica_recebimento_pagamento }
+  state :processando_envio,            :after => Proc.new {|model| model.pedido_pago }
   state :processando_envio_envelopado, :after => Proc.new {|model| model.pedido_envelopado }
   state :processando_envio_notafiscal, :after => Proc.new {|model| model.pedido_notafiscal }
   state :produto_enviado,              :after => Proc.new {|model| model.envia_produto }
@@ -356,6 +356,14 @@ class Pedido < ActiveRecord::Base
   
   def self.contador_por_status
     return Pedido.find_by_sql("SELECT COUNT(*) AS contador, status FROM pedidos p GROUP BY p.status ORDER BY contador DESC")
+  end
+  
+  def self.contador_por_data(field)
+    return Pedido.find_by_sql("SELECT DATE(#{field}) AS #{field}, count(*) AS contador FROM pedidos GROUP BY YEAR(#{field}), MONTH(#{field}), DAY(#{field}) ORDER BY #{field} DESC")
+  end
+  
+  def self.pedidos_e_pagamentos(options = {})
+    return Pedido.find_by_sql("SELECT X.data, Y.pedidos, X.pagos FROM (SELECT COUNT(p.data_pgmto) AS pagos, DATE(p.data_pgmto) AS data FROM pedidos p WHERE DATE(p.data_pgmto) > '2010-01-01' GROUP BY DAY(p.data_pgmto), MONTH(p.data_pgmto), YEAR(p.data_pgmto) ORDER BY p.data_pgmto DESC) X INNER JOIN (SELECT COUNT(p.data_pedido) AS pedidos, DATE(p.data_pedido) AS data FROM pedidos p WHERE DATE(p.data_pedido) > '2010-01-01' GROUP BY DAY(p.data_pedido), MONTH(p.data_pedido), YEAR(p.data_pedido) ORDER BY p.data_pedido DESC) Y ON (X.data = Y.data)")
   end
 
   #============================================================================#

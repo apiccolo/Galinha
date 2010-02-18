@@ -5,7 +5,7 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
   # Sempre que gerar um registro E221 gerar também um registro filho E222-LANÇAMENTO DE PRODUTOS/SERVIÇOS. 
   # A ordenação no aquivo para cada nota será o registro E221 (pai) e em seguida o(s) registro(s) E222 (filho). 
   # OBS: Poderá existir apenas um registro E221 por nota fiscal.
-  def e221_chave_lancamento_produtos(pedido)
+  def e221_chave_lancamento_produtos(pedido, pq)
     return (e221_nome_do_registro +
             e221_saida +
             e221_especie_nf +
@@ -16,7 +16,7 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
             e221_frete +
             e221_seguro +
             e221_despesas_acessorias +
-            e221_qtde_itens +
+            e221_qtde_itens(pedido) +
             e221_pis_cofins +
             e221_peso_bruto +
             e221_peso_liquido +
@@ -122,8 +122,8 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
   # Caso a nota não possua produtos/serviços, informar zeros neste campo e criar o registro filho E222 sem informações do produto/serviço.
   # Tipo: Num
   # Tam.: 3
-  def e221_qtde_itens
-    return "%03d" % 1
+  def e221_qtde_itens(pedido)
+    return "%03d" % pedido.produtos_quantidades.size
   end
 
   # 12. PIS/COFINS - Informe o valor de Pis e Cofins retido anteriormente (valor destacado na nota fiscal).

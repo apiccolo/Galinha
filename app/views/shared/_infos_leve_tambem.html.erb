@@ -3,12 +3,13 @@
 <% carrinho.each { |r| acrescimo += r.produto.desconto if (r.produto.class == ProdutoCombo) } -%>
 <% if p_faltante -%>
 <div class="clearfix">
-<p class="produto_faltante">
+<p class="produto_faltante margin0">
   <%= thumbnail_produto(p_faltante, :style => "float:left;margin:0 10px 0 0") -%><br />
   <span class="pequeno negrito"><%= p_faltante.nome %></span><br />
   De <span class="preco_mentira"><%= number2currency(p_faltante.preco) %></span> 
   por <span class="preco_final"><%= number2currency(p_faltante.preco - produto_combo.desconto + acrescimo) %></span>
 </p>
+<p><%= link_to_modal_box "[Saiba...+]" , { :action => "produto", :id => p_faltante.id }, :width => 720 %></p>
 <p class="lnk_levar_pacote">
 <%= link_to_remote "#{image_tag('icones/carrinho_troca.png')} Levar com desconto!", 
                     :url => { 

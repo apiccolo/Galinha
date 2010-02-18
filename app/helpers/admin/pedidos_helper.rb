@@ -226,7 +226,7 @@ module Admin::PedidosHelper
   def querystring_para_notafiscal(pedido)
     q  = ""
     q += "pedidoid="
-    q += CGI::escape("pedido #{pedido.id}")
+    q += CGI::escape("#{pedido.id}")
     q += "&codvendas="
     q += (pedido.entrega_estado=='SP') ? "5.102" : "6.102"
     q += "&dataemissao="

@@ -44,6 +44,10 @@ class Pessoa < ActiveRecord::Base
   def md5
     return Pessoa.encrypt("#{self.email}".reverse,"#{self.id}")
   end
+  
+  def self.contador(field)
+    return Pessoa.find_by_sql("SELECT COUNT(*) AS contador, #{field} FROM pessoas GROUP BY #{field} ORDER BY contador DESC")
+  end
     
   protected
   

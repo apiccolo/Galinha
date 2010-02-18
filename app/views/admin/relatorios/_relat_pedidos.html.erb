@@ -1,0 +1,36 @@
+<p>Primeiro teste: <b>pedidos por estado</b>:</p>
+<% estados = []
+   v = []
+   cores = [] %>
+<% 
+@pedidos_por_estado.each do |key, value|
+  estados << "#{key}: #{value} (#{number_to_percentage(value.to_f*100/@total.to_f, :precision => 1)})"
+  v << value
+  cores << cores_por_regiao(key)
+end %>
+<p><%= image_tag(Gchart.pie(:width => 400, :heigth => 350,
+                            :legend => estados.join("|"), 
+                            :data => v,
+                            :bar_colors => cores.join("|") )) %></p>
+
+
+<script type="text/javascript" charset="utf-8">
+google.setOnLoadCallback(drawAreaChart);
+
+function drawAreaChart() {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Tempo');
+  data.addColumn('number', 'Pedidos');
+  data.addColumn('number', 'Pagamentos');
+  data.addRows(<%= @pedidos_e_pagos.size %>);
+  <% @pedidos_e_pagos.each_with_index do |ppg, j| -%>
+  data.setValue(<%= j %>, 0, '<%= ppg.data %>');
+  data.setValue(<%= j %>, 1, <%= ppg.pedidos %>);
+  data.setValue(<%= j %>, 2, <%= ppg.pagos %>);
+  <% end -%>
+
+  var chart = new google.visualization.AreaChart(document.getElementById('chart_area_div'));
+  chart.draw(data, {width: 500, height: 340, legend: 'bottom', title: 'Pedidos e Pagamentos'});
+}
+</script>
+<div id="chart_area_div" style="width: 500px; height: 300px;"></div>

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  before_filter :get_settings
+  before_filter :get_settings, :qual_banco
   
   # http://github.com/rails/exception_notification
   #include ExceptionNotifiable
@@ -38,6 +38,14 @@ class ApplicationController < ActionController::Base
        authenticate_or_request_with_http_basic do |user_name, password|
          user_name == "galinha" && password == "pintinho-molhado"
        end
+     end
+   end
+   
+   def qual_banco
+     if not ambiente_producao?
+       config = Rails::Configuration.new
+       tmp = ActiveRecord::Base.connection
+       flash[:warning] = "Atenção: você está desenvolvendo no <b>#{tmp.adapter_name}</b>, database <b>#{config.database_configuration[RAILS_ENV]['database']}</b>"
      end
    end
    

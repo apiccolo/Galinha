@@ -5,6 +5,9 @@
 <%= radio_button_tag "settings[frete_tipo]", "estadual", (@settings["frete_tipo"]=="estadual") %> Por estado (<%= link_to "configurar valores...", :action => "frete_por_estado" %>) <br />
 <%= radio_button_tag "settings[frete_tipo]", "correios", (@settings["frete_tipo"]=="correios") %> Pelos Correios<br />
   </li>
+  <li>
+    Frete grátis a partir de X reais...
+  </li>
 </ul>
 
 <fieldset class="grupo-simples">

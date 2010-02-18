@@ -1,0 +1,59 @@
+<p>Como compradores conheceram a Galinha:</p>
+<% como = []
+   val  = []
+   cores = [] %>
+<% 
+srand
+@como_conheceu.each_with_index do |row, o|
+  if (o != 0)
+    como << "#{row.como_conheceu}: #{row.contador}"
+    val  << row.contador.to_i
+    cores << "#{((rand(239))+15).to_s(16)}#{((rand(239))+15).to_s(16)}#{((rand(239))+15).to_s(16)}"
+  end
+end %>
+<p><%= image_tag(Gchart.pie(:width => 400, :heigth => 350,
+                            :legend => como.join("|"), 
+                            :data => val,
+                            :bar_colors => cores.join("|") )) %></p>
+
+<% aux = [] %>
+<% @como_conheceu.each_with_index { |row, i| aux << "['#{row.como_conheceu}', #{row.contador}]" if (i > 0) } -%>
+<script type="text/javascript">
+
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1', {'packages':['piechart', 'areachart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table, 
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  var _chart = false;
+  function drawChart() {
+
+  // Create our data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Como conheceu');
+    data.addColumn('number', 'Quantos');
+    data.addRows([ <%= aux.join(",\n") %> ]);
+
+    // Instantiate and draw our chart, passing in some options.
+    _chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    google.visualization.events.addListener(_chart, 'ready', pieReadyHandler);
+    _chart.draw(data, {width: 400, height: 240, is3D: true, title: 'Como conheceu a Galinha Pintadinha'});
+    //$('chart_div').append('<div align="center" style="font-style:italic">Click the slices and legend entries.</div>');
+  }
+  
+  function pieReadyHandler(e) {
+    window.setTimeout("_chart.setSelection([{row:0, column:null}])", 2000);
+    window.setInterval("togglePieSelection()", 5000);
+  }
+ 
+  function togglePieSelection() {
+    var nextSliceNumber = (_chart.getSelection()[0].row + 1) % 7;
+    _chart.setSelection([{row:nextSliceNumber, column:null}]);
+  }
+</script>
+
+<div id="chart_div" style="width: 300px; height: 300px;"></div>

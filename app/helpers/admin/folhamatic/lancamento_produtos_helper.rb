@@ -13,7 +13,7 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   #     E221 referente NF 0151 
   #     E222 referente item 001 
   #     E222 referente item 002
-  def e222_lancamento_produtos(pedido)
+  def e222_lancamento_produtos(pedido, pq)
     return (e222_nome_do_registro +
             e222_saida +
             e222_especie_nf +
@@ -23,15 +23,15 @@ module Admin::Folhamatic::LancamentoProdutosHelper
             e222_codigo_cliente(pedido) +
             e222_numero_item(pedido) +
             e222_cfop(pedido) +
-            e222_codigo_do_produto(pedido) +
+            e222_codigo_do_produto(pedido, pq) +
             e222_aliquota_icms +
-            e222_quantidade(pedido) +
+            e222_quantidade(pedido, pq) +
             e222_valor_mercadoria(pedido) +
-            e222_valor_desconto +
+            e222_valor_desconto(pedido, pq) +
             e222_base_calculo_icms +
             e222_base_subst_trib +
             e222_valor_ipi +
-            e222_valor_unitario(pedido) +
+            e222_valor_unitario(pedido, pq) +
             e222_numero_di +
             e222_base_calculo_ipi +
             e222_valor_do_icms +
@@ -148,14 +148,8 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # 10. CÓDIGO DO PRODUTO/SERVIÇO - Informe o código do produto/serviço conforme cadastro de Produtos/Serviços.
   # Tipo: AlphaNum X
   # Tam.: 14
-  def e222_codigo_do_produto(pedido)
-    id = "DVD"
-    if (pedido.produtos_quantidades[0].presente)
-      id += "002"
-    else
-      id += "001"
-    end
-    return "%-14s" % id
+  def e222_codigo_do_produto(pedido, pq)
+    return "%-14s" % pq.produto_id
   end
   
   # 11. ALÍQUOTA DO ICMS - Informe a aliquota de ICMS do produto/serviço. Exemplo: alíquota de 18% informar no arquivo 0180000.
@@ -168,8 +162,8 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # 12. QUANTIDADE - Informe a quantidade do produto/serviço.
   # Tipo: Num
   # Tam.: 14
-  def e222_quantidade(pedido)
-    return "%014d" % (pedido.produtos_quantidades[0].qtd.to_i * 1000)
+  def e222_quantidade(pedido, pq)
+    return "%014d" % (pq.qtd.to_i * 1000)
   end
 
   # 13. VLR.MERCADORIA/SERVIÇO - Informe o valor da mercadoria/serviço. Deve ser o valor bruto do produto/serviço (valor unitário x quantidade).
@@ -177,14 +171,14 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # Tam.: 14
   def e222_valor_mercadoria(pedido)
     # TOTAL DA NOTA!
-    preco_sem_ponto = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valortotal).delete(".").to_i
+    preco_sem_ponto = sprintf("%.2f", (pedido.total - pedido.frete)).delete(".").to_i
     return "%014d" % preco_sem_ponto
   end
 
   # 14. VALOR DO DESCONTO - Informe o valor do desconto concedido no item.
   # Tipo: Num
   # Tam.: 14
-  def e222_valor_desconto
+  def e222_valor_desconto(pedido, pq)
     return "%014d" % 0
   end
 
@@ -215,8 +209,8 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # 18. VALOR UNITÁRIO - Informe o valor unitário do produto/serviço.
   # Tipo: Num
   # Tam.: 14
-  def e222_valor_unitario(pedido)
-    preco_sem_ponto = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valorunit).delete(".").to_i
+  def e222_valor_unitario(pedido, pq)
+    preco_sem_ponto = sprintf("%.2f", pq.preco_unitario).delete(".").to_i
     return "%014d" % (preco_sem_ponto * 100)
   end
 

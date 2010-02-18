@@ -7,6 +7,8 @@
 <% for p in @pedidos -%>
 <%= e200_notas_ficais(p) %>
 <%= e201_lancamentos_de_impostos_das_notas_fiscais(p) %>
-<%= e221_chave_lancamento_produtos(p) %>
-<%= e222_lancamento_produtos(p) %>
+<% p.produtos_quantidaddes.each do |pq| -%>
+<%= e221_chave_lancamento_produtos(p, pq) %>
+<%= e222_lancamento_produtos(p, pq) %>
+<% end -%>
 <% end -%>
