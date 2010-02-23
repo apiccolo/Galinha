@@ -1,4 +1,16 @@
-<div class="grid_12 alpha omega"><h1 id="especial">Relatórios</h1></div>
+<div class="grid_12 alpha omega">
+  <h1 id="especial">Relatórios</h1>
+  <div id="seletor_data" style="margin-left:300px;text-align:right">
+    <% form_for :intervalo, :url => { :action => :index }, :html => { :method => :get } do |f| %>
+    De <%= select_date(@data1, :prefix => 'de') %><br />
+    até <%= select_date(@data2, :prefix => 'ate') %><br />
+    <%= submit_tag "Refazer relatórios"%>
+    <% end %>
+  </div>
+  <h3>Intervalo: 
+  de  <span class="date"><%= l @data1, :format => "%d de %B de %Y" %></span> 
+  até <span class="date"><%= l @data2, :format => "%d de %B de %Y" %></span></h2>
+</div>
 
 <div class="grid_3 alpha">
   <ul id="tabs_relatorios" class="subsection_tabs">
@@ -17,3 +29,17 @@
 <script type="text/javascript" charset="utf-8">
 new Control.Tabs('tabs_relatorios');  
 </script>
+<style type="text/css" media="screen">
+h3 { 
+  margin-top:10px;
+  text-align:center;
+  background:#eee;
+}
+span.date {
+  color:blue;
+}
+.graph {
+  text-align:center;
+  border: 1px solid gray;
+}
+</style>

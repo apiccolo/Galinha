@@ -35,7 +35,7 @@ class ProdutoCombo < Produto
     end
     #logger.debug("======> #{total_produtos}")
     aux = []
-    ProdutoCombo.n_itens(:n_itens_pacote => (total_produtos+1)).each do |pc|
+    ProdutoCombo.n_itens(:order => "produtos.id DESC, total ASC", :n_itens_pacote => (total_produtos+1)).each do |pc|
       aux << pc if (pc.disponivel and 
                     ((pc.produto_ids - carrinho_ids).size.to_i == 1))
     end
@@ -96,8 +96,8 @@ MYSTRING
   end
   
   def qtd_estoque=(valor)
-    tmp = self.qtd_estoque
-    write_attribute(:qtd_estoque, tmp)
+    #tmp = self.qtd_estoque #somehow, it didn't work...
+    write_attribute(:qtd_estoque, 1999)
   end
   
   def qtd_estoque

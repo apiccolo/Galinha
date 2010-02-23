@@ -77,7 +77,18 @@ ActionController::Routing::Routes.draw do |map|
   map.quem_somos '/quem-somos', :controller => 'fale_conosco', :action => 'quem_somos'
   map.iphone '/iphone', :controller => 'fale_conosco', :action => 'iphone'
 
+  # EXCLUSIVO para retorno automático dos pagamentos
   map.pagseguro '/retorno_uolpagseguro', :controller => 'comprar', :action => 'confirmacao_uol'
+  
+  # LETRAS (que tem hifen no nome)
+  map.connect '/letras/galinha-pintadinha', :controller => 'letras', :action => 'galinha_pintadinha'
+  map.connect '/letras/o-sapo', :controller => 'letras', :action => 'o_sapo'
+  map.connect '/letras/a-barata', :controller => 'letras', :action => 'a_barata'
+  map.connect '/letras/pintinho-amarelinho', :controller => 'letras', :action => 'pintinho_amarelinho'
+  map.connect '/letras/marcha-soldado', :controller => 'letras', :action => 'marcha_soldado'
+  map.connect '/letras/fli-flai', :controller => 'letras', :action => 'fli_flai'
+  map.connect '/letras/escravos-de-jo', :controller => 'letras', :action => 'escravos_de_jo'
+  map.connect '/letras/quem-esta-feliz', :controller => 'letras', :action => 'quem_esta_feliz'
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should

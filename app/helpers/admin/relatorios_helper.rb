@@ -16,4 +16,9 @@ module Admin::RelatoriosHelper
     return cores
   end
   
+  def data_para_grafico(strdata)
+    y, m, d = strdata.split("-")
+    return Date.new(y.to_i, m.to_i, d.to_i).strftime("%d/%b/%Y")
+  end
+  
 end

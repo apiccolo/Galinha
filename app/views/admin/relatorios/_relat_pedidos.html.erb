@@ -1,18 +1,7 @@
-<p>Primeiro teste: <b>pedidos por estado</b>:</p>
-<% estados = []
-   v = []
-   cores = [] %>
-<% 
-@pedidos_por_estado.each do |key, value|
-  estados << "#{key}: #{value} (#{number_to_percentage(value.to_f*100/@total.to_f, :precision => 1)})"
-  v << value
-  cores << cores_por_regiao(key)
-end %>
-<p><%= image_tag(Gchart.pie(:width => 400, :heigth => 350,
-                            :legend => estados.join("|"), 
-                            :data => v,
-                            :bar_colors => cores.join("|") )) %></p>
-
+<script type="text/javascript">
+// Load the Visualization API and the piechart package.
+google.load('visualization', '1', {'packages':['piechart', 'areachart', 'barchart']});
+</script>
 
 <script type="text/javascript" charset="utf-8">
 google.setOnLoadCallback(drawAreaChart);
@@ -24,13 +13,53 @@ function drawAreaChart() {
   data.addColumn('number', 'Pagamentos');
   data.addRows(<%= @pedidos_e_pagos.size %>);
   <% @pedidos_e_pagos.each_with_index do |ppg, j| -%>
-  data.setValue(<%= j %>, 0, '<%= ppg.data %>');
+  data.setValue(<%= j %>, 0, '<%= data_para_grafico(ppg.data) %>');
   data.setValue(<%= j %>, 1, <%= ppg.pedidos %>);
   data.setValue(<%= j %>, 2, <%= ppg.pagos %>);
   <% end -%>
 
   var chart = new google.visualization.AreaChart(document.getElementById('chart_area_div'));
-  chart.draw(data, {width: 500, height: 340, legend: 'bottom', title: 'Pedidos e Pagamentos'});
+  chart.draw(data, {width: 500, height: 400, legend: 'bottom', title: 'Pedidos e Pagamentos'});
 }
 </script>
-<div id="chart_area_div" style="width: 500px; height: 300px;"></div>
+<div id="chart_area_div" class="graph"></div>
+
+
+<!-- graph 2 -->
+<% estados = []
+   v = []
+   cores = [] %>
+<% 
+#@pedidos_por_estado.each do |key, value|
+#  estados << "#{key}: #{value} (#{number_to_percentage(value.to_f*100/@total.to_f, :precision => 1)})"
+#  v << value
+#  cores << cores_por_regiao(key)
+#end %>
+<p><%#= image_tag(Gchart.pie(:width => 400, :heigth => 350,
+                            :legend => estados.join("|"), 
+                            :data => v,
+                            :bar_colors => cores.join("|") )) %></p>
+<% auxE = [] %>
+<% @pedidos_por_estado.each { |k, v| auxE << "['#{k}', #{v}]" } -%>
+<script type="text/javascript">
+// Set a callback to run when the Google Visualization API is loaded.
+google.setOnLoadCallback(drawEstadosChart);
+
+// Callback that creates and populates a data table, 
+// instantiates the pie chart, passes in the data and
+// draws it.
+var _chart2 = false;
+function drawEstadosChart() {
+
+// Create our data table.
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Estado');
+  data.addColumn('number', 'Pedidos');
+  data.addRows([ <%= auxE.join(",\n") %> ]);
+
+  // Instantiate and draw our chart, passing in some options.
+  _chart2 = new google.visualization.PieChart(document.getElementById('chart_estados_div'));
+  _chart2.draw(data, {width: 400, height: 340, is3D: true, title: 'Pedidos para os Estados'});
+}
+</script>
+<div id="chart_estados_div" class="graph"></div>

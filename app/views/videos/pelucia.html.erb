@@ -17,7 +17,29 @@
       <a href="/videos/karaoke">Exemplo Karaokê</a>
     </p>
   </div>
-  <div id="count_youtube">Visto mais de <b>30 milhões</b> de vezes!!!</div>
+  <div id="count_youtube"></div>
 </div>
-<%= render :partial => "barra_lateral" %>
+<%#= render :partial => "barra_lateral" %>
+<!-- barra lateral -->
+<div class="grid_5 alpha" id="vendas"><h1 class="vermelho">Chegou a pelúcia da Galinha Pintadinha!</h1>
+  <div id="chamada_para_venda">
+    <p id="produto" class="margin0 direita" style="margin:0 30px 0 0;float:right;">
+      Pelúcia da Galinha Pintadinha
+      <br />
+      <span id="preco" class="azul_claro"><%= number2currency(34.9) %></span>
+      <br />
+      <span>(+ FRETE)</span>
+    </p>
+    <p class="direita" style="color:#007AC1;position:relative;top:-80px">
+      <%= link_to image_tag("produtos/botao_compra_dvd1.png", :id => "dvd_com_botao"), 
+                                      { :controller => "comprar", 
+                                        :action => "incluir",
+                                        :produto_id => 4 },
+                                      :method => :post,
+                                      :style => "display:inline" %>
+      <span style="margin-right:20px">Produto disponível, <span class="negrito">pronta entrega</span></span>
+    </p>
+  </div>
+</div>
+
 <%= render :partial => "depoimentos_saibamais" %>

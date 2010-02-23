@@ -1,1 +1,18 @@
-<p>Relatório de Produtos vendidos</p>
+<script type="text/javascript">
+  google.setOnLoadCallback(drawProdutosChart);
+  function drawProdutosChart() {
+    var data = new google.visualization.DataTable();
+    <% @produtos_vendidos.each do |prod| -%>
+    data.addColumn('number', '<%= prod.nome %>');
+    <% end -%>
+    
+    data.addRows(<%= (@produtos_vendidos.size) %>);
+    <% @produtos_vendidos.each_with_index do |prod, k| -%>
+    data.setValue(0, <%= k %>, <%= prod.vendidos %>);
+    <% end -%>
+
+    var chart = new google.visualization.BarChart(document.getElementById('produtos_chart'));
+    chart.draw(data, {width: 450, height: 150, is3D: true, title: 'Produtos Vendidos'});
+  }
+</script>
+<div id="produtos_chart" class="graph"></div>

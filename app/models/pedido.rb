@@ -358,12 +358,36 @@ class Pedido < ActiveRecord::Base
     return Pedido.find_by_sql("SELECT COUNT(*) AS contador, status FROM pedidos p GROUP BY p.status ORDER BY contador DESC")
   end
   
-  def self.contador_por_data(field)
+  def self.contador_por_data(field, my_options = {})
     return Pedido.find_by_sql("SELECT DATE(#{field}) AS #{field}, count(*) AS contador FROM pedidos GROUP BY YEAR(#{field}), MONTH(#{field}), DAY(#{field}) ORDER BY #{field} DESC")
   end
   
-  def self.pedidos_e_pagamentos(options = {})
-    return Pedido.find_by_sql("SELECT X.data, Y.pedidos, X.pagos FROM (SELECT COUNT(p.data_pgmto) AS pagos, DATE(p.data_pgmto) AS data FROM pedidos p WHERE DATE(p.data_pgmto) > '2010-01-01' GROUP BY DAY(p.data_pgmto), MONTH(p.data_pgmto), YEAR(p.data_pgmto) ORDER BY p.data_pgmto DESC) X INNER JOIN (SELECT COUNT(p.data_pedido) AS pedidos, DATE(p.data_pedido) AS data FROM pedidos p WHERE DATE(p.data_pedido) > '2010-01-01' GROUP BY DAY(p.data_pedido), MONTH(p.data_pedido), YEAR(p.data_pedido) ORDER BY p.data_pedido DESC) Y ON (X.data = Y.data)")
+  def self.pedidos_e_pagamentos(my_options = {})
+    options = {
+      :de => 30.days.ago,
+      :ate => Date.today
+    }.merge!(my_options)
+    conditions = []
+    conditions << "created_at >= #{options[:de].strftime('%Y-%m-%d')}"
+    conditions << "created_at <= #{options[:ate].strftime('%Y-%m-%d')}"
+    str_sql = <<MYSTRING.gsub(/\s+/, " ").strip
+SELECT X.data, Y.pedidos, X.pagos 
+FROM (SELECT COUNT(p.data_pgmto) AS pagos, DATE(p.data_pgmto) AS data 
+      FROM pedidos p 
+      WHERE DATE(p.data_pgmto) >= '#{options[:de].strftime('%Y-%m-%d')}' AND
+            DATE(p.data_pgmto) <= '#{options[:ate].strftime('%Y-%m-%d')}'
+      GROUP BY DAY(p.data_pgmto), MONTH(p.data_pgmto), YEAR(p.data_pgmto) 
+      ORDER BY p.data_pgmto DESC) X 
+JOIN (SELECT COUNT(p.data_pedido) AS pedidos, DATE(p.data_pedido) AS data 
+      FROM pedidos p 
+      WHERE DATE(p.data_pedido) >= '#{options[:de].strftime('%Y-%m-%d')}' AND
+            DATE(p.data_pedido) <= '#{options[:ate].strftime('%Y-%m-%d')}'
+      GROUP BY DAY(p.data_pedido), MONTH(p.data_pedido), YEAR(p.data_pedido) 
+      ORDER BY p.data_pedido DESC) Y
+ON (X.data = Y.data) 
+ORDER BY X.data ASC
+MYSTRING
+    return Pedido.find_by_sql(str_sql)
   end
 
   #============================================================================#

@@ -31,7 +31,7 @@
 <input type="hidden" name="item_valor_<%= (pedido.produtos_quantidades.size+2) %>" value="<%= preco_pagseguro(embalagens) -%>" />
 <% end -%>
 
-<input type="hidden" name="cliente_nome" value="<%= pedido.para %>" />
+<input type="hidden" name="cliente_nome" value="<%= pedido.pessoa.nome %>" />
 <input type="hidden" name="cliente_cep" value="<%= pedido.entrega_cep %>" />
 <input type="hidden" name="cliente_end" value="<%= pedido.entrega_endereco %>" />
 <input type="hidden" name="cliente_num" value="<%= pedido.entrega_numero %>" />

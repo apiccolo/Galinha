@@ -50,13 +50,15 @@ namespace :deploy do
     desc "Present a maintenance page to visitors"
     task :disable, :roles => :web, :except => { :no_release => true } do
       on_rollback { run "rm -Rf #{deploy_to}/system" }
-      run "mkdir #{deploy_to}/current/public/system; cp #{deploy_to}/current/public/maintenance.html #{deploy_to}/current/public/system/maintenance.html"
+      run "rm -rf #{deploy_to}/current/public/system"
+      run "mkdir #{deploy_to}/current/public/system"
+      run "cp #{deploy_to}/current/public/maintenance.html #{deploy_to}/current/public/system/maintenance.html"
       run "chown -R www-data:www-data #{deploy_to}/current/public/system/maintenance.html"
     end
     
     desc "Remove maintenance page"
     task :enable, :roles => :web, :except => { :no_release => true } do
-      run "rm -Rf #{deploy_to}/current/public/system"
+      run "rm -rf #{deploy_to}/current/public/system"
     end
     
     desc "Restart apache web-server"

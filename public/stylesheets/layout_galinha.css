@@ -130,8 +130,6 @@
   color:#099;
 }
 #vendas div#chamada_para_venda {
-  position: relative;
-  top: 50px;
 }
 #vendas div#chamada_para_venda p#produto {
   font-weight:normal;

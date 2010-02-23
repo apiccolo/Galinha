@@ -1,9 +1,30 @@
-<h1>Olá <%= admin_logado.nome %>!</h1>
-<p>
-  Lorem ipsum e o escambal.
-</p>
-<ul>
-  <li>Últimas Vendas</li>
-  <li>Estatísticas de Vendas (últimos 7 dias)</li>
-  <li>Últimas Vendas</li>
-</ul>
+<h1>Olá, <%= admin_logado.nome %>!</h1>
+
+<div class="grid_6 alpha">
+<p>Como compradores (<b>dos últimos 10 dias</b>) conheceram a Galinha?</p>
+<% como = []
+   val  = []
+   cores = [] %>
+<% 
+srand
+@como_conheceu.each_with_index do |row, o|
+    row.como_conheceu = "Não responderam" if row.como_conheceu.blank?
+    como << "#{row.como_conheceu}: #{row.contador}"
+    val  << row.contador.to_i
+    cores << "#{((rand(239))+15).to_s(16)}#{((rand(239))+15).to_s(16)}#{((rand(239))+15).to_s(16)}"
+end %>
+<p><%= image_tag(Gchart.pie(:width => 400, :height => 180,
+                            :legend => como.join("|"), 
+                            :data => val,
+                            :bar_colors => cores.join("|") )) %></p>
+</div>
+
+<div class="grid_6 omega">
+<p>Como estão <b>pedidos x pagamentos</b> hoje (<%= @hoje.strftime("%d/%b") %>)?</p>
+<% tmp = [ @pedidos_e_pagos[0].pedidos.to_i, @pedidos_e_pagos[0].pagos.to_i ] %>
+<p><%= image_tag(Gchart.bar(:width => 340, :height => 70,
+                            :legend => "Pedidos (#{tmp[0]})|Pagamentos (#{tmp[1]})",
+                            :data => tmp,
+                            :orientation => 'horizontal',
+                            :bar_colors => "3333FF|33FF33" )) %></p>
+</div>

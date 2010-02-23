@@ -45,8 +45,15 @@ class Pessoa < ActiveRecord::Base
     return Pessoa.encrypt("#{self.email}".reverse,"#{self.id}")
   end
   
-  def self.contador(field)
-    return Pessoa.find_by_sql("SELECT COUNT(*) AS contador, #{field} FROM pessoas GROUP BY #{field} ORDER BY contador DESC")
+  def self.contador(field, my_options = {})
+    options = {
+      :de => 10.days.ago,
+      :ate => Date.today
+    }.merge!(my_options)
+    conditions = []
+    conditions << "DATE(created_at) >= '#{options[:de].strftime('%Y-%m-%d')}'"
+    conditions << "DATE(created_at) <= '#{options[:ate].strftime('%Y-%m-%d')}'"
+    return Pessoa.find_by_sql("SELECT COUNT(*) AS contador, #{field} FROM pessoas WHERE #{conditions.join(' AND ')} GROUP BY #{field} ORDER BY contador DESC")
   end
     
   protected

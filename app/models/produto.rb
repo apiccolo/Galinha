@@ -77,16 +77,18 @@ class Produto < ActiveRecord::Base
   # (dentro de um intervalo etc.)
   def self.vendidos(my_options = {})
     options = {
+      :de => 30.days.ago,
+      :ate => Date.today,
       :order => "vendidos ASC"
     }.merge!(my_options)
 
     condicoes = []
-    condicoes << "1=1"
+    condicoes << "pedidos.forma_pgmto <> 'INDEFINIDO'"
     condicoes << "pedidos.status <> 'aguardando_pagamento'"
     condicoes << "pedidos.status <> 'pedido_cancelado'"
     condicoes << "pedidos.status <> 'pedido'"
-    condicoes << "pedidos.data_pgmto >= '#{options[:pagos_depois_de]}'" if options[:pagos_depois_de]
-    condicoes << "pedidos.data_pgmto <= '#{options[:pagos_antes_de]}'" if options[:pagos_antes_de]
+    condicoes << "pedidos.data_pgmto >= '#{options[:de].strftime('%Y-%m-%d')}'"
+    condicoes << "pedidos.data_pgmto <= '#{options[:ate].strftime('%Y-%m-%d')}'"
 
     sql_string = <<MYSTRING.gsub(/\s+/, " ").strip
     SELECT produtos.*, Z.vendidos FROM produtos
