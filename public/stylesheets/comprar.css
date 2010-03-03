@@ -65,6 +65,7 @@ tr#frete {
   line-height:0.1em;
 }
 tr#desconto {
+  background-color:#5BBEFF;
   line-height:0.1em;
 }
 tr#desconto td.formfield {

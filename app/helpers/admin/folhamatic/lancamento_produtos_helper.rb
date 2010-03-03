@@ -13,7 +13,7 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   #     E221 referente NF 0151 
   #     E222 referente item 001 
   #     E222 referente item 002
-  def e222_lancamento_produtos(pedido, pq)
+  def e222_lancamento_produtos(pedido, pq, produto_do_combo=nil, k=nil)
     return (e222_nome_do_registro +
             e222_saida +
             e222_especie_nf +
@@ -21,17 +21,17 @@ module Admin::Folhamatic::LancamentoProdutosHelper
             e222_subserie_nf +
             e222_numero_nf(pedido) +
             e222_codigo_cliente(pedido) +
-            e222_numero_item(pedido) +
+            e222_numero_item(pedido, k) +
             e222_cfop(pedido) +
-            e222_codigo_do_produto(pedido, pq) +
+            e222_codigo_do_produto(pedido, pq, produto_do_combo) +
             e222_aliquota_icms +
             e222_quantidade(pedido, pq) +
-            e222_valor_mercadoria(pedido) +
-            e222_valor_desconto(pedido, pq) +
+            e222_valor_mercadoria(pedido, pq, produto_do_combo, k) +
+            e222_valor_desconto(pedido, pq, produto_do_combo, k) +
             e222_base_calculo_icms +
             e222_base_subst_trib +
             e222_valor_ipi +
-            e222_valor_unitario(pedido, pq) +
+            e222_valor_unitario(pedido, pq, produto_do_combo, k) +
             e222_numero_di +
             e222_base_calculo_ipi +
             e222_valor_do_icms +
@@ -68,7 +68,10 @@ module Admin::Folhamatic::LancamentoProdutosHelper
             e222_reducao_base_calculo_icms +
             e222_valor_nao_tributado +
             e222_quantidade_cancelada +
-            e222_base_icms_reduzida)
+            e222_base_icms_reduzida + 
+            e222_dados_para_redef_nf_paulista +
+            e222_numero_do_totalizador +
+            e222_controle_do_sistema)
   end
 
   # 1. NOME DO REGISTRO - Informe E222
@@ -128,9 +131,13 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # OBS: O validador do arquivo magnético SINTEGRA (Convênios 69/02 e 142/02) não aceita que o produto seja de itens 991 a 999.
   # Tipo: Num
   # Tam.: 3
-  def e222_numero_item(pedido)
-    return "%03d" % 1
-    # return pedido.produtos_quantidades.size...
+  def e222_numero_item(pedido, k)
+    if k
+      item = k+1
+    else
+      item = 1
+    end
+    return "%03d" % item
   end
 
   # 9. CFOP - Informe o CFOP do item. 
@@ -148,8 +155,13 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # 10. CÓDIGO DO PRODUTO/SERVIÇO - Informe o código do produto/serviço conforme cadastro de Produtos/Serviços.
   # Tipo: AlphaNum X
   # Tam.: 14
-  def e222_codigo_do_produto(pedido, pq)
-    return "%-14s" % pq.produto_id
+  def e222_codigo_do_produto(pedido, pq, produto_do_combo)
+    if produto_do_combo
+      id = produto_do_combo.id
+    else
+      id = pq.produto_id
+    end
+    return "%-14s" % id
   end
   
   # 11. ALÍQUOTA DO ICMS - Informe a aliquota de ICMS do produto/serviço. Exemplo: alíquota de 18% informar no arquivo 0180000.
@@ -161,25 +173,34 @@ module Admin::Folhamatic::LancamentoProdutosHelper
 
   # 12. QUANTIDADE - Informe a quantidade do produto/serviço.
   # Tipo: Num
-  # Tam.: 14
+  # Tam.: 15
   def e222_quantidade(pedido, pq)
-    return "%014d" % (pq.qtd.to_i * 1000)
+    return "%015d" % (pq.qtd.to_i * 100000)
   end
 
   # 13. VLR.MERCADORIA/SERVIÇO - Informe o valor da mercadoria/serviço. Deve ser o valor bruto do produto/serviço (valor unitário x quantidade).
   # Tipo: Num
   # Tam.: 14
-  def e222_valor_mercadoria(pedido)
-    # TOTAL DA NOTA!
-    preco_sem_ponto = sprintf("%.2f", (pedido.total - pedido.frete)).delete(".").to_i
+  def e222_valor_mercadoria(pedido, pq, produto_do_combo, k)
+    if produto_do_combo
+      preco_sem_ponto = sprintf("%.2f", produto_do_combo.preco_fiscal * pq.qtd ).delete(".").to_i
+    else
+      preco_sem_ponto = sprintf("%.2f", pq.produto.preco_fiscal * pq.qtd ).delete(".").to_i
+    end  
     return "%014d" % preco_sem_ponto
   end
 
   # 14. VALOR DO DESCONTO - Informe o valor do desconto concedido no item.
   # Tipo: Num
   # Tam.: 14
-  def e222_valor_desconto(pedido, pq)
-    return "%014d" % 0
+  def e222_valor_desconto(pedido, pq, produto_do_combo, k)
+    if produto_do_combo and k
+      desconto = 0 
+      desconto = sprintf("%.2f", pq.produto.desconto).delete(".").to_i if (k == 0) # aplicar o desconto para o primeiro item do combo
+    else
+      desconto = 0
+    end
+    return "%014d" % desconto
   end
 
   # 15. BASE DE CÁLCULO DO ICMS - Informe o valor da base de cálculo do ICMS do produto/serviço. 
@@ -209,9 +230,17 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # 18. VALOR UNITÁRIO - Informe o valor unitário do produto/serviço.
   # Tipo: Num
   # Tam.: 14
-  def e222_valor_unitario(pedido, pq)
-    preco_sem_ponto = sprintf("%.2f", pq.preco_unitario).delete(".").to_i
-    return "%014d" % (preco_sem_ponto * 100)
+  def e222_valor_unitario(pedido, pq, produto_do_combo, k)
+    if produto_do_combo and k
+      if (k==0) # aplicar o desconto para o primeiro item do combo
+        valor_unitario = sprintf("%.2f", produto_do_combo.preco_fiscal - pq.produto.desconto).delete(".").to_i
+      else
+        valor_unitario = sprintf("%.2f", produto_do_combo.preco_fiscal).delete(".").to_i
+      end
+    else
+      valor_unitario = sprintf("%.2f", pq.preco_unitario).delete(".").to_i
+    end
+    return "%014d" % (valor_unitario * 100)
   end
 
   # 19. Nº D.I. - Informe o número da DI (Declaração de importação) quando se tratar de nota fiscal de importação (CFOP 3.xxx).
@@ -491,5 +520,26 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   def e222_base_icms_reduzida
     return "%014d" % 0
   end
-  
+
+  # 56. DADOS PARA REDEF NF. PAULISTA 
+  # Tipo: Num
+  # Tam.: 1
+  def e222_dados_para_redef_nf_paulista
+    return "%1d" % 1
+  end
+
+  # 57. NUMERO DO TOTALIZADOR
+  # Tipo: AlphaNum
+  # Tam.: 2
+  def e222_numero_do_totalizador
+    return "%-2s" % ""
+  end
+
+  # 58. CONTROLE DO SISTEMA
+  # Tipo: Num
+  # Tam.: 1
+  def e222_controle_do_sistema
+    return "0"
+  end
+
 end

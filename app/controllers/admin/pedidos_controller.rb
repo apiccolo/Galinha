@@ -16,7 +16,7 @@ class Admin::PedidosController < Admin::AdminController
     @demais  = Pedido.contador_por_status
     @pedidos = Pedido.paginate(:all, 
                                :conditions => @filtros, 
-                               :order => "pedidos.id DESC", 
+                               :order => @order, 
                                :page => params[:page], 
                                :per_page => @per_page,
                                :include => [:pessoa, :produtos_quantidades])
@@ -245,9 +245,14 @@ class Admin::PedidosController < Admin::AdminController
   
   def define_filtros(p)
     @filtros = {}
-    @filtros.merge!(:status => p["status"]) if p["status"] and not p["status"].empty? and (p["status"] != 'todos')
-    @filtros.merge!(p["search_field"] => p["search_value"]) if p["search_field"] and p["search_value"] and not p["search_value"].blank?
+    @filtros.merge!(:status => p["status"]) if p["status"] and not p["status"].blank? and (p["status"] != 'todos')
+    @filtros.merge!("pedidos.id" => p["id"]) if p["id"] and not p["id"].blank?
+    @filtros.merge!(:nota_fiscal => p["nota_fiscal"]) if p["nota_fiscal"] and not p["nota_fiscal"].blank?
+    @filtros.merge!(:entrega_cep => p["entrega_cep"]) if p["entrega_cep"] and not p["entrega_cep"].blank?
+    @filtros.merge!("pessoas.email" => p["pessoas_email"]) if p["pessoas_email"] and not p["pessoas_email"].blank?
     
+    #@filtros.merge!(p["search_field"] => p["search_value"]) if p["search_field"] and p["search_value"] and not p["search_value"].blank?
     @per_page = (p[:per_page] and not p[:per_page].blank?) ? p[:per_page].to_i : PER_PAGE
+    @order    = (p[:order] and not p[:order.blank?]) ? p[:order] : "pedidos.id DESC"
   end  
 end

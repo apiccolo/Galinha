@@ -5,9 +5,8 @@
 <table class="crud">
   <tr>
     <th>Para</th>
-    <th>Válido até</th>
+    <th>Validade</th>
     <th>Valor</th>
-    <th>Usou</th>
     <th>Ações</th>
   </tr>
 
@@ -15,25 +14,26 @@
   <tr>
     <td>
       <%= desconto.email %><br />
-      Código: <%= desconto.codigo %><br />
+      Cupom: <%= desconto.codigo %><br />
       <span class="pequeno cinza">Criado em <%= l desconto.created_at, :format => "%d/%m/%Y às %H:%M" %></span>
     </td>
-    <td >
+    <td>
+      <% unless desconto.expirado? -%>
+      <% if desconto.usou? -%>
+      <%= image_tag("icones/accept.png") %>
+      <span class="pequeno cinza"><%= link_to "Pedido #{desconto.pedido_id}", :controller => "pedidos", :action => "index", :id => desconto.pedido_id %></span>
+      <% else -%>
       <%= l desconto.valido_ate, :format => "%d/%m/%Y" %><br />
       <span class="pequeno cinza"><%= distance_of_time_in_words_to_now(desconto.valido_ate) %></span>
-    </td>
-    <td class="grandao green"><%= number2currency(desconto.valor) %></td>
-    <td><% if desconto.usou? -%>
-      <%= image_tag("icones/accept.png") %><br />
-      <span class="pequeno cinza">Usado em <%= l desconto.usado_em, :format => "%d/%m/%Y às %H:%M" %></span>
+      <% end -%>
       <% else -%>
-      <%= image_tag("icones/cancel.png") %>
+      expirado
       <% end -%>
     </td>
-    <td><%= link_to 'Ver', :action => "show", :id => desconto %><br />
-        <!-- <%= link_to 'Editar', edit_admin_desconto_path(desconto) %><br /> -->
-        <%= link_to 'Reenviar', "#" %><br />
-        <%= link_to 'Apagar', admin_desconto_path(desconto), :confirm => 'Tem certeza?', :method => :delete %></td>
+    <td class="grandao green"><%= number2currency(desconto.valor) %></td>
+    <td class="acoes">
+        <%= link_to "#{image_tag('icones/arrow_refresh.png')} Reenviar", "#" %><br />
+        <%= link_to "#{image_tag('icones/cancel.png')} Remover", admin_desconto_path(desconto), :confirm => 'Tem certeza?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

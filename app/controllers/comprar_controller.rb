@@ -200,13 +200,28 @@ class ComprarController < ApplicationController
   #------------------------------------------------------------
   #   Formulário de confirmacao do pedido
   #
-  verify :params => :cupom_desconto,
-         :only => :validar_cupom_desconto
-  def validar_cupom_desconto
-    render :nothing => true
-    #render :update do |page|
-    #  page.replace_html 'desconto', :text => "<td>ok!</td>"
-    #end
+  verify :params => :cupom,
+         :only => :validar_cupom
+  def validar_cupom
+    #render :nothing => true
+    valido, desconto = Desconto.valida_cupom(params[:cupom])
+    
+    if valido and (desconto.class==Desconto)
+      if @pedido.total_sem_frete_sem_desconto >= desconto.minimo_pedido
+        # Atualizar @pedido...
+        @pedido.update_attributes(:desconto => desconto.valor)
+        @pedido.cupom_de_desconto=(desconto) #relacionamento...
+        refresh_carrinho_e_outros(:except => ["meu_carrinho", "leve_tambem", "sugestoes"] )
+      else
+        render :update do |page|
+          page.alert("O valor do pedido é menor que a condição do cupom de desconto.\nAumente sua compra para usufruir o desconto promocional.")
+        end
+      end
+    else
+      render :update do |page|
+        page.alert(desconto)
+      end
+    end
   end
   
   #==================================================================#
@@ -215,7 +230,7 @@ class ComprarController < ApplicationController
   before_filter :inicia_pedido, :only => [ :incluir, :retirar, :esvaziar, 
                                            :embrulhar, :alterar_qtd, 
                                            :trocar_por_combo, :desfazer_combo, 
-                                           :atualizar_frete_por_estado ]
+                                           :atualizar_frete_por_estado, :validar_cupom ]
   
   #-----------------------------------------------------------
   #   Acrescenta o produto no carrinho
@@ -401,21 +416,19 @@ class ComprarController < ApplicationController
     session[:pedido] = @pedido
   end
   
-  def atualiza_pedido(params)
-    @pedido.update_attributes(params[:pedido])
-    @pedido.pessoa.update_attributes(params[:pessoa])
-  end
-  
   def limpa_erros
     @pedido.errors.clear
     @pessoa.errors.clear
   end
-  
+
+  #----------------------------------------------------
+  #   Recolhe outros produtos indicados para venda
+  #
   def recolhe_outros_produtos
     @leve_tambem = ProdutoCombo.leve_tambem(@pedido.produtos_quantidades)
     @sugestoes = Produto.sugere_demais_produtos(@pedido.produtos_quantidades, @settings['loja_mostrar_sugestoes_empty_default'])
   end
-  
+
   #------------------------------------
   #   Retira o produto do carrinho
   #
@@ -506,9 +519,7 @@ class ComprarController < ApplicationController
   def calculo_do_frete_por_estado(estado)
     valor_frete = @settings["frete_por_estado"][estado].to_f
     n = @pedido.n_itens
-    if (n <= 0)
-      return 0
-    elsif (n < @settings['frete_estadual_qtd_limite'].to_i)
+    if (n < @settings['frete_estadual_qtd_limite'].to_i)
       return valor_frete
     else
       acrescimo = @settings['frete_estadual_multiplicador']
@@ -520,12 +531,24 @@ class ComprarController < ApplicationController
   def esvazia_carrinho
     @pedido.produtos_quantidades.clear
   end
+
+  #def atualiza_pedido(params)
+  #  @pedido.update_attributes(params[:pedido])
+  #  @pedido.pessoa.update_attributes(params[:pessoa])
+  #end
   
   def atualiza_pedido(p = {})
     if (p and not p.empty?)
       if (p[:pessoa] and p[:pedido])
         @pedido.update_attributes(p[:pedido])
         @pessoa.update_attributes(p[:pessoa])
+
+        # Para prevenir...
+        if (@pedido.frete == 0)
+          frete = calculo_do_frete_por_estado(p[:pedido][:entrega_estado])
+          @pedido.update_attributes(:frete => frete,
+                                    :frete_tipo => "FRETE GALINHA - #{p[:pedido][:entrega_estado]}")
+        end
       else
         @pedido.update_attributes(p)
       end
@@ -555,8 +578,6 @@ class ComprarController < ApplicationController
     end
     return my_p    
   end
-  
-  protected
   
   def encrypt(str)
     salt = str.to_s.reverse

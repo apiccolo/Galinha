@@ -17,7 +17,8 @@
              :locals => { 
                :carrinho => @pedido.produtos_quantidades,
                :pedido => @pedido,
-               :msg => 'pos'
+               :msg => 'pos',
+               :link_alterar => false
               } -%>
   </div>
 
@@ -25,7 +26,8 @@
   <!-- RESUMO DO PEDIDO: COMPRADOR E ENTREGA -->
   <%= render :partial => "resumo_pedido", 
              :locals => { 
-               :pedido => @pedido
+               :pedido => @pedido,
+                :link_alterar => false
               } -%>
   </div>
 

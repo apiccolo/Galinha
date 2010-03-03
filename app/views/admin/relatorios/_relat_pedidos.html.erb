@@ -1,6 +1,6 @@
 <script type="text/javascript">
 // Load the Visualization API and the piechart package.
-google.load('visualization', '1', {'packages':['piechart', 'areachart', 'barchart']});
+google.load('visualization', '1', {'packages':['piechart', 'areachart', 'linechart', 'barchart']});
 </script>
 
 <script type="text/javascript" charset="utf-8">
@@ -18,8 +18,8 @@ function drawAreaChart() {
   data.setValue(<%= j %>, 2, <%= ppg.pagos %>);
   <% end -%>
 
-  var chart = new google.visualization.AreaChart(document.getElementById('chart_area_div'));
-  chart.draw(data, {width: 500, height: 400, legend: 'bottom', title: 'Pedidos e Pagamentos'});
+  var chart = new google.visualization.LineChart(document.getElementById('chart_area_div'));
+  chart.draw(data, {width: 500, height: 400, legend: 'bottom', title: 'Pedidos e Pagamentos', smoothLine: true});
 }
 </script>
 <div id="chart_area_div" class="graph"></div>

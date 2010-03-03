@@ -22,7 +22,9 @@ class Admin::DescontosController < Admin::AdminController
   # GET /descontos/new
   # GET /descontos/new.xml
   def new
-    @desconto = Desconto.new
+    @desconto = Desconto.new(:valor => @settings["desconto_valor_padrao"],
+                             :minimo_pedido => @settings["desconto_valor_pedido_minimo"],
+                             :valido_ate => @settings["desconto_prazo_padrao"].to_i.days.from_now)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @desconto }

@@ -1,12 +1,8 @@
-<h1>Editing desconto</h1>
+<h1>Editar desconto (id = <%= @desconto.id %>)</h1>
 
-<% form_for(@desconto) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+<% form_for(@desconto, :url => admin_descontos_path, :html => { :multipart => true }) do |f| %>
+<%# form_for(@desconto) do |f| %>
+<%= error_messages_for :desconto %>
+<%= render :partial => "form", :locals => { :f => f } %>
+<p class="form_button"><%= f.submit "Salvar" %> ou <%= link_to "Voltar", admin_descontos_path %></p>
 <% end %>
-
-<%= link_to 'Show', @desconto %> |
-<%= link_to 'Back', descontos_path %>

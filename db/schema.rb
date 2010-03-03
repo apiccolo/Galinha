@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100128030347) do
+ActiveRecord::Schema.define(:version => 20100225152516) do
 
   create_table "administradores", :force => true do |t|
     t.string   "nome"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20100128030347) do
   end
 
   create_table "descontos", :force => true do |t|
-    t.string   "codigo",     :limit => 50
+    t.string   "codigo",        :limit => 50
     t.string   "email"
     t.integer  "valor"
     t.datetime "valido_ate"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20100128030347) do
     t.datetime "usado_em"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "minimo_pedido",               :default => 0.0
   end
 
   add_index "descontos", ["codigo"], :name => "index_descontos_on_codigo"

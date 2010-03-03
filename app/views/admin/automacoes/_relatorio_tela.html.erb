@@ -5,8 +5,7 @@ ul#pedidos {
   font-family:Verdana,Arial,sans-serif;
 }
 ul#pedidos li {
-  width:200px;
-  height:400px;
+  width:250px;
   border:1px dotted gray;
   float:left;
   margin:5px;
@@ -32,7 +31,12 @@ ul#pedidos li p span.title {
        CNPJ: 09.583.710/0001-66<br />
        Inscrição Estadual: 244.786.970.119<br />
        Operação: Venda<br />
-       C.F.O.P.: 6.102</p>
+       <% if (p.entrega_estado=="SP") -%>
+         C.F.O.P.: <b>5.102</b>
+       <% else -%>
+         C.F.O.P.: <b>6.102</b>
+       <% end -%>   
+      </p>
     <p class="pessoa"><span class="title">Destinatário/Remetente</span>
        Nome: <b><%= p.pessoa.nome %></b><br />
        C.P.F.: <b><%= p.pessoa.cpf.blank? ? "não informado" : formata_cpf(p.pessoa.cpf) %></b><br />
@@ -44,15 +48,37 @@ ul#pedidos li p span.title {
        R.G.: não informado</p>
     <p class="produto"><span class="title">Dados dos Produtos</span>
 <% if p.produtos_quantidades and not p.produtos_quantidades.empty? -%>
-      <% p.produtos_quantidades.each do |r| %>
-       Cod. Produto: <%#= r.codproduto %><br />
-       Descr. Prod.: DVD Galinha Pintadinha <b>Pedido n. <%= p.id.to_s %></b><br />
-       Sit. Trib: 00<br />
-       Quant.: <b><%= r.qtd %></b><br />
-       Valor Unitário: <%#= r.nf_valorunit %><br />
-       Valor Total: <b><%#= r.nf_valortotal %></b><br />
-       <% end %>
+  <% p.produtos_quantidades.each do |r| %>
+      <% if r.produto.class == ProdutoCombo -%>
+      <!-- pedido com produto combo -->      
+      <% r.produto.produtos.each_with_index do |pc, k| %>
+
+      Cod. Produto: <%= pc.id %><br />
+      Descr. Prod.: <%= pc.descricao_simples %> *combo<br />
+      Sit. Trib: 00<br />
+      Quant.: <b><%= r.qtd %></b><br />
+      Valor Unitário: <%= number2currency(pc.preco_fiscal) %><br />
+      <% if (k==0) %>
+        Desconto: <%= number2currency(r.produto.desconto) %><br />
+      <% multiplicador = pc.preco_fiscal-r.produto.desconto %>
+      <% else %>
+       <% multiplicador = pc.preco_fiscal %>
+      <% end -%>
+      Valor Total: <b><%= number2currency(r.qtd * multiplicador) %></b><br />
+      <% end -%>
+      
+      <% else -%>
+      <!-- pedido com produto simples -->
+      Cod. Produto: <%= r.produto_id %><br />
+      Descr. Prod.: <%= r.produto.descricao_simples %><br />
+      Sit. Trib: 00<br />
+      Quant.: <b><%= r.qtd %></b><br />
+      Valor Unitário: <%= number2currency(r.produto.preco_fiscal) %><br />
+      Valor Total: <b><%= number2currency(r.qtd * r.produto.preco_fiscal) %></b><br />
+      <% end -%>
+  <% end %>
 <% end %>
+       <b>Pedido n. <%= p.id.to_s %></b><br />
        <span class="verysmall">
        Alíquota ICMS: 0<br />
        Obs.: Não incidência de ICMS conforme RICMS-SP art. 7 inciso XIII.</span>
@@ -60,9 +86,6 @@ ul#pedidos li p span.title {
   </li>
   <% end -%>
 </ul>
-<p>Total das notas fiscais: R$ <b><%#= sprintf("%.2f", total_das_notas) -%></b>
-</p>
 <% else -%>
-<p>Não há pedidos concluídos (com NF) entre <%= inicio.strftime("%d de %B de %Y às %H:%M") %> e 
-                                            <%= final.strftime("%d de %B de %Y às %H:%M") %>.</p>
+<p>Não foram marcados pedidos concluídos com NF.</p>
 <% end -%>

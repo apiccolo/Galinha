@@ -48,42 +48,42 @@ module Admin::Folhamatic::ImpostosDasNotasHelper
           )
   end
   
-  # NOME DO REGISTRO - Informe E201
+  # 1. NOME DO REGISTRO - Informe E201
   # Tipo: AlphaNum
   # Tam.: 4
   def e201_nome_do_registro
     return "E201"
   end
 
-  # ENTRADAS OU SAÍDAS - Informe "E" para nota fiscal de entrada ou "S" para nota fiscal de saída.
+  # 2. ENTRADAS OU SAÍDAS - Informe "E" para nota fiscal de entrada ou "S" para nota fiscal de saída.
   # Tipo: AlphaNum
   # Tam.: 1
   def e201_saidas
     return "S"
   end
 
-  # ESPÉCIE N.F. - Informe a espécie da nota fiscal.
+  # 3. ESPÉCIE N.F. - Informe a espécie da nota fiscal.
   # Tipo: AlphaNum X
   # Tam.: 5
   def e201_especie_nf
     return "%-5s" % "NF"
   end
 
-  # SÉRIE N.F - Informe a série da nota fiscal.
+  # 4. SÉRIE N.F - Informe a série da nota fiscal.
   # Tipo: AlphaNum X
   # Tam.: 3
   def e201_serie_nf
     return "%-3s" % "2"
   end
   
-  # SUBSÉRIE N.F - Informe a subsérie da nota fiscal.
+  # 5. SUBSÉRIE N.F - Informe a subsérie da nota fiscal.
   # Tipo: AlphaNum X
   # Tam.: 2
   def e201_subserie_nf
     return "%-2s" % ""
   end
   
-  # NÚMERO N.F. - Informe o número da nota fiscal. 
+  # 6. NÚMERO N.F. - Informe o número da nota fiscal. 
   # No caso de notas fiscais de saídas agrupadas, informar o número inicial.
   # Tipo: Num
   # Tam.: 10
@@ -91,7 +91,7 @@ module Admin::Folhamatic::ImpostosDasNotasHelper
     return "%010d" % pedido.nota_fiscal.to_i
   end
   
-  # CÓDIGO DO CLIENTE/FORNECEDOR - Informe o código do cliente ou fornecedor da nota fiscal conforme cadastro de clientes e fornecedores.
+  # 7. CÓDIGO DO CLIENTE/FORNECEDOR - Informe o código do cliente ou fornecedor da nota fiscal conforme cadastro de clientes e fornecedores.
   # Tipo: AlphaNum X
   # Tam.: 20
   def e201_codigo_cliente(pedido)
@@ -129,13 +129,12 @@ module Admin::Folhamatic::ImpostosDasNotasHelper
     return "1"
   end
   
-  # BC ICMS - Informe a Base de Cálculo do ICMS da linha de lançamento.
+  # 11. BC ICMS - Informe a Base de Cálculo do ICMS da linha de lançamento.
   # Tipo: Num
   # Tam.: 14
   def e201_bc_icms(pedido)
-    # TOTAL DA NOTA!
-    preco_sem_ponto = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valortotal).delete(".").to_i
-    return "%014d" % preco_sem_ponto
+    #preco_sem_ponto = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valortotal).delete(".").to_i
+    return "%014d" % 0
   end
   
   # CÓDIGO TURBO - Este campo é para informação dos códigos turbos utilizado em alguns tipos de operações e para cálculos automáticos no Sistema E-Fiscal; classificar conforme Tabela de Códigos Turbo. 
@@ -185,9 +184,8 @@ module Admin::Folhamatic::ImpostosDasNotasHelper
   # Tam.: 14
   def e201_outras_de_icms(pedido)
     # TOTAL DA NOTA!
-    preco_sem_ponto = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valortotal).delete(".").to_i
+    preco_sem_ponto = sprintf("%.2f", pedido.total_sem_frete_sem_desconto).delete(".").to_i
     return "%014d" % preco_sem_ponto
-    # return "%014d" % 0
   end
   
   # ICMS SUBST. TRIB. - Informe o valor do ICMS Substituição Tributária da linha de lançamento.

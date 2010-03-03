@@ -13,13 +13,17 @@
            :locals => { 
              :carrinho => @carrinho,
              :pedido => @pedido,
-             :msg => 'pre'
+             :msg => 'pre',
+             :link_alterar => true
             } -%>
 
 <div class="grid_11 alpha omega">
 <!-- FORM RESUMO DO PEDIDO -->
 <%= render :partial => "resumo_pedido",
-           :locals => { :pedido => @pedido } %>
+           :locals => { 
+             :pedido => @pedido,
+             :link_alterar => true
+                  } %>
 
   <div class="grid_1 omega direita">
     <%= image_submit_tag('icones/botao_continuar.png', :style => "position:relative;top:220px") %>

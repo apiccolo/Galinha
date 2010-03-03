@@ -47,6 +47,14 @@ class Mailer < ActionMailer::Base
     @subject = "Lembrete da Galinha Pintadinha!"
   end
   
+  def novo_desconto(desconto)
+    @from = "Sistema da Galinha Pintadinha <noreply@galinhapintadinha.com.br>"
+    @recipients = "#{desconto.email}"
+    @subject = "Desconto especial da Galinha Pintadinha!"
+    @charset = "utf-8"
+    @body[:desconto] = desconto
+  end
+  
   # Emails para administracao
   #==========================
   

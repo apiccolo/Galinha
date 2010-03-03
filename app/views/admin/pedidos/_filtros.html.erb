@@ -5,16 +5,24 @@
   <li><%= label_tag "Status" %>
       <%= select_tag "status", options_for_select([["Todos (#{@todos})", "todos"]] + @demais.collect {|p| [ "#{p.status.humanize} (#{p.contador})", p.status] }, params[:status] ) %>
   </li>
-  <li><%= label_tag "Buscar" %>
-      <%= select_tag "search_field", options_for_select( {'' => '',
-                                                          'CEP' => 'entrega_cep',
-                                                          'Id' => 'pedidos.id',
-                                                          'Email' => 'pessoas.email'}, params[:search_field]) %>
-      <%= text_field_tag "search_value", params[:search_value], :size => 14 %>
+  <li><%= label_tag "Buscar" %>    
+    <p style="text-align:right;margin:0 10px 0 0">
+      Id: <%= text_field_tag "id", params[:id], :size => 20 %><br />
+      NF: <%= text_field_tag "nota_fiscal", params[:nota_fiscal], :size => 20 %><br />
+      CEP: <%= text_field_tag "entrega_cep", params[:entrega_cep], :size => 20 %><br />
+      Email: <%= text_field_tag "pessoas_email", params[:pessoas_email], :size => 20 %>
+    </p>
   </li>
   <li>
-    <%= label_tag "Pedidos por página" %>
+    <%= label_tag "pedidos_per_page", "Pedidos por página", :style => "display: inline" %>
     <%= select_tag "per_page", options_for_select([10, 25, 50, 100], @per_page) %>
+  </li>
+  <li>
+    <%= label_tag "Ordenar", "Ordenar", :style => "display: inline" %>
+    <%= select_tag "order", options_for_select( {'id DESC' => 'pedidos.id DESC',
+                                                 'id ASC' => 'pedidos.id ASC',
+                                                 'nota fiscal DESC' => 'pedidos.nota_fiscal DESC',
+                                                 'nota fiscal ASC' => 'pedidos.nota_fiscal ASC'}, @order) %>
   </li>
   <li>
     <%= submit_tag "Filtrar" %>

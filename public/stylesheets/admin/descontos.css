@@ -1,0 +1,12 @@
+fieldset.grupo-simples {
+  border:1px dotted #aaa;
+  padding:0 0 0 10px;
+}
+fieldset.grupo-simples legend {
+  margin:0;
+  padding:0 10px;
+}
+
+fieldset.grupo-simples ul li label {
+  display:inline;
+}

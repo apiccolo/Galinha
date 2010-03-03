@@ -15,3 +15,7 @@
 <%= javascript_include_tag "validation/validation" %>
 <% end -%>
 <%= stylesheet_link_tag "#{controller.controller_name}.css" if File.exists?("#{RAILS_ROOT}/public/stylesheets/#{controller.controller_name}.css") -%>
+<script type="text/javascript">
+var userflyHost = (("https:" == document.location.protocol) ? "https://secure.userfly.com" : "http://asset.userfly.com");
+document.write(unescape("%3Cscript src='" + userflyHost + "/users/42686/userfly.js' type='text/javascript'%3E%3C/script%3E"));
+</script>

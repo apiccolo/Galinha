@@ -1,4 +1,4 @@
-<div class="grid_6 alpha">
+<div class="grid_5 alpha">
 <fieldset>
   <ol>
     <li class="big green">
@@ -10,13 +10,6 @@
       <label>Email</label>
       <%= f.text_field :email, :size => 44 %>
     </li>
-    <li class="checkbox">
-      <%= f.check_box :enviar_email %> Enviar email ao criar/salvar este cupom?
-    </li>
-    <li>
-      <label>Válido até</label>
-      <%= f.datetime_select :valido_ate, :default => 30.days.from_now.end_of_day %>
-    </li>
     <% if @desconto.usou? -%>
     <li>
       <p>
@@ -25,6 +18,23 @@
       </p>
     </li>
     <% end -%>
+  </ol>
+</fieldset>
+</div>
+
+<div class="grid_7 omega">
+<fieldset class="grupo-simples">
+  <legend>Condições<legend>
+  <ol>
+    <li>
+      <%= label "minimo_pedido", "Mínimo do pedido"  %>
+      R$ <%= f.text_field :minimo_pedido, :size => 4 %>
+      <p class="dica">Use ponto para separar os centavos.</p>
+    </li>
+    <li>
+      <label>Válido até</label>
+      <%= f.datetime_select :valido_ate, :default => 30.days.from_now.end_of_day %>
+    </li>
   </ol>
 </fieldset>
 </div>

@@ -5,7 +5,7 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
   # Sempre que gerar um registro E221 gerar também um registro filho E222-LANÇAMENTO DE PRODUTOS/SERVIÇOS. 
   # A ordenação no aquivo para cada nota será o registro E221 (pai) e em seguida o(s) registro(s) E222 (filho). 
   # OBS: Poderá existir apenas um registro E221 por nota fiscal.
-  def e221_chave_lancamento_produtos(pedido, pq)
+  def e221_chave_lancamento_produtos(pedido)
     return (e221_nome_do_registro +
             e221_saida +
             e221_especie_nf +
@@ -41,6 +41,7 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
             e221_cnpj_recebimento_da_mercadoria +
             e221_estado_recebimento_da_mercadoria +
             e221_ie_recebimento_da_mercadoria +
+            e221_uf_do_transportador +
             e221_controle_do_sistema)
   end
   
@@ -123,7 +124,7 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
   # Tipo: Num
   # Tam.: 3
   def e221_qtde_itens(pedido)
-    return "%03d" % pedido.produtos_quantidades.size
+    return "%03d" % pedido.n_linhas_nota_fiscal
   end
 
   # 12. PIS/COFINS - Informe o valor de Pis e Cofins retido anteriormente (valor destacado na nota fiscal).
@@ -186,9 +187,9 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
 
   # 19. QTDE DE VOLUMES - Informe a quantidade de Volumes da nota fiscal. Quando se tratar de cupom fiscal, zerar este campo.
   # Tipo: Num
-  # Tam.: 17
+  # Tam.: 15
   def e221_qtde_volumes
-    return "%017d" % 0
+    return "%015d" % 0
   end
 
   # 20. ESPÉCIE DOS VOLUMES - Informe a espécie de volume da nota fiscal, exemplo: caixa.
@@ -319,7 +320,14 @@ module Admin::Folhamatic::ChaveLancamentoProdutosHelper
     return "%-18s" % ""
   end
 
-  # 36. CONTROLE DO SISTEMA - Informe "0" (zero) para controle interno do Sistema E-Fiscal.
+  # 36. UF DO TRANSPORTADOR
+  # Tipo: AlphaNum
+  # Tam.: 2
+  def e221_uf_do_transportador
+    return "%-2s" % ""
+  end
+
+  # 37. CONTROLE DO SISTEMA - Informe "0" (zero) para controle interno do Sistema E-Fiscal.
   # Tipo: Num
   # Tam.: 1
   def e221_controle_do_sistema

@@ -26,9 +26,14 @@
   <% if (@settings["desconto_ligado"].to_i == 1) -%><!-- DESCONTO -->
     <tr id="desconto" class="verdinho esquerda">
       <td class="formfield">
+        <% if @pedido.desconto and (@pedido.desconto > 0) -%>
+        &nbsp;Desconto (cupom <b><%= @pedido.cupom_de_desconto.codigo %></b>)
+        <% else -%>
         &nbsp;Cupom de desconto 
         <%= text_field_tag :cupom_desconto, nil %>
-        <%= link_to_function(image_tag("icones/arrow_refresh.png", :style => "margin-left:5px;position:relative;top:3px"), "enviaDesconto()") %>
+        <%= link_to_function(image_tag("icones/arrow_refresh.png", 
+                                       :style => "margin-left:5px;position:relative;top:3px"), 
+                             "enviaDesconto()") -%>
         <%#= observe_field("cupom_desconto", 
                           :url => { 
                             :action => "validar_cupom_desconto" 
@@ -36,13 +41,16 @@
                           :with => "cupom_desconto") %>
 <script type="text/javascript" charset="utf-8">
 function enviaDesconto() {
-/*  if ($('cupom_desconto').value.length==8) {
-    new Form.Element.EventObserver('cupom_desconto', function(element, value) {new Ajax.Request('/comprar/validar_cupom_desconto', {asynchronous:true, evalScripts:true, parameters:'cupom_desconto=' + encodeURIComponent(value) + '&authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>')})});
-  }*/ 
+  if ($('cupom_desconto').value.length>=20) {
+    new Ajax.Request('/comprar/validar_cupom', {asynchronous:true, evalScripts:true, parameters:'cupom=' + encodeURIComponent($('cupom_desconto').value) + '&authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>')});
+  } else {
+    alert($('cupom_desconto').value.length);
+  }  
 }
 </script>
+        <% end -%>
       </td>
-      <td class="valor"><%= number2currency(0) %></td>
+      <td class="valor"><%= number2currency(@pedido.desconto) %></td>
     </tr>
   <% end -%>
   </table>

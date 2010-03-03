@@ -34,28 +34,28 @@ module Admin::Folhamatic::NotasFiscaisHelper
            )
   end
   
-  # NOME DO REGISTRO - Informe E200
+  # 1. NOME DO REGISTRO - Informe E200
   # Tipo: AlphaNum
   # Tam.: 4
   def e200_nome_do_registro
     return "E200"
   end
   
-  # ENTRADAS OU SAÍDAS - Informe "E" para nota fiscal de entrada ou "S" para nota fiscal de saída.
+  # 2. ENTRADAS OU SAÍDAS - Informe "E" para nota fiscal de entrada ou "S" para nota fiscal de saída.
   # Tipo: AlphaNum
   # Tam.: 1
   def e200_entradas_saidas
     return "S"
   end
   
-  # ESPÉCIE N.F. - Informe a espécie da nota fiscal.
+  # 3. ESPÉCIE N.F. - Informe a espécie da nota fiscal.
   # Tipo: AlphaNum X
   # Tam.: 5
   def e200_especie_nf
     return "%-5s" % "NF"
   end
   
-  # SÉRIE N.F. - Informe a série da nota fiscal conforme Tabela de Orientações de Séries e
+  # 4. SÉRIE N.F. - Informe a série da nota fiscal conforme Tabela de Orientações de Séries e
   # Subséries. Quando se tratar de cupom fiscal informe a série conforme o campo Código
   # (Série) do cadastro dos Dados da Máquina Registradora/ECF/PDV contido no Sistema EFiscal (menu Arquivos).
   # Tipo: AlphaNum X
@@ -64,7 +64,7 @@ module Admin::Folhamatic::NotasFiscaisHelper
     return "%-3s" % "2"
   end
   
-  # SUBSÉRIE N.F - Informe a subsérie da nota fiscal conforme Tabela de Orientações de
+  # 5. SUBSÉRIE N.F - Informe a subsérie da nota fiscal conforme Tabela de Orientações de
   # Séries e Subséries. Quando se tratar de cupom fiscal, deixe este campo vazio.
   # Tipo: AlphaNum X
   # Tam.: 2
@@ -72,7 +72,7 @@ module Admin::Folhamatic::NotasFiscaisHelper
     return "%-2s" % ""
   end
   
-  # Nº INICIAL DA N. F. - Informe o número da nota fiscal. Caso esteja lançando nota fiscal de
+  # 6. Nº INICIAL DA N. F. - Informe o número da nota fiscal. Caso esteja lançando nota fiscal de
   # saídas com várias notas agrupadas (ex. série D..), informe o número da primeira nota fiscal.
   # Campo Obrigatório.
   # Tipo: Num 
@@ -81,7 +81,7 @@ module Admin::Folhamatic::NotasFiscaisHelper
     return "%010d" % pedido.nota_fiscal.to_i
   end
 
-  # Nº FINAL DA N. F - Caso esteja lançando nota fiscal de saídas com várias notas agrupadas
+  # 7. Nº FINAL DA N. F - Caso esteja lançando nota fiscal de saídas com várias notas agrupadas
   # (ex. série D..), informe o número da última nota fiscal, caso contrário, repetir o número da nota fiscal informada no campo 06. 
   # Este campo somente será utilizado nas notas fiscais de saídas, quando tratar de nota fiscal de entradas, informar zeros.
   # Tipo: Num
@@ -90,7 +90,7 @@ module Admin::Folhamatic::NotasFiscaisHelper
     return "%010d" % pedido.nota_fiscal.to_i
   end
 
-  # CÓDIGO DO CLIENTE/FORNECEDOR - Informe o código do cliente ou fornecedor da nota fiscal conforme cadastro de clientes e fornecedores. 
+  # 8. CÓDIGO DO CLIENTE/FORNECEDOR - Informe o código do cliente ou fornecedor da nota fiscal conforme cadastro de clientes e fornecedores. 
   # Campo obrigatório para notas fiscais de entradas. 
   # OBS: Este campo só poderá estar vazio nas notas de saídas quando se tratar de venda a consumidor (NF série D..), ou quando cupom fiscal (NF espécie ECF, CMR e PDV), diferente
   # disso, o campo deverá ser informado para não ocorrer rejeição na validação de arquivos magnéticos como SINTEGRA, GRF-CBT, SINCO, EFD e outros.
@@ -229,7 +229,7 @@ module Admin::Folhamatic::NotasFiscaisHelper
   # Tam.: 14
   def e200_valor_contabil(pedido)
     # TOTAL DA NOTA!
-    preco_sem_ponto = sprintf("%.2f", pedido.produtos_quantidades[0].nf_valortotal).delete(".").to_i
+    preco_sem_ponto = sprintf("%.2f", pedido.total_sem_frete_sem_desconto).delete(".").to_i
     return "%014d" % preco_sem_ponto
   end
 

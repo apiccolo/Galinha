@@ -7,8 +7,14 @@
 <% for p in @pedidos -%>
 <%= e200_notas_ficais(p) %>
 <%= e201_lancamentos_de_impostos_das_notas_fiscais(p) %>
-<% p.produtos_quantidaddes.each do |pq| -%>
-<%= e221_chave_lancamento_produtos(p, pq) %>
+<%= e221_chave_lancamento_produtos(p) %>
+<% p.produtos_quantidades.each do |pq| -%>
+<% if pq.produto.class == ProdutoCombo -%>
+<% pq.produto.produtos.each_with_index do |produto, k| # desmembra produtos do combo -%>
+<%= e222_lancamento_produtos(p, pq, produto, k) %>
+<% end #each... -%>
+<% else # produto simples no pedido -%>
 <%= e222_lancamento_produtos(p, pq) %>
-<% end -%>
-<% end -%>
+<% end #if... -%>
+<% end #each... -%>
+<% end #for... -%>

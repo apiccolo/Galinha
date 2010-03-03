@@ -8,6 +8,29 @@
                       :before => "$('spinner_desconto_ligado').show()",
                       :after => "$('spinner_desconto_ligado').hide()" -%>
   </li>
-  <li>Valor padrão do cupom de desconto</li>
-  <li>Prazo de validade padrão do cupom de desconto</li>
 </ul>
+
+<fieldset class="grupo-simples">
+  <legend>Cupom padrão</legend>
+  <ul class="sans-bullets bem-distribuidos">
+    <li>
+      <label for="valor_padrao_desconto">Desconto de </label>
+      <span class="negrito">R$ <%= text_field_tag "settings[desconto_valor_padrao]", @settings["desconto_valor_padrao"], :size => 4 -%></span>
+    </li>
+    <li>
+      <label for="valor_padrao_pedido_minimo">Pedido mínimo de </label>
+      <span class="negrito">R$ <%= text_field_tag "settings[desconto_valor_pedido_minimo]", @settings["desconto_valor_pedido_minimo"], :size => 4 -%></span>
+    </li>
+    <li>
+      <label for="desconto_dias_validos">Válido por </label>
+      <%= text_field_tag "settings[desconto_prazo_padrao]", @settings["desconto_prazo_padrao"], :size => 3 -%> dias
+    </li>
+    <li><%= link_to "Padrão de email ao contemplado", 
+                    { :action => "editar_arquivo", 
+                      :file => "/app/views/mailer/novo_desconto.html.erb",
+                      :nome_arquivo => "Email ao contemplado",
+                      :rows => 12, :cols => 70 },
+                    :method => :post -%>
+    </li>
+  </ul>
+</fieldset>

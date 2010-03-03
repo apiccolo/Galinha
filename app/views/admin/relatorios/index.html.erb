@@ -2,8 +2,8 @@
   <h1 id="especial">Relatórios</h1>
   <div id="seletor_data" style="margin-left:300px;text-align:right">
     <% form_for :intervalo, :url => { :action => :index }, :html => { :method => :get } do |f| %>
-    De <%= select_date(@data1, :prefix => 'de') %><br />
-    até <%= select_date(@data2, :prefix => 'ate') %><br />
+    De <%= select_date(@data1, :prefix => 'de', :start_year => 2008, :end_year => Date.today.year) %><br />
+    até <%= select_date(@data2, :prefix => 'ate', :start_year => 2008, :end_year => Date.today.year) %><br />
     <%= submit_tag "Refazer relatórios"%>
     <% end %>
   </div>

@@ -21,7 +21,7 @@
 <input type="hidden" name="item_id_<%= (pedido.produtos_quantidades.size+1) %>" value="1001-<%= pedido.entrega_estado %>" />
 <input type="hidden" name="item_descr_<%= (pedido.produtos_quantidades.size+1) %>" value="Frete para <%= pedido.entrega_estado %>" />
 <input type="hidden" name="item_quant_<%= (pedido.produtos_quantidades.size+1) %>" value="1" />
-<input type="hidden" name="item_valor_<%= (pedido.produtos_quantidades.size+1) %>" value="<%= preco_pagseguro(pedido.frete) -%>" />
+<input type="hidden" name="item_valor_<%= (pedido.produtos_quantidades.size+1) %>" value="<%= preco_pagseguro(pedido.frete - pedido.desconto) -%>" />
 <% end -%>
 
 <% if (embalagens != 0) -%>

@@ -37,6 +37,13 @@
     <% if (@settings["opcao_para_presente"].to_i==1) -%><td></td><% end -%>
     <td class="valor centro"><%= number_to_currency(pedido.frete) %></td>
   </tr>
+  <% if (@settings["desconto_ligado"].to_i == 1) -%><!-- DESCONTO -->
+  <tr id="desconto">
+    <td colspan="2">&nbsp;Desconto</td>
+    <% if (@settings["opcao_para_presente"].to_i==1) -%><td></td><% end -%>
+    <td class="valor centro">-<%= number_to_currency(pedido.desconto) %></td>
+  </tr>
+  <% end %>
   <tr id="total" class="verdinho">
     <td class="esquerda" colspan="2">&nbsp;<b>Total</b> (<%= pluralize(carrinho.size, "item") %>)</td>
     <% if settings_checked?(@settings["opcao_para_presente"]) -%><td></td><% end -%>
@@ -45,7 +52,7 @@
   <tr>
     <td colspan="2" style="padding:2px">&nbsp;</td>
     <% if settings_checked?(@settings["opcao_para_presente"]) -%><td></td><% end -%>
-    <td class="direita negrito" style="padding:2px"><%= link_to_function "Alterar...", "history.back()" %></td>
+    <td class="direita negrito" style="padding:2px"><%= link_to_function "Alterar...", "history.back()" if link_alterar %></td>
   </tr>
 </table>
 <% end -%>

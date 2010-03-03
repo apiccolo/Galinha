@@ -9,6 +9,9 @@ class Pedido < ActiveRecord::Base
   # Retornos do UOLPagSeguro
   has_many :retornos_pgmtos
   
+  # Tabela descontos (associados aos pedidos; aqui guarda-se só o valor)
+  has_one :cupom_de_desconto, :class_name => "Desconto", :autosave => true
+  
   # Para mudanca de status...
   attr_accessor :mudar_para
   
@@ -114,22 +117,41 @@ class Pedido < ActiveRecord::Base
   
   # Calcula o valor total do pedido
   def total
+    t  = self.total_sem_frete_sem_desconto
+    t += self.frete.to_f if self.frete
+    t -= self.desconto.to_f if self.desconto
+    return t.to_f
+  end
+
+  def total_sem_frete_sem_desconto
     t = 0
     if self.produtos_quantidades
       for p in self.produtos_quantidades
         t += p.qtd.to_i * p.preco_unitario.to_f
       end
     end
-    t += self.frete.to_f if self.frete
-    t -= self.desconto.to_f if self.desconto
     return t.to_f
   end
   
   # Retorna quantos itens tem o pedido
+  # (i.e. a QUANTIDADE total de itens pedidos)
   def n_itens
     n = 0
     self.produtos_quantidades.each { |c| n += c.qtd }
     return n
+  end
+  
+  # Retorna quantas linhas ha na nota-fiscal do produto
+  def n_linhas_nota_fiscal
+    n = 0
+    self.produtos_quantidades.each do |pq|
+      if pq.produto.class == ProdutoCombo
+        n += pq.produto.produtos.size
+      else
+        n += 1
+      end
+    end
+    return n    
   end
   
   # CEP no formato DDDDD-DDD
