@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  google.setOnLoadCallback(drawProdutosChart);
+/*google.setOnLoadCallback(drawProdutosChart);
   function drawProdutosChart() {
     var data = new google.visualization.DataTable();
     <% @produtos_vendidos.each do |prod| -%>
@@ -12,7 +12,38 @@
     <% end -%>
 
     var chart = new google.visualization.BarChart(document.getElementById('produtos_chart'));
-    chart.draw(data, {width: 450, height: 150, is3D: true, title: 'Produtos Vendidos'});
+    chart.draw(data, {width: 400, height: 250, is3D: true, title: 'Produtos Vendidos'});
+  }*/
+</script>
+<script type="text/javascript">
+  google.setOnLoadCallback(drawProdutosChart);
+  function drawProdutosChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Produtos');
+    data.addColumn('number', 'Vendidos');
+<% 
+tmp = []
+@produtos_vendidos.each do |prod| 
+  tmp << "['#{prod.nome}', #{prod.vendidos}]"
+end -%>
+    data.addRows([ <%= tmp.join(",\n") %> ]);
+ 
+    var chart = new google.visualization.PieChart(document.getElementById('produtos_chart'));
+    chart.draw(data, {width: 430, height: 220, is3D: true, title: 'Produtos Vendidos'});
   }
 </script>
 <div id="produtos_chart" class="graph"></div>
+<div id="produtos_data">
+  <table border="1">
+    <tr>
+      <th>Produto</th>
+      <th>Vendidos</th>
+    </tr>
+    <% @produtos_vendidos.each do |prod| -%>
+    <tr>
+      <td><%= prod.nome %></td>
+      <td class="centro"><%= prod.vendidos %></td>
+    </tr>
+    <% end -%>
+  </table>
+</div>

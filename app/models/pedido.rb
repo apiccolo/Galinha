@@ -58,6 +58,20 @@ class Pedido < ActiveRecord::Base
   #===============================================================================#
   #                               NAMED SCOPES                                    #
   #===============================================================================#
+  named_scope :feitos_antes_de, lambda { |data|
+    if data.blank?
+      {}
+    else
+      { :conditions => ["pedidos.created_at <= ?", data] }
+    end
+  }
+  named_scope :feitos_dias_atras, lambda { |data|
+    if data.blank?
+      {}
+    else
+      { :conditions => ["DATE(pedidos.created_at) = DATE(?)", data] }
+    end
+  }
   named_scope :posteriores_a, lambda { |data|
     if data.blank?
       {}
@@ -86,6 +100,33 @@ class Pedido < ActiveRecord::Base
       { :conditions => ["pedidos.nota_fiscal <= ?", nf_numero] }
     end
   }
+  named_scope :com_status, lambda { |varios_status|
+    if varios_status.blank?
+      {}
+    else
+      if varios_status.kind_of?(String)
+        { :conditions => ["pedidos.status IN (?)", varios_status] }
+      elsif varios_status.kind_of?(Array)
+        tmp = []
+        varios_status.each { |k| tmp << "pedidos.status = '#{k}'" }
+        { :conditions => [ tmp.join(' OR ') ] }
+      end      
+    end
+  }
+  named_scope :forma_pgmto, lambda { |diversas|
+    if diversas.blank?
+      {}
+    else
+      if diversas.kind_of?(String)
+        { :conditions => ["pedidos.forma_pgmto IN (?)", diversas] }
+      elsif diversas.kind_of?(Array)
+        tmp = []
+        diversas.each { |k| tmp << "pedidos.forma_pgmto = '#{k}'" }
+        { :conditions => [ tmp.join(' OR ') ] }
+      end      
+    end
+  }
+
 
   #==================================================================#
   #                           METHODS                                #
@@ -291,11 +332,13 @@ class Pedido < ActiveRecord::Base
     self.save(false)
   end
 
-  # Marca quando o pedido foi pago.
+  # 1. Marca quando o pedido foi pago.
+  # 2. Dá baixa no estoque dos produtos enviados.
   def pedido_pago
     self.data_pgmto = Time.now.utc
     self.save(false)
     self.notifica_recebimento_pagamento
+    self.baixa_estoque
   end
 
   # Avisa que o produto já está no
@@ -314,10 +357,8 @@ class Pedido < ActiveRecord::Base
     self.save(false)
   end
 
-  # 1. Dá baixa no estoque dos produtos enviados.
-  # 2. Notifica o cliente da postagem dos produtos.
+  # 1. Notifica o cliente da postagem dos produtos.
   def envia_produto
-    self.baixa_estoque
     # Marca dia/hora do envio
     self.data_envio = Time.now.utc
     self.save(false)

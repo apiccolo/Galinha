@@ -13,7 +13,7 @@
 <% pq.produto.produtos.each_with_index do |produto, k| # desmembra produtos do combo -%>
 <%= e222_lancamento_produtos(p, pq, produto, k) %>
 <% end #each... -%>
-<% else # produto simples no pedido -%>
+<% else # ProdutoSimples no pedido -%>
 <%= e222_lancamento_produtos(p, pq) %>
 <% end #if... -%>
 <% end #each... -%>

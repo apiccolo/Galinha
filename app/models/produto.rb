@@ -36,7 +36,9 @@ class Produto < ActiveRecord::Base
       end
     else
       #logger.debug("# ====> #{default_on_empty}")
-      s = self.find(:all, :conditions => ["id IN (?)", default_on_empty.split(',')])
+      s = self.find(:all, 
+                    :conditions => ["id IN (?)", default_on_empty.split(',')], 
+                    :order => "id DESC")
     end
     return s
   end

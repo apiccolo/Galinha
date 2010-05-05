@@ -6,7 +6,7 @@ module Admin::AutomacoesHelper
       ps.each do |p|
         pedido = Pedido.find(p) unless (p == "empty") #arrays first position
         if pedido
-          text  = image_tag("icones/heart_delete.png") + "Pedido #{pedido.id}: NF <b>#{pedido.nota_fiscal}</b>"
+          text  = image_tag("icones/heart_delete.png") + "Pedido #{pedido.id}<br />NF <b>#{pedido.nota_fiscal}</b>"
           link  = link_to_remote(text, :url => { 
                                           :controller => "admin/pedidos",
                                           :action => "nf_marcar",
@@ -25,6 +25,17 @@ module Admin::AutomacoesHelper
       return content_tag(:p, "Não há pedidos marcados.", :class => "negrito margin0")
     else
       return content_tag(:p, "Não há pedidos marcados. Settings['pedidos_selecionados'] vazia!", :class => "negrito margin0")
+    end
+  end
+  
+  def acumula_totais(t, p)
+    t[0] += p.total_sem_frete_sem_desconto
+    p.produtos_quantidades.each do |r|
+      if (t[1].has_key?(r.produto_id))
+        t[1][r.produto_id] += r.qtd
+      else
+        t[1].merge!({ r.produto_id => r.qtd })
+      end
     end
   end
 

@@ -23,6 +23,7 @@ ul#pedidos li p span.title {
 }
 </style>
 <p><b><%= pluralize(pedidos.size, "pedido") %></b> com NF.</p>
+<% totais = [0, {}] %>
 <ul id="pedidos">
   <% for p in pedidos -%>
   <li id="pedido_<%= p.id.to_s %>">
@@ -47,6 +48,7 @@ ul#pedidos li p span.title {
        U.F.: <b><%= p.entrega_estado %></b><br />
        R.G.: não informado</p>
     <p class="produto"><span class="title">Dados dos Produtos</span>
+<% acumula_totais(totais, p) #acumula itens vendidos %>
 <% if p.produtos_quantidades and not p.produtos_quantidades.empty? -%>
   <% p.produtos_quantidades.each do |r| %>
       <% if r.produto.class == ProdutoCombo -%>
@@ -85,6 +87,13 @@ ul#pedidos li p span.title {
       </p>
   </li>
   <% end -%>
+</ul>
+<p>Resumo: <br />
+   Total = <b><%= number2currency(totais[0]) %></b> (sem frete, sem descontos)</p>
+<ul>
+<% totais[1].each do |k, v| -%>
+  <li><% prod = Produto.find(k) %><b><%= prod.nome %></b> = <%= v %> unid.</li>
+<% end -%>
 </ul>
 <% else -%>
 <p>Não foram marcados pedidos concluídos com NF.</p>

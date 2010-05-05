@@ -8,7 +8,7 @@
   <% @sugestoes.each_with_index do |produto, j| %>
     <% if (j < @settings['loja_mostrar_sugestoes_maximo'].to_i) -%>
     <li id="produto_<%= produto.id %>" class="produtos">
-      <%= infos_produto_box(produto) %>
+      <%= infos_produto_box(produto, :mostrar_preco => true, :mostrar_desconto => true) %>
     </li>
     <% end -%>
   <% end %>

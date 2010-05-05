@@ -1,13 +1,1 @@
-Olá, você acaba de ganhar um desconto de <%= number2currency(@desconto.valor) %> da Galinha Pintadinha!
-Entre no site (www.galinhapintadinha.com.br) e, ao fazer seu pedido, informe o cupom abaixo, no campo "Cupom de desconto": 
-
-<%= @desconto.cupom %>
-
-Mas atenção: seu cupom só é válido até <%= @desconto.valido_ate.strftime('%d de %B de %Y') %>, nas compras acima de <%= number2currency(@desconto.minimo_pedido) %>.
-
-Então não perca tempo: peça já os produtos da Galinha e aproveite seu desconto!
-
-Um abraço da
-
-
-Galinha Pintadinha
+../../../../../shared/app/mailer/novo_desconto.html.erb

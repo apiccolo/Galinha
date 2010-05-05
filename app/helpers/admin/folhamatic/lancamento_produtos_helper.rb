@@ -182,9 +182,9 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # Tipo: Num
   # Tam.: 14
   def e222_valor_mercadoria(pedido, pq, produto_do_combo, k)
-    if produto_do_combo
+    if produto_do_combo # se esse parametro existe, sabemos que eh um ProdutoSimples integrante do combo
       preco_sem_ponto = sprintf("%.2f", produto_do_combo.preco_fiscal * pq.qtd ).delete(".").to_i
-    else
+    else # se nao, eh um ProdutoSimples comprado separadamente
       preco_sem_ponto = sprintf("%.2f", pq.produto.preco_fiscal * pq.qtd ).delete(".").to_i
     end  
     return "%014d" % preco_sem_ponto
@@ -194,11 +194,10 @@ module Admin::Folhamatic::LancamentoProdutosHelper
   # Tipo: Num
   # Tam.: 14
   def e222_valor_desconto(pedido, pq, produto_do_combo, k)
+    desconto = 0 
     if produto_do_combo and k
-      desconto = 0 
-      desconto = sprintf("%.2f", pq.produto.desconto).delete(".").to_i if (k == 0) # aplicar o desconto para o primeiro item do combo
-    else
-      desconto = 0
+      desconto = sprintf("%.2f", pq.produto.desconto).delete(".").to_i if (k == 0)
+      # aplicar o desconto para o primeiro item do combo
     end
     return "%014d" % desconto
   end
@@ -238,7 +237,7 @@ module Admin::Folhamatic::LancamentoProdutosHelper
         valor_unitario = sprintf("%.2f", produto_do_combo.preco_fiscal).delete(".").to_i
       end
     else
-      valor_unitario = sprintf("%.2f", pq.preco_unitario).delete(".").to_i
+      valor_unitario = sprintf("%.2f", pq.produto.preco_fiscal).delete(".").to_i
     end
     return "%014d" % (valor_unitario * 100)
   end

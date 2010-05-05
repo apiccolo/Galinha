@@ -2,12 +2,14 @@
   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <link rel="shortcut icon" href="/favicon.ico" />
   <%= display_meta_tags :site => "Site Oficial da Galinha Pintadinha", :separator => "-" %>
+  <%= render :partial => "layouts/essential/meta_description_and_keywords" %>
+  <link rel="shortcut icon" href="/favicon.ico" />
   <%= render :partial => "layouts/essential/stylesheet_javascript" %>
 </head>
 <body>
+  <%= render :partial => "layouts/essential/top_bar" %>
+  <!-- conteudo -->  
   <div id="conteudo" class="container_12 clearfix">
     <%= flash_message_mais_fechar %>
     <%= render :partial => "layouts/essential/testeira" %>

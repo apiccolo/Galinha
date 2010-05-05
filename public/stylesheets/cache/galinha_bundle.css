@@ -1150,6 +1150,32 @@ a.remover {
 	margin: 10px 0;
 	text-align: center;
 }/* --------- /stylesheets/layout_galinha.css --------- */ 
+/* Top Bar 
+-----------------------------------------------------------------------------
+*/
+#top_bar {
+  height: 24px;
+	background-color: #0B5075;	
+	text-align: right;
+	line-height: 20px;
+	margin:0;
+}
+#top_bar ul li {
+  list-style:none;
+  display:inline;
+  margin:0 30px 0 0;
+}
+#top_bar a {
+  color: gray;
+	text-decoration: none;
+}
+#top_bar a:hover {
+	color: white;
+}
+#top_bar a img {
+  vertical-align:middle;
+}
+
 /* Testeira
 -----------------------------------------------------------------------------
 */

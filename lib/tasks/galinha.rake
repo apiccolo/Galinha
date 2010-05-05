@@ -1,30 +1,37 @@
 namespace :galinha do
+  
+  namespace :rotinas do
+    
+    desc "Cancela pedidos antigos não pagos"
+    task :cancela_antigos => :environment do
+      data = 45.days.ago
+      Pedido.feitos_antes_de(data).com_status('aguardando_pagamento').find(:all, :include => :pessoa).each do |pedido|
+        pedido.cancelar!
+        puts "Pedido #{pedido.id}, feito em #{pedido.created_at.strftime('%d/%m/%Y')}, por #{pedido.pessoa.nome} (#{pedido.pessoa.email}) - CANCELADO!"
+      end
+    end
+    
+    desc "Encerra pedidos antigos enviados aos clientes e já recebidos"
+    task :encerra_enviados => :environment do
+      data = 30.days.ago
+      Pedido.anteriores_a(data).com_status(%w(recebido_pelo_cliente produto_enviado_cod_postagem)).find(:all, :include => :pessoa).each do |pedido|
+        pedido.encerrar!
+        puts "Pedido #{pedido.id}, enviado em #{pedido.data_envio.strftime('%d/%m/%Y')}, comprado por #{pedido.pessoa.nome} (#{pedido.pessoa.email}) - ENCERRADO!"
+      end
+    end
+
+    desc "Notifica compradores de boletos não pago"
+    task :boletos_nao_pagos => :environment do
+      data = 8.days.ago
+      Pedido.feitos_dias_atras(data).com_status('aguardando_pagamento').forma_pgmto('Boleto').find(:all, :include => :pessoa).each do |pedido|
+        pedido.notifica_retry_boleto
+        puts "Pedido #{pedido.id}, feito em #{pedido.created_at.strftime('%d/%m/%Y')}, comprado por #{pedido.pessoa.nome} (#{pedido.pessoa.email}) - AVISO DE BOLETO NÃO PAGO!"
+      end
+    end
+    
+  end#namespace :rotinas
 
   namespace :db_updates do
-
-   #desc "Ajustes em produtos_quantidades"
-   #task :pq_ajustes => :environment do
-   #  Pedido.all.each do |p|
-   #    for r in p.produtos_quantidades
-   #      if r.preco_unitario.blank?
-   #        preco = 32.9
-   #        if (p.id < 6583)
-   #          preco = 29.9
-   #        else #if (p.id >= 6583) and (p.id <= 28179) #ultimo ID antes de migrar
-   #          estados_caros = %w(AM CE MA PI PA RN RO)
-   #          if (estados_caros.include?(p.entrega_estado))
-   #            preco = 37.9
-   #          else
-   #            preco = 32.9
-   #          end
-   #        end
-   #        preco += 1.5 if r.presente
-   #        r.update_attribute(:preco_unitario, preco)
-   #      end
-   #    end
-   #  end
-   #end
-    
    desc "Ajustes em pedidos[data_pgmto]"
    task :data_pgmto => :environment do
      RetornosPgmto.find(:all, 

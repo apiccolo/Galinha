@@ -1,7 +1,7 @@
 class VideosController < ApplicationController
   layout "default"
   
-  before_filter :dados_produto_1, :except => :pelucia
+  before_filter :dados_produto_1, :except => [:pelucia, :cd_caixinha_musica]
   
   def index
     redirect_to :action => "trailer"
@@ -29,6 +29,10 @@ class VideosController < ApplicationController
   
   def pelucia
     render :template => "videos/pelucia"
+  end
+
+  def cd_caixinha_musica
+    render :template => "videos/cd_caixinha_musica"
   end
   
   private

@@ -64,7 +64,7 @@ class Admin::AutomacoesController < Admin::AdminController
     #render :text => params.inspect
     conditions = []
     conditions = ["pedidos.id IN (?)", params['pedidos_ids']] if (params['selecao']=="automatica")
-    conditions = ["#{params[:condicoes]}"] if (params['selecao']=="my_where")
+    conditions = ["pedidos.id IN (#{params[:condicoes]})"] if (params['selecao']=="my_where")
     @pedidos = Pedido.find(:all, :conditions => conditions,
                            :order => "nota_fiscal ASC",
                            :include => :pessoa )

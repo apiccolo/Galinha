@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <%= display_meta_tags :site => "Site Oficial da Galinha Pintadinha", :separator => "-" %>
+  <%= render :partial => "layouts/essential/meta_description_and_keywords" %>
+  <%= render :partial => "layouts/essential/stylesheet_javascript" %>
+<style type="text/css" media="screen">
+#home {
+	text-align: left;
+	font-family: Verdana, Geneva, Arial, sans-serif;
+	visibility: visible;
+	margin:0 0 90px 0;
+}
+#home .bodytext li {
+	height: 190px;
+	float: left;
+	margin-left: -15px;
+/*	background: url('/images/decoracao/shadow.png') no-repeat bottom center; */
+}
+#home .bodytext li.last { margin-right: -15px; }
+#home ul {
+	list-style-type: none;
+	margin-bottom:0px;
+	margin-left:200px;
+}
+#home li a {
+	text-indent: -8008px;
+	overflow: hidden;
+	float: left;
+	width: 210px;
+	height: 200px;
+	background: no-repeat 0px 0px;
+}
+#home li a:hover { opacity: .9; }
+#home li a:active, .downkey {
+	background-position: 0px -200px;
+	opacity: 1;
+}
+#home li a#dvd { background-image:url('/images/decoracao/home-icon-dvd.png'); }
+#home li a#pelucia { background-image:url('/images/decoracao/home-icon-pelucia.png'); }
+#home li a#bluray { background-image:url('/images/decoracao/home-icon-caixinha-musica.png'); }
+</style>
+</head>
+<body>
+
+<div class="container_12">
+	<div class="grid_12 alpha omega" id="copy" style="margin: 50px 0pt 50px 0px;text-align:center">
+		<img src="/images/logos/galinha_pintadinha_logo.png"><h1 style="display: none">Galinha Pintadinha</h1>
+	</div>
+  
+  <!-- botoes -->
+	<div class="grid_12 alpha" id="home">
+		<div class="bodytext">
+			<ul>
+				<li><a id="pelucia" href="/pelucia" class="link2"><h2>Pelúcia</h2></a></li>
+				<li><a id="dvd" href="/videos/trailer" class="link1"><h2>DVD</h2></a></li>
+				<li class="last"><a id="bluray" href="/caixinha-de-musica" class="link4"><h2>Blu-ray disc</h2></a></li>
+			</ul>
+		</div>
+	</div>	
+</div>
+
+<%= render :partial => "layouts/essential/google_analytics" %>
+</body>
+</html>

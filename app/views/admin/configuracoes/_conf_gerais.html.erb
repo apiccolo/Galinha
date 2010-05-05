@@ -3,4 +3,34 @@
     <span>Identificação da Empresa na Etiqueta (Automação...)</span><br />
     <%= text_area_tag "settings[automacao_empresa_na_etiqueta]", @settings["automacao_empresa_na_etiqueta"], :cols => 40, :rows => 4 -%>
   </li>
+
+  <fieldset class="grupo-simples" id="aproveite_para_levar">
+    <legend>Site &lt;HEAD&gt;, SEO etc.</legend>
+    <li>
+      <span>Description</span><br />
+      <%= text_area_tag "settings[head_description]", @settings["head_description"], :cols => 80, :rows => 4 -%>
+    </li>
+    <li>
+      <span>Keywords</span><br />
+      <%= text_area_tag "settings[head_keywords]", @settings["head_keywords"], :cols => 80, :rows => 2 -%>
+    </li>
+    <li>
+      <%= image_tag "spinners/spinner.gif", :id => "spinner_tail_googleanalytics", :style => "display:none" %>
+      <%= check_box_tag "settings[tail_googleanalytics]", 1, settings_checked?(@settings["tail_googleanalytics"]) %> Monitorar acesso (usando <i>Google Analytics</i>)
+      <%= observe_field "settings_tail_googleanalytics", 
+                        :url => { :action => "update_check_box" },
+                        :with => "settings[tail_googleanalytics]",
+                        :before => "$('spinner_tail_googleanalytics').show()",
+                        :after => "$('spinner_tail_googleanalytics').hide()" -%>
+    </li>
+    <li>
+      <%= image_tag "spinners/spinner.gif", :id => "spinner_head_userfly", :style => "display:none" %>
+      <%= check_box_tag "settings[head_userfly]", 1, settings_checked?(@settings["head_userfly"]) %> Monitorar navegação dos usuários (usando <i>Userfly</i>)
+      <%= observe_field "settings_head_userfly", 
+                        :url => { :action => "update_check_box" },
+                        :with => "settings[head_userfly]",
+                        :before => "$('spinner_head_userfly').show()",
+                        :after => "$('spinner_head_userfly').hide()" -%>
+    </li>
+  </fieldset>
 </ul>  

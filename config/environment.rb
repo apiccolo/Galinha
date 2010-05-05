@@ -57,3 +57,7 @@ end
 
 # http://improveit.com.br/software_livre/brazilian_rails
 require 'brazilian-rails'
+
+if "irb" == $0
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+end
