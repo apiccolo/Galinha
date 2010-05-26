@@ -18,7 +18,6 @@
                                   :mostrar_preco => true,
                                   :mostrar_desconto => true,
                                   :mostrar_itens => true) -%>
-      <p class="margin0"><%= link_to_modal_box "[Saiba...+]" , { :action => "produto", :id => prod.id }, :width => 720 %></p>
     </td>
     <% if settings_checked?(@settings['opcao_para_presente']) -%>
     <td class="curta">

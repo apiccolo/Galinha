@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :get_settings, :qual_banco
   
   # http://github.com/rails/exception_notification
-  #include ExceptionNotifiable
+  include ExceptionNotification::Notifiable #include ExceptionNotifiable
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password

@@ -1,12 +1,12 @@
-<p style="margin:0">
+<p style="margin-bottom:10px">
   <%= thumbnail_produto(produto) -%><br />
-  <span class="pequeno negrito"><%= produto.nome %></span>
+  <span class="pequeno negrito"><%= link_to_modal_box produto.nome, { :action => "produto", :id => produto.id }, :width => 720 %></span>
   <% if options[:mostrar_preco] -%>
   <br />Por apenas <span class="preco_final"><%= number_to_currency(produto.preco) %></b>
   <% end -%>
 </p>
 <% if options[:link_to_carrinho] -%>
-<p class="colocar_no_carrinho"><%= link_to_remote "Colocar no #{image_tag('icones/carrinho_adicionar.png')}", 
+<p><%= link_to_remote "#{image_tag('icones/botao_colocar_no_carrinho.png')}", 
                       :url => { :action => "incluir", 
                                 :produto_id => produto.id } -%></p>
 <% end -%>

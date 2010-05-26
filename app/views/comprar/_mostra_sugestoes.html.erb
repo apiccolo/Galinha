@@ -2,7 +2,7 @@
 <% if (settings_checked?(@settings['loja_mostrar_sugestoes']) and 
       @sugestoes and 
       not @sugestoes.blank?) -%>
-  <h6 class="margin0"><%= @settings["loja_mostrar_sugestoes_titulo"] %></h6>
+  <h6 class="margin0" style="background:#19A4FF;color:white;text-align:center"><%= @settings["loja_mostrar_sugestoes_titulo"] %></h6>
   <p class="pequeno"><%= @settings["loja_mostrar_sugestoes_linha_fina"] %></p>
   <ul id="lista_de_sugestoes" class="clearfix">
   <% @sugestoes.each_with_index do |produto, j| %>

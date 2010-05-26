@@ -13,12 +13,13 @@ class Admin::RelatoriosController < Admin::AdminController
   
   private
   
-  def intervalo
+  def intervalo    
     if params["de"] and params["ate"]
       @data1 = Date.new(params["de"]["year"].to_i, params["de"]["month"].to_i, params["de"]["day"].to_i) #|| 30.days.ago
       @data2 = Date.new(params["ate"]["year"].to_i, params["ate"]["month"].to_i, params["ate"]["day"].to_i)
     else
-      @data1 = 10.days.ago
+      @data1 = 10.days.ago # default = 10 dias atras...
+      @data1 = Date.new(Date.today.year, Date.today.month, 1) if (Date.today.day > 10) # se (hoje > dia 10), pega desde o inicio do mes
       @data2 = Date.today
     end
   end

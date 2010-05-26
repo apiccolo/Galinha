@@ -227,6 +227,11 @@ class ComprarController < ApplicationController
   #==================================================================#
   #                      CARRINHO DE COMPRAS                         #
   #==================================================================#
+  protect_from_forgery :except => [ :confirmar_pedido,
+                                    :incluir, :retirar, :esvaziar, 
+                                    :embrulhar, :alterar_qtd, 
+                                    :trocar_por_combo, :desfazer_combo, 
+                                    :atualizar_frete_por_estado, :validar_cupom ]
   before_filter :inicia_pedido, :only => [ :incluir, :retirar, :esvaziar, 
                                            :embrulhar, :alterar_qtd, 
                                            :trocar_por_combo, :desfazer_combo, 
