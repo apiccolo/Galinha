@@ -29,6 +29,14 @@ namespace :galinha do
       end
     end
     
+    desc "Previne pedidos pendentes não inicializados"
+    task :previne_pendentes => :environment do
+      Pedido.com_status('pedido').find(:all, :include => :pessoa).each do |pedido|
+        pedido.iniciar! unless pedido.produtos_quantidades.empty?
+        puts "Pedido #{pedido.id}, comprado por #{pedido.pessoa.nome} (#{pedido.pessoa.email}) - INICIADO!"
+      end
+    end
+    
   end#namespace :rotinas
 
   namespace :db_updates do

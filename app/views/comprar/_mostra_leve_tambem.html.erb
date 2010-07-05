@@ -7,7 +7,7 @@
 
   <ul id="lista_de_leve_tambem" class="clearfix">
   <% @leve_tambem.each_with_index do |pc, i| -%>
-    <% if (i < @settings['loja_aproveite_para_levar_maximo'].to_i) -%>
+    <% if ((i < @settings['loja_aproveite_para_levar_maximo'].to_i) and pc.pode_ser_vendido?) -%>
     <li id="produto_<%= pc.id %>" class="produtos">
       <%= infos_leve_tambem(pc, @carrinho) %>
     </li>

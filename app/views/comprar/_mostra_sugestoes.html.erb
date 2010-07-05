@@ -6,7 +6,7 @@
   <p class="pequeno"><%= @settings["loja_mostrar_sugestoes_linha_fina"] %></p>
   <ul id="lista_de_sugestoes" class="clearfix">
   <% @sugestoes.each_with_index do |produto, j| %>
-    <% if (j < @settings['loja_mostrar_sugestoes_maximo'].to_i) -%>
+    <% if ((j < @settings['loja_mostrar_sugestoes_maximo'].to_i) and produto.pode_ser_vendido?) -%>
     <li id="produto_<%= produto.id %>" class="produtos">
       <%= infos_produto_box(produto, :mostrar_preco => true, :mostrar_desconto => true) %>
     </li>
