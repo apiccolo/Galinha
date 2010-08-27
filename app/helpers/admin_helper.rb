@@ -4,9 +4,20 @@ module AdminHelper
     str = "<p class=\"margin0\">"
     if pedido
       if pedido.pessoa
-        str += "#{pedido.pessoa.nome}<br />"
-        str += "#{mail_to(pedido.pessoa.email)}<br />"
-        str += formata_cpf(pedido.pessoa.cpf)
+        #str += "#{pedido.pessoa.nome}<br />"
+        str += "Nome: #{in_place_editor_field(:pessoa, 'nome', {}, :click_to_edit_text => 'Editar nome do comprador')}<br />"
+        str += "Email: #{in_place_editor_field(:pessoa, 'email', {}, :click_to_edit_text => 'Editar email do comprador')}<br />"
+
+        @pessoa.cpf = 'vazio' unless @pessoa.cpf
+        str += "CPF: #{in_place_editor_field(:pessoa, 'cpf', {}, :click_to_edit_text => 'Editar CPF do comprador')}<br />"
+
+        @pessoa.cnpj = 'vazio' unless @pessoa.cnpj
+        str += "CNPJ: #{in_place_editor_field(:pessoa, 'cnpj', {}, :click_to_edit_text => 'Editar CNPJ do comprador')}<br />"
+
+        @pessoa.inscricao_estadual = 'vazio' unless @pessoa.inscricao_estadual
+        str += "Insc. Est.: #{in_place_editor_field(:pessoa, 'inscricao_estadual', {}, :click_to_edit_text => 'Editar Inscrição Estadual do comprador')}<br />"
+
+        #str += formata_cpf(pedido.pessoa.cpf)
         str += "<br />Conheceu a Galinha Pintadinha: <i>#{pedido.pessoa.como_conheceu}</i>" if not pedido.pessoa.como_conheceu.blank?
         str += "</p>"
         str += e_nota_fiscal(pedido)
@@ -38,7 +49,14 @@ module AdminHelper
           pedido.encerrado?) and pedido.nota_fiscal and not pedido.nota_fiscal.blank?
         str  = "<p class=\"margin0\">"
         str += "NF: <b>#{in_place_editor_field(:pedido, 'nota_fiscal', {}, :click_to_edit_text => 'Editar número da NF')}</b>"
+        str += "&nbsp;&nbsp;&nbsp;&nbsp;[#{link_to('nota avulsa', { :controller => 'automacoes', :action => 'nota_fiscal_avulsa', :id => pedido.id }, :target => '_blank')}]"
         str += "</p>"
+    else
+      pedido.nota_fiscal = 'vazio'
+      str  = "<p class=\"margin0\">"
+      str += "NF: <b>#{in_place_editor_field(:pedido, 'nota_fiscal', {}, :click_to_edit_text => 'Editar número da NF')}</b>"
+      str += "&nbsp;&nbsp;&nbsp;&nbsp;[#{link_to('nota avulsa', { :controller => 'automacoes', :action => 'nota_fiscal_avulsa', :id => pedido.id }, :target => '_blank')}]"
+      str += "</p>"
     end
     return str
   end
@@ -108,15 +126,15 @@ module AdminHelper
     }
     options = options.merge!(my_options)
     str = ""
-    pedido.produtos_quantidades.each do |pq|
+    pedido.produtos_quantidades.each do |@produtos_quantidade|
       str += "<tr>"
-      str += "  <td class=\"quantidade\">#{pq.qtd}</td>"
-      str += "  <td class=\"descricao\">#{pq.produto.descricao_simples}</td>"
+      str += "  <td class=\"quantidade\">#{in_place_editor_field(:produtos_quantidade, 'qtd', {}, :click_to_edit_text => 'Editar quantidade')}</td>"
+      str += "  <td class=\"descricao\">#{@produtos_quantidade.produto.descricao_simples}</td>"
       str += "  <td class=\"presente\">"
-      str += image_tag('icones/para_presente.gif') if pq.presente
+      str += image_tag('icones/para_presente.gif') if @produtos_quantidade.presente
       str += "  </td>"
-      str += "  <td class=\"preco_unitario\">#{number2currency(pq.preco_unitario)}</td>" if options[:com_preco_unitario]
-      str += "  <td class=\"valor_total\">#{number2currency(pq.qtd * pq.preco_unitario)}</td>" if options[:com_valor_total]
+      str += "  <td class=\"preco_unitario\">#{in_place_editor_field(:produtos_quantidade, 'preco_unitario', {}, :click_to_edit_text => 'Editar preco')}</td>" if options[:com_preco_unitario]
+      str += "  <td class=\"valor_total\">#{number2currency(@produtos_quantidade.qtd * @produtos_quantidade.preco_unitario)}</td>" if options[:com_valor_total]
       str += "</tr>"
     end
     return str
@@ -159,7 +177,11 @@ module AdminHelper
     tmp += "<br />"
     tmp += in_place_editor_field(:pedido, 'entrega_bairro', {}, :click_to_edit_text => 'Editar bairro') +"<br />" if pedido.entrega_bairro
     #tmp += "#{pedido.entrega_bairro}<br />" if pedido.entrega_bairro
-    tmp += "#{in_place_editor_field(:pedido, 'entrega_cep')} - #{in_place_editor_field(:pedido, 'entrega_cidade', {}, :click_to_edit_text => 'Editar cidade')} - #{pedido.entrega_estado}"
+    tmp += "#{in_place_editor_field(:pedido, 'entrega_cep')}"
+    tmp += " - "
+    tmp += "#{in_place_editor_field(:pedido, 'entrega_cidade', {}, :click_to_edit_text => 'Editar cidade')}"
+    tmp += " - "
+    tmp += "#{in_place_editor_field(:pedido, 'entrega_estado', {}, :click_to_edit_text => 'Editar estado')}"
     tmp += "</p>" 
     tmp += e_envelope(pedido)
     tmp += e_cod_postagem(pedido)

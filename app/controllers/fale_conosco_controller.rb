@@ -10,6 +10,9 @@ class FaleConoscoController < ApplicationController
     end
   end
   
+  def patrocinadores
+  end
+  
   def quem_somos
   end
   

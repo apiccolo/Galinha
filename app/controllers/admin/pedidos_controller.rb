@@ -8,6 +8,18 @@ class Admin::PedidosController < Admin::AdminController
   in_place_edit_for :pedido, :entrega_cep
   in_place_edit_for :pedido, :entrega_cidade
   in_place_edit_for :pedido, :nota_fiscal
+  in_place_edit_for :pedido, :frete_tipo
+  in_place_edit_for :pedido, :frete
+  in_place_edit_for :pedido, :desconto
+  
+  in_place_edit_for :pessoa, :nome
+  in_place_edit_for :pessoa, :email
+  in_place_edit_for :pessoa, :cpf
+  in_place_edit_for :pessoa, :cnpj
+  in_place_edit_for :pessoa, :inscricao_estadual
+
+  in_place_edit_for :produtos_quantidade, :qtd
+  in_place_edit_for :produtos_quantidade, :preco_unitario  
 
   # Bem vindo à lista de pedidos.
   def index
@@ -27,6 +39,7 @@ class Admin::PedidosController < Admin::AdminController
          :only => :detalhes
   def detalhes
     @pedido = Pedido.find(params[:id])
+    @pessoa = @pedido.pessoa
     render :partial => "detalhes",
            :locals => { :pedido => @pedido }
   end

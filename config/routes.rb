@@ -63,7 +63,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :automacoes, :collection => { :entrar_arquivo => :get,
                                                   :processar_dados => :post,
                                                   :relatorios => :get,
-                                                  :desmarcar_todos => :get },
+                                                  :desmarcar_todos => :get,
+                                                  :nota_fiscal_avulsa => :get },
                                  :member => { :confirmar_pagamento => :post }
   end
 
@@ -77,6 +78,7 @@ ActionController::Routing::Routes.draw do |map|
   map.fale_conosco '/fale-conosco', :controller => 'fale_conosco'
   map.quem_somos '/quem-somos', :controller => 'fale_conosco', :action => 'quem_somos'
   map.iphone '/iphone', :controller => 'fale_conosco', :action => 'iphone'
+  map.iphone '/patrocinadores', :controller => 'fale_conosco', :action => 'patrocinadores'
 
   # EXCLUSIVO para retorno automático dos pagamentos
   map.pagseguro '/retorno_uolpagseguro', :controller => 'comprar', :action => 'confirmacao_uol'

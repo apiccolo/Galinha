@@ -36,12 +36,12 @@
                                               :com_preco_unitario => true, 
                                               :com_valor_total => true) %>
         <tr class="frete">
-          <td colspan="4">Frete (<%= pedido.frete_tipo %>)</td>
-          <td><span class="valor_frete"><%= number2currency(pedido.frete) -%></span></td>
+          <td colspan="4">Frete (<%= in_place_editor_field(:pedido, 'frete_tipo') %>)</td>
+          <td><span class="valor_frete"><%= in_place_editor_field(:pedido, 'frete') -%><% #number2currency(pedido.frete) %></span></td>
         </tr>
         <tr class="desconto">
           <td colspan="4">Desconto</td>
-          <td><span class="valor_desconto">-<%= number2currency(pedido.desconto) %></span></td>
+          <td><span class="valor_desconto">-<%= in_place_editor_field(:pedido, 'desconto') %></span></td>
         </tr>
         <tr class="total">
           <td colspan="4">Total</td>

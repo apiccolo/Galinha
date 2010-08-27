@@ -21,6 +21,12 @@ class Admin::AutomacoesController < Admin::AdminController
   def entrar_arquivo
   end
   
+  def nota_fiscal_avulsa
+    @pedido = nil
+    @pedido = Pedido.find(params[:id]) if params[:id]
+    render :template => false
+  end
+  
   # Recebe dados (arquivo ou text_area)
   # e apresenta-os na tabela para conferir
   # com os pedidos.
